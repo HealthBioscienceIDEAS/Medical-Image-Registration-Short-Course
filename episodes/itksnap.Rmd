@@ -20,8 +20,23 @@ exercises: 2
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-
 ## Getting Started with ITK-SNAP
+### History
+ITK-SNAP started in 1999 with SNAP (SNake Automatic Partitioning) and then developed by Paul Yushkevich with the guidance of Guido Gerig.
+
+### Hardware Requirements
+* Memory: "Overall 2Gb of memory should be enough for most users; 4Gb should suffice for users with large images." [:link:](http://www.itksnap.org/pmwiki/pmwiki.php?n=Documentation.HardwareRequirements#:~:text=Memory%20usage%20in%20SNAP%20is,for%20a%20512%20cubed%20image.)
+* Operating System: ITK-SNAP binaries are distributed for Linux (32 and 64 bit, [itksnap-4.0.2-20230925-Linux-gcc64 (701MB)]), Windows ([itksnap-4.2.0-20240422-win64-AMD64]), and MacOS Leopard (32 bit).
+
+### Installation
+* In Ubuntu 22.04 x64 GNU/Linux
+```
+FILENAME=itksnap-nightly-rel_4.0-Linux-gcc64.tar.gz  #Length: 200943059 (192M) [application/x-gzip]
+cd ~/Downloads/
+mkdir -p itksnap && cd itksnap
+wget https://sourceforge.net/projects/itk-snap/files/itk-snap/Nightly/$FILENAME/download -O $FILENAME
+tar -xvzf $FILENAME
+```
 
 ## Medical imaging data in DICOM and nifti formats
 
