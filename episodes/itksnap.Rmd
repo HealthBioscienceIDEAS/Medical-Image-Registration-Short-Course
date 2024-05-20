@@ -38,11 +38,10 @@ wget https://sourceforge.net/projects/itk-snap/files/itk-snap/Nightly/$FILENAME/
 tar -xvzf $FILENAME
 ```
 
-## Medical imaging data in DICOM and nifti formats
-
-### Introduction 
+## Medical Imaging Data 
 In these exercises we will be working with real-world medical imaging data from the HNSCC collection on The Cancer Imaging Archive and the Cancer Imaging Archive (TCIA).
 
+### Data resources
 The data we are using comes from the HNSCC collection on The Cancer Imaging Archive [:link:](https://wiki.cancerimagingarchive.net/display/Public/HNSCC).
 This is a collection of data from several hundred subjects who underwent radiotherapy for
 head and neck cancer and includes the CT scans used to plan their radiotherapy as well as
