@@ -40,6 +40,121 @@ tar -xvzf $FILENAME
 
 ## Medical imaging data in DICOM and nifti formats
 
+### Introduction 
+In these exercises we will be working with real-world medical imaging data from the HNSCC collection on The Cancer Imaging Archive and the Cancer Imaging Archive (TCIA).
+
+The data we are using comes from the HNSCC collection on The Cancer Imaging Archive [:link:](https://wiki.cancerimagingarchive.net/display/Public/HNSCC).
+This is a collection of data from several hundred subjects who underwent radiotherapy for
+head and neck cancer and includes the CT scans used to plan their radiotherapy as well as
+other radiotherapy and imaging data. The scans we are using have been defaced (had the
+facial details blurred) prior to sharing them with you for these exercises to help ensure the
+individuals cannot be reidentified. 
+
+The Cancer Imaging Archive (TCIA) is a resource of public datasets hosts a large archive of medical images of cancer accessible for public download. 
+Data may require extensive cleaning and pre-processing before it is suitable to be used.
+
+Notes: 
+1. the screenshots in this document were generated before the defacing had been performed.
+2. When using open datasets that contain images of humans, such as those from TCIA, for your
+own research, you will still need to get ethical approval (as you do for any non-open
+datasets you use) – this can usually be obtained from the local ethics committee (both
+Medical Physics and Computer Science have their own local ethics committee) or from UCL
+central ethics if your department does not have one.
+3. Although there are many formats that medical imaging data can come
+in, we are going to focus on DICOM and nifti as they are two of the most common formats.
+Most data that comes from a hospital will be in DICOM format, whereas nifti is a very
+popular format in the medical image analysis community.
+
+
+### DICOM format
+The data is available on moodle as a zip file, `data_for_reg_exercises_4.zip`. 
+This contains data from two subjects, with a CT scan in DICOM format for subject 1 and a CT scan in nifti format for subject 2. 
+
+DICOM images typically have a separate file for every slice. If you look at the data for subject
+1 you will see there are 123 individual files corresponding to 123 slices in the volume. 
+In addition to the image data for each slice, each file contains a header which can contain an
+extensive amount of extra information relating to the scan and subject. 
+In a clinical setting this will include patient identifiable information such as their name, address, and other relevant details. 
+Such information should be removed before the data is transferred from the clinical network for use in research. 
+If you ever discover patient identifiable information in the header of data you are using you should immediately alert your supervisor, manager or collaborator
+
+The majority of the information in the DICOM header is not directly useful for typical image processing and analysis tasks. 
+Furthermore, there are complicated ‘links’ (provided by unique identifiers, UIDs) between the DICOM headers of different files belonging to thesame scan or subject, which together with storing separate slices as separate files, makes working directly with DICOM rather cumbersome (at least if you want to do it correctly!).
+Therefore, a common first step of any image processing pipeline is to convert the DICOM image to a more suitable format such as nifti. 
+Generally, you will only convert images back to DICOM if you need to import them into a clinical system that only works with DICOM.
+
+Notes.
+1. Converting images back to DICOM such that they are correctly interpreted by a clinical system can be very tricky and requires a good understanding of the DICOM standard. More information on the DICOM standard can be found here: https://www.dicomstandard.org
+
+### NifTi format
+The Neuroimaging Informatics Technology Initiative (NIfTI) image format are usually stored as a single file containing the imaging data and header information.
+It also is possible to store the header and image data in separate files but this is not very common.
+
+There are actually two formats for nifti files, nifti-1 and nifti-2, with the later allowing for very large images. 
+However, the formats are very similar, and the header contains the same info (but some of it stored slightly differently). 
+They can be worked with and manipulated in the same way, and it is only when loading and saving the files (which is handled by NiBabel’s functions) that a distinction really needs to be made. 
+The nifti header contains much less information than DICOM, but does include all the key information required for interpreting, manipulating, and processing the image. 
+
+During these exercises you will learn about some of the key information stored in the nifti header, but for more information see: https://brainder.org/2012/09/23/the-nifti-file-format/ and https://brainder.org/2015/04/03/the-nifti-2-file-format/.
+
+## Viewing data
+
+You can include figures generated from R Markdown:
+
+```{r pyramid, fig.alt = "pie chart illusion of a pyramid", fig.cap = "Sun arise each and every morning"}
+pie(
+  c(Sky = 78, "Sunny side of pyramid" = 17, "Shady side of pyramid" = 5), 
+  init.angle = 315, 
+  col = c("deepskyblue", "yellow", "yellow3"), 
+  border = FALSE
+)
+```
+Or you can use pandoc markdown for static figures with the following syntax:
+
+`![optional caption that appears below the figure](figure url){alt='alt text for
+accessibility purposes'}`
+
+![You belong in The Carpentries!](https://raw.githubusercontent.com/carpentries/logo/master/Badge_Carpentries.svg){alt='Blue Carpentries hex person logo with no text.'}
+
+
+## Converting data
+
+One of our episodes contains $\LaTeX$ equations when describing how to create
+dynamic reports with {knitr}, so we now use mathjax to describe this:
+
+`$\alpha = \dfrac{1}{(1 - \beta)^2}$` becomes: $\alpha = \dfrac{1}{(1 - \beta)^2}$
+
+Cool, right?
+
+::::::::::::::::::::::::::::::::::::: keypoints 
+
+- Use `.md` files for episodes when you want static content
+- Use `.Rmd` files for episodes when you need to generate output
+- Run `sandpaper::check_lesson()` to identify any issues with your lesson
+- Run `sandpaper::build_lesson()` to preview your lesson locally
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+## Modifyiing data
+
+...
+
+
+## References 
+
+http://www.itksnap.org/docs/viewtutorial.php 
+
+The NiBabel documentation also contains some useful information and tutorials for working with nifti images and understanding world coordinate systems and radiological vs neurological view.
+https://nipy.org/nibabel/nifti_images.html
+https://nipy.org/nibabel/coordinate_systems.html
+https://nipy.org/nibabel/neuro_radio_conventions.html
+
+
+
+
+## Template section
+
 This is a lesson created via The Carpentries Workbench. It is written in
 [Pandoc-flavored Markdown][pandoc] for static files (with extension `.md`) and
 [R Markdown][r-markdown] for dynamic files that can render code into output
@@ -93,45 +208,5 @@ You can add a line with at least three colons and a `solution` tag.
 :::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Viewing data
 
-You can include figures generated from R Markdown:
-
-```{r pyramid, fig.alt = "pie chart illusion of a pyramid", fig.cap = "Sun arise each and every morning"}
-pie(
-  c(Sky = 78, "Sunny side of pyramid" = 17, "Shady side of pyramid" = 5), 
-  init.angle = 315, 
-  col = c("deepskyblue", "yellow", "yellow3"), 
-  border = FALSE
-)
-```
-Or you can use pandoc markdown for static figures with the following syntax:
-
-`![optional caption that appears below the figure](figure url){alt='alt text for
-accessibility purposes'}`
-
-![You belong in The Carpentries!](https://raw.githubusercontent.com/carpentries/logo/master/Badge_Carpentries.svg){alt='Blue Carpentries hex person logo with no text.'}
-
-## Converting data
-
-One of our episodes contains $\LaTeX$ equations when describing how to create
-dynamic reports with {knitr}, so we now use mathjax to describe this:
-
-`$\alpha = \dfrac{1}{(1 - \beta)^2}$` becomes: $\alpha = \dfrac{1}{(1 - \beta)^2}$
-
-Cool, right?
-
-::::::::::::::::::::::::::::::::::::: keypoints 
-
-- Use `.md` files for episodes when you want static content
-- Use `.Rmd` files for episodes when you need to generate output
-- Run `sandpaper::check_lesson()` to identify any issues with your lesson
-- Run `sandpaper::build_lesson()` to preview your lesson locally
-
-::::::::::::::::::::::::::::::::::::::::::::::::
-
-
-## Modifyiing data
-
-http://www.itksnap.org/docs/viewtutorial.php 
 
