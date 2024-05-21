@@ -6,37 +6,19 @@ exercises: 2
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- How to understand volumetric medical data in ITK-SNAP?
+- How to understand and visualise volumetric medical data in ITK-SNAP?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Getting started with ITK-SNAP
 - Medical imaging data in DICOM and nifti formats
+- Getting started with ITK-SNAP
 - Viewing data
 - Converting data
 - Modifyiing data
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
-
-## Getting Started with ITK-SNAP
-### History
-ITK-SNAP started in 1999 with SNAP (SNake Automatic Partitioning) and then developed by Paul Yushkevich with the guidance of Guido Gerig.
-
-### Hardware Requirements
-* Memory: "Overall 2Gb of memory should be enough for most users; 4Gb should suffice for users with large images." [:link:](http://www.itksnap.org/pmwiki/pmwiki.php?n=Documentation.HardwareRequirements#:~:text=Memory%20usage%20in%20SNAP%20is,for%20a%20512%20cubed%20image.)
-* Operating System: ITK-SNAP binaries are distributed for Linux (32 and 64 bit, [itksnap-4.0.2-20230925-Linux-gcc64 (701MB)]), Windows ([itksnap-4.2.0-20240422-win64-AMD64]), and MacOS Leopard (32 bit).
-
-### Installation
-* In Ubuntu 22.04 x64 GNU/Linux
-```
-FILENAME=itksnap-nightly-rel_4.0-Linux-gcc64.tar.gz  #Length: 200943059 (192M) [application/x-gzip]
-cd ~/Downloads/
-mkdir -p itksnap && cd itksnap
-wget https://sourceforge.net/projects/itk-snap/files/itk-snap/Nightly/$FILENAME/download -O $FILENAME
-tar -xvzf $FILENAME
-```
 
 ## Medical Imaging Data 
 In these exercises we will be working with real-world medical imaging data from the HNSCC collection on The Cancer Imaging Archive and the Cancer Imaging Archive (TCIA).
@@ -96,48 +78,80 @@ The nifti header contains much less information than DICOM, but does include all
 
 During these exercises you will learn about some of the key information stored in the nifti header, but for more information see: https://brainder.org/2012/09/23/the-nifti-file-format/ and https://brainder.org/2015/04/03/the-nifti-2-file-format/.
 
-## Viewing data
+## ITK-SNAP
 
-You can include figures generated from R Markdown:
+### Getting Started with ITK-SNAP
+#### History
+ITK-SNAP started in 1999 with SNAP (SNake Automatic Partitioning) and then developed by Paul Yushkevich with the guidance of Guido Gerig.
 
-```{r pyramid, fig.alt = "pie chart illusion of a pyramid", fig.cap = "Sun arise each and every morning"}
-pie(
-  c(Sky = 78, "Sunny side of pyramid" = 17, "Shady side of pyramid" = 5), 
-  init.angle = 315, 
-  col = c("deepskyblue", "yellow", "yellow3"), 
-  border = FALSE
-)
+#### Hardware Requirements
+* Memory: "Overall 2Gb of memory should be enough for most users; 4Gb should suffice for users with large images." [:link:](http://www.itksnap.org/pmwiki/pmwiki.php?n=Documentation.HardwareRequirements#:~:text=Memory%20usage%20in%20SNAP%20is,for%20a%20512%20cubed%20image.)
+* Operating System: ITK-SNAP binaries are distributed for Linux (32 and 64 bit, [itksnap-4.0.2-20230925-Linux-gcc64 (701MB)]), Windows ([itksnap-4.2.0-20240422-win64-AMD64]), and MacOS Leopard (32 bit).
+
+#### Installation
+* In Ubuntu 22.04 x64 GNU/Linux
 ```
-Or you can use pandoc markdown for static figures with the following syntax:
+FILENAME=itksnap-nightly-rel_4.0-Linux-gcc64.tar.gz  #Length: 200943059 (192M) [application/x-gzip]
+cd ~/Downloads/
+mkdir -p itksnap && cd itksnap
+wget https://sourceforge.net/projects/itk-snap/files/itk-snap/Nightly/$FILENAME/download -O $FILENAME
+tar -xvzf $FILENAME
+```
 
-`![optional caption that appears below the figure](figure url){alt='alt text for
-accessibility purposes'}`
-
-![You belong in The Carpentries!](https://raw.githubusercontent.com/carpentries/logo/master/Badge_Carpentries.svg){alt='Blue Carpentries hex person logo with no text.'}
-
-
-## Converting data
-
-One of our episodes contains $\LaTeX$ equations when describing how to create
-dynamic reports with {knitr}, so we now use mathjax to describe this:
-
-`$\alpha = \dfrac{1}{(1 - \beta)^2}$` becomes: $\alpha = \dfrac{1}{(1 - \beta)^2}$
-
-Cool, right?
-
-::::::::::::::::::::::::::::::::::::: keypoints 
-
-- Use `.md` files for episodes when you want static content
-- Use `.Rmd` files for episodes when you need to generate output
-- Run `sandpaper::check_lesson()` to identify any issues with your lesson
-- Run `sandpaper::build_lesson()` to preview your lesson locally
-
-::::::::::::::::::::::::::::::::::::::::::::::::
+### ITK-SNAP application
+ITK-SNAP application shows three orthogonal slices and a fourth window for three-dimensional view segmentation. 
+![ITK-SNAP main window](../fig/itk-snap-main-window.svg)
 
 
-## Modifyiing data
 
-...
+
+
+## Viewing and understanding DICOM data
+
+### * Opening and Viewing DICOM images
+
+### * Navigating DICOM images
+
+### * Converting DICOM images to nifti
+
+
+
+
+
+
+## Viewing and understanding the nifti header with NiBabel
+
+### * Loading images
+
+### * Header features
+
+### * qform
+
+### * coordinate system
+
+
+
+
+
+
+
+## Modifying nifti images and headers with Nibabel
+
+### * Using float64 data type
+
+### * 16-bit integers vs 32 bit floats
+
+### * cropping data
+
+### * updating the affine transforms
+
+### * cropped and aligned image
+
+### * affine registration
+
+
+
+
 
 
 ## References 
@@ -148,64 +162,5 @@ The NiBabel documentation also contains some useful information and tutorials fo
 https://nipy.org/nibabel/nifti_images.html
 https://nipy.org/nibabel/coordinate_systems.html
 https://nipy.org/nibabel/neuro_radio_conventions.html
-
-
-
-
-## Template section
-
-This is a lesson created via The Carpentries Workbench. It is written in
-[Pandoc-flavored Markdown][pandoc] for static files (with extension `.md`) and
-[R Markdown][r-markdown] for dynamic files that can render code into output
-(with extension `.Rmd`). Please refer to the [Introduction to The Carpentries
-Workbench][carpentries-workbench] for full documentation.
-
-What you need to know is that there are three sections required for a valid
-Carpentries lesson template:
-
- 1. `questions` are displayed at the beginning of the episode to prime the
-    learner for the content.
- 2. `objectives` are the learning objectives for an episode displayed with
-    the questions.
- 3. `keypoints` are displayed at the end of the episode to reinforce the
-    objectives.
-
-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: instructor
-
-Inline instructor notes can help inform instructors of timing challenges
-associated with the lessons. They appear in the "Instructor View"
-
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::: challenge 
-
-## Challenge 1: Can you do it?
-
-What is the output of this command?
-
-```python
-paste("This", "new", "lesson", "looks", "good")
-```
-
-:::::::::::::::::::::::: solution 
-
-## Output
- 
-```output
-[1] "This new lesson looks good"
-```
-
-:::::::::::::::::::::::::::::::::
-
-
-## Challenge 2: how do you nest solutions within challenge blocks?
-
-:::::::::::::::::::::::: solution 
-
-You can add a line with at least three colons and a `solution` tag.
-
-:::::::::::::::::::::::::::::::::
-::::::::::::::::::::::::::::::::::::::::::::::::
-
 
 
