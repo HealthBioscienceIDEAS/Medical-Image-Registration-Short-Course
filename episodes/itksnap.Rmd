@@ -43,14 +43,13 @@ We recomend to focus on exhale/inhale breath hold CT (BHCT) Dicoms which belog t
 * The BHCT scans for CT-PET-VI-02 & CT-PET-VI-03 show very little motion between inhale and exhale
 * The BHCT scans for CT-PET-VI-05 have a different number of slices between the inhale and exhale
 
-### Notes 
-1. the screenshots in this document were generated before the defacing had been performed.
-2. When using open datasets that contain images of humans, such as those from TCIA, for your
+#### Notes 
+1. When using open datasets that contain images of humans, such as those from TCIA, for your
 own research, you will still need to get ethical approval (as you do for any non-open
 datasets you use) – this can usually be obtained from the local ethics committee (both
 Medical Physics and Computer Science have their own local ethics committee) or from UCL
 central ethics if your department does not have one.
-3. Although there are many formats that medical imaging data can come
+2. Although there are many formats that medical imaging data can come
 in, we are going to focus on DICOM and nifti as they are two of the most common formats.
 Most data that comes from a hospital will be in DICOM format, whereas nifti is a very
 popular format in the medical image analysis community.
