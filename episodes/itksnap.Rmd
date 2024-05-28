@@ -24,6 +24,8 @@ exercises: 2
 In these exercises we will be working with real-world medical imaging data from the HNSCC collection on The Cancer Imaging Archive and the Cancer Imaging Archive (TCIA).
 
 ### Data resources
+
+#### the HNSCC collection on The Cancer Imaging Archive
 The data we are using comes from the HNSCC collection on The Cancer Imaging Archive [:link:](https://wiki.cancerimagingarchive.net/display/Public/HNSCC).
 This is a collection of data from several hundred subjects who underwent radiotherapy for
 head and neck cancer and includes the CT scans used to plan their radiotherapy as well as
@@ -31,10 +33,17 @@ other radiotherapy and imaging data. The scans we are using have been defaced (h
 facial details blurred) prior to sharing them with you for these exercises to help ensure the
 individuals cannot be reidentified. 
 
+#### The Cancer Imaging Archive (TCIA)
 The Cancer Imaging Archive (TCIA) is a resource of public datasets hosts a large archive of medical images of cancer accessible for public download. 
 Data may require extensive cleaning and pre-processing before it is suitable to be used.
 
-Notes: 
+#### CT-vs-PET-Ventilation-Imaging 
+CT Ventilation as a Functional Imaging Modality for Lung Cancer Radiotherapy [:link:](https://www.cancerimagingarchive.net/collection/ct-vs-pet-ventilation-imaging/)
+We recomend to focus on exhale/inhale breath hold CT (BHCT) Dicoms which belog to: 
+* The BHCT scans for CT-PET-VI-02 & CT-PET-VI-03 show very little motion between inhale and exhale
+* The BHCT scans for CT-PET-VI-05 have a different number of slices between the inhale and exhale
+
+### Notes 
 1. the screenshots in this document were generated before the defacing had been performed.
 2. When using open datasets that contain images of humans, such as those from TCIA, for your
 own research, you will still need to get ethical approval (as you do for any non-open
