@@ -129,9 +129,9 @@ Open ITK-SNAP application and the directory where you see "3.000000-CT Lung  3.0
 
 ## Viewing and understanding the nifti header with NiBabel
 
-
-### Dependencies
+### Installing Dependencies
 Installing python virtual environment with dependencies (e.g., nibabel, etc).
+See further instructions [here](https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course/tree/main/_dependencies). 
 
 * Using conda
 ```
