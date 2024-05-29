@@ -54,3 +54,6 @@ renv/sandbox # OPTIONAL
 
 ## vim temp files
 *.swp
+
+## .nii.gz
+*.nii.gz
