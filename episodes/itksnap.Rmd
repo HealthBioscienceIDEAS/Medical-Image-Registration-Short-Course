@@ -152,7 +152,7 @@ We are using DICOM data from "3.000000-CT Lung  3.0  B31f-61322  [175 items, tot
 
 * Open DICOM images  
 
-Open ITK-SNAP application and the directory where you see "3.000000-CT Lung  3.0  B31f-61322" where you see `1-*.dcm` files and then drag `1-001.dcm` to ITK application. 
+Open ITK-SNAP application and the directory where you see "3.000000-CT Lung  3.0  B31f-61322" where you see `1-*.dcm` files, drag directory and drop it into ITK application,  select File format to `DICOM Image Series`, and clid `Next` and `Finish`
 ![ITK-SNAP main window](../fig/itk-snap-viewing-dicoms.svg)
 
 ### Navigating DICOM images
