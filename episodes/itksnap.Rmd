@@ -114,13 +114,16 @@ ITK-SNAP application shows three orthogonal slices and a fourth window for three
 ## Viewing and understanding DICOM data
 
 We are using DICOM data from "3.000000-CT Lung  3.0  B31f-61322  [175 items, totalling 92.4 MB]".
+
 ### Opening and Viewing DICOM images
-* Open DICOM images
+
+* Open DICOM images  
+
 Open ITK-SNAP application and the directory where you see "3.000000-CT Lung  3.0  B31f-61322" where you see `1-*.dcm` files and then drag `1-001.dcm` to ITK application. 
 ![ITK-SNAP main window](../fig/itk-snap-viewing-dicoms.svg)
 
 * View DICOM images
-  * As separate image
+  * Two or N DICOMS as separate image(s)
   * Overlays
   * Info
   * Color Map
