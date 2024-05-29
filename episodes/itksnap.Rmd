@@ -166,9 +166,9 @@ Open ITK-SNAP application and the directory where you see "3.000000-CT Lung  3.0
 
 
 
-
-
 ## Viewing and understanding the nifti header with NiBabel
+We are going to use the python package [NiBabel](https://nipy.org/nibabel/) to work with `NifTI` images. 
+We recommend to check [documentation](https://nipy.org/nibabel/#documentation) for further deatils on using nibabel library.
 
 ### Installing Dependencies
 Installing python virtual environment with dependencies (e.g., nibabel, etc).
@@ -199,16 +199,93 @@ cd ~/_dependencies
 python3 -m pip install -r requirements.txt
 ```
 
-### * Loading images
+### Loading images
+1. Activate `mirVE` environment and open a python terminal under episodes path to run:
+```
+#conda activate mirVE
+import numpy as np
+import nibabel as nib
+niiX = nib.load("demo-data/CT_subject_X.nii.gz")
+```
 
-### * Header features
+2. `NifTI` file properties:
+```
+print(type(niiX))
+# <class 'nibabel.nifti1.Nifti1Image'>
+print(niiX.get_data_dtype())
+#float32
+niiX.shape
+# (512, 271, 156)
+niiX.affine
+#array([[ -0.9765625 ,  -0.        ,  -0.        , 250.        ],
+#       [ -0.        ,  -0.9765625 ,  -0.        , 136.        ],
+#       [  0.        ,   0.        ,   2.5       ,  21.90002441],
+#       [  0.        ,   0.        ,   0.        ,   1.        ]])
+```
 
-### * qform
+### Header features 
+```
+print(niiX.header)
+<class 'nibabel.nifti1.Nifti1Header'> object, endian='<'
+sizeof_hdr      : 348
+data_type       : b'          '
+db_name         : b'                  '
+extents         : 16384
+session_error   : 0
+regular         : b'r'
+dim_info        : 0
+dim             : [  3 512 271 156   1   1   1   1]
+intent_p1       : 0.0
+intent_p2       : 0.0
+intent_p3       : 0.0
+intent_code     : none
+datatype        : float32
+bitpix          : 32
+slice_start     : 0
+pixdim          : [1.        0.9765625 0.9765625 2.5       1.        1.        1.
+ 1.       ]
+vox_offset      : 0.0
+scl_slope       : nan
+scl_inter       : nan
+slice_end       : 0
+slice_code      : unknown
+xyzt_units      : 2
+cal_max         : 0.0
+cal_min         : 0.0
+slice_duration  : 0.0
+toffset         : 0.0
+glmax           : 0
+glmin           : 0
+descrip         : b'                                                                                '
+aux_file        : b'                        '
+qform_code      : unknown
+sform_code      : scanner
+quatern_b       : 0.0
+quatern_c       : 0.0
+quatern_d       : 0.0
+qoffset_x       : 0.0
+qoffset_y       : 0.0
+qoffset_z       : 0.0
+srow_x          : [ -0.9765625  -0.         -0.        250.       ]
+srow_y          : [ -0.         -0.9765625  -0.        136.       ]
+srow_z          : [ 0.        0.        2.5      21.900024]
+intent_name     : b'                '
+magic           : b'n+1'
+```
 
-### * coordinate system
+### qform   
+```
+print(niiX.get_qform())
+#[[0.9765625 0.        0.        0.       ]
+# [0.        0.9765625 0.        0.       ]
+# [0.        0.        2.5       0.       ]
+# [0.        0.        0.        1.       ]]
+```
 
-
-
+### coordinate system  
+The original DICOM images assume the world coordinate system is LPS (i.e. values increase when moving to the left, posterior, and superior).
+See [here](https://nipy.org/nibabel/dicom/dicom_orientation.html), if you obtained a similar affine transform from the DICOM headers.
+The values in the first two rows corresponding to the x and y dimensions would be the negative of those in the nifti header.
 
 
 
