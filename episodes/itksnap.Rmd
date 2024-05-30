@@ -164,7 +164,13 @@ Open ITK-SNAP application and the directory where you see "3.000000-CT Lung  3.0
 ### * Converting DICOM images to nifti
 
 
-
+* Using [dicom2nifti](https://github.com/icometrix/dicom2nifti)
+```
+from pathlib import Path 
+import dicom2nifti 
+dicoms = Path("~/3_000000-CT_Lung_30_B31f-61322")
+dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=True)
+```
 
 ## Viewing and understanding the nifti header with NiBabel
 We are going to use the python package [NiBabel](https://nipy.org/nibabel/) to work with `NifTI` images. 
@@ -180,8 +186,6 @@ conda create -n "mirVE" python=3.11 pip -c conda-forge
 conda activate mirVE
 cd ~/_dependencies
 pip install -r requirements.txt
-conda list -n mirVE #to check installed packages
-conda remove -n mirVE --all #in case you want to remove it
 ```
 * Using python virtual environment
 ```
@@ -203,83 +207,87 @@ python3 -m pip install -r requirements.txt
 1. Activate `mirVE` environment and open a python terminal under episodes path to run:
 ```
 #conda activate mirVE
+#python
+
 import numpy as np
 import nibabel as nib
-niiX = nib.load("demo-data/CT_subject_X.nii.gz")
+nii3ct = nib.load("data/3_ct_lung__30__b31f_int16.nii.gz")
 ```
 
 2. `NifTI` file properties:
 ```
-print(type(niiX))
+print(type(nii3ct))
+
 # <class 'nibabel.nifti1.Nifti1Image'>
-print(niiX.get_data_dtype())
-#float32
-niiX.shape
-# (512, 271, 156)
-niiX.affine
-#array([[ -0.9765625 ,  -0.        ,  -0.        , 250.        ],
-#       [ -0.        ,  -0.9765625 ,  -0.        , 136.        ],
-#       [  0.        ,   0.        ,   2.5       ,  21.90002441],
-#       [  0.        ,   0.        ,   0.        ,   1.        ]])
+print(nii3ct.get_data_dtype())
+#int16
+nii3ct.shape
+# (512, 512, 175)
+nii3ct.affine
+#array([[  -0.9765625 ,    0.        ,    0.        ,  249.51171875],
+#       [  -0.        ,    0.9765625 ,    0.        ,  -33.01171875],
+#       [   0.        ,   -0.        ,    2.        , -553.5       ],
+#       [   0.        ,    0.        ,    0.        ,    1.        ]])
 ```
 
 ### Header features 
 ```
-print(niiX.header)
-<class 'nibabel.nifti1.Nifti1Header'> object, endian='<'
-sizeof_hdr      : 348
-data_type       : b'          '
-db_name         : b'                  '
-extents         : 16384
-session_error   : 0
-regular         : b'r'
-dim_info        : 0
-dim             : [  3 512 271 156   1   1   1   1]
-intent_p1       : 0.0
-intent_p2       : 0.0
-intent_p3       : 0.0
-intent_code     : none
-datatype        : float32
-bitpix          : 32
-slice_start     : 0
-pixdim          : [1.        0.9765625 0.9765625 2.5       1.        1.        1.
- 1.       ]
-vox_offset      : 0.0
-scl_slope       : nan
-scl_inter       : nan
-slice_end       : 0
-slice_code      : unknown
-xyzt_units      : 2
-cal_max         : 0.0
-cal_min         : 0.0
-slice_duration  : 0.0
-toffset         : 0.0
-glmax           : 0
-glmin           : 0
-descrip         : b'                                                                                '
-aux_file        : b'                        '
-qform_code      : unknown
-sform_code      : scanner
-quatern_b       : 0.0
-quatern_c       : 0.0
-quatern_d       : 0.0
-qoffset_x       : 0.0
-qoffset_y       : 0.0
-qoffset_z       : 0.0
-srow_x          : [ -0.9765625  -0.         -0.        250.       ]
-srow_y          : [ -0.         -0.9765625  -0.        136.       ]
-srow_z          : [ 0.        0.        2.5      21.900024]
-intent_name     : b'                '
-magic           : b'n+1'
+print(nii3ct.header)
+
+#<class 'nibabel.nifti1.Nifti1Header'> object, endian='<'
+#sizeof_hdr      : 348
+#data_type       : b''
+#db_name         : b''
+#extents         : 0
+#session_error   : 0
+#regular         : b''
+#dim_info        : 0
+#dim             : [  3 512 512 175   1   1   1   1]
+#intent_p1       : 0.0
+#intent_p2       : 0.0
+#intent_p3       : 0.0
+#intent_code     : none
+#datatype        : int16
+#bitpix          : 16
+#slice_start     : 0
+#pixdim          : [-1.         0.9765625  0.9765625  2.         1.         1.
+#  1.         1.       ]
+#vox_offset      : 0.0
+#scl_slope       : nan
+#scl_inter       : nan
+#slice_end       : 0
+#slice_code      : unknown
+#xyzt_units      : 2
+#cal_max         : 0.0
+#cal_min         : 0.0
+#slice_duration  : 0.0
+#toffset         : 0.0
+#glmax           : 0
+#glmin           : 0
+#descrip         : b''
+#aux_file        : b''
+#qform_code      : unknown
+#sform_code      : aligned
+#quatern_b       : 0.0
+#quatern_c       : 1.0
+#quatern_d       : 0.0
+#qoffset_x       : 249.51172
+#qoffset_y       : -33.01172
+#qoffset_z       : -553.5
+#srow_x          : [ -0.9765625   0.          0.        249.51172  ]
+#srow_y          : [ -0.          0.9765625   0.        -33.01172  ]
+#srow_z          : [   0.    -0.     2.  -553.5]
+#intent_name     : b''
+#magic           : b'n+1'
 ```
 
 ### qform   
 ```
-print(niiX.get_qform())
-#[[0.9765625 0.        0.        0.       ]
-# [0.        0.9765625 0.        0.       ]
-# [0.        0.        2.5       0.       ]
-# [0.        0.        0.        1.       ]]
+print(nii3ct.get_qform())
+#[[  -0.9765625     0.            0.          249.51171875]
+# [   0.            0.9765625     0.          -33.01171875]
+# [   0.            0.            2.         -553.5       ]
+# [   0.            0.            0.            1.        ]]
 ```
 
 ### coordinate system  

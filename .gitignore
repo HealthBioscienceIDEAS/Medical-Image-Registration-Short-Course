@@ -1,3 +1,9 @@
+## vim temp files
+*.swp
+
+## .nii.gz
+*.nii.gz
+
 # sandpaper files
 episodes/*html
 site/*
@@ -52,8 +58,3 @@ po/*~
 # renv sandbox needed for renv version 0.16.0
 renv/sandbox # OPTIONAL
 
-## vim temp files
-*.swp
-
-## .nii.gz
-*.nii.gz
