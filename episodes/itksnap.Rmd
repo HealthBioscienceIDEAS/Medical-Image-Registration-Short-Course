@@ -211,7 +211,8 @@ python3 -m pip install -r requirements.txt
 
 import numpy as np
 import nibabel as nib
-nii3ct = nib.load("data/3_ct_lung__30__b31f_int16.nii.gz")
+import matplotlib.pyplot as plt
+nii3ct = nib.load("data/3_ct_lung__30__b31f.nii.gz")
 ```
 
 2. `NifTI` file properties:
@@ -224,6 +225,12 @@ print(nii3ct.get_data_dtype())
 nii3ct.shape
 # (512, 512, 175)
 nii3ct.affine
+## dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=True) # nii.gz
+#array([[  -0.9765625 ,   -0.        ,    0.        ,  249.51171875],
+#       [  -0.        ,   -0.9765625 ,    0.        ,  466.01171875],
+#       [   0.        ,    0.        ,    2.        , -553.5       ],
+#       [   0.        ,    0.        ,    0.        ,    1.        ]])
+## dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=False) # nii.gz
 #array([[  -0.9765625 ,    0.        ,    0.        ,  249.51171875],
 #       [  -0.        ,    0.9765625 ,    0.        ,  -33.01171875],
 #       [   0.        ,   -0.        ,    2.        , -553.5       ],
@@ -284,10 +291,17 @@ print(nii3ct.header)
 ### qform   
 ```
 print(nii3ct.get_qform())
+## dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=True) # nii.gz
 #[[  -0.9765625     0.            0.          249.51171875]
 # [   0.            0.9765625     0.          -33.01171875]
 # [   0.            0.            2.         -553.5       ]
 # [   0.            0.            0.            1.        ]]
+## dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=False) # nii.gz
+#[[  -0.9765625     0.            0.          249.51171875]
+# [   0.           -0.9765625     0.          466.01171875]
+# [   0.            0.            2.         -553.5       ]
+# [   0.            0.            0.            1.        ]]
+
 ```
 
 ### coordinate system  
@@ -295,6 +309,17 @@ The original DICOM images assume the world coordinate system is LPS (i.e. values
 See [here](https://nipy.org/nibabel/dicom/dicom_orientation.html), if you obtained a similar affine transform from the DICOM headers.
 The values in the first two rows corresponding to the x and y dimensions would be the negative of those in the nifti header.
 
+
+### Obtaining image pixel data
+```
+pixel_data=nii3ct.get_fdata()
+
+print(pixel_data.dtype, pixel_data.shape)
+#float64 (512, 512, 175)
+
+plt.imshow(pixel_data[:,:,140], cmap="gray"); plt.show()
+#launch plot window
+```
 
 
 
@@ -312,9 +337,12 @@ The values in the first two rows corresponding to the x and y dimensions would b
 
 ### * affine registration
 
+### Write NIfTI files
 
-
-
+```
+processed_nifti = nib.Nifti1Image(X_processed, nifti.affine)
+nib.save(processed_nifti, 'X_processed.nii.gz')
+```
 
 
 ## References 
