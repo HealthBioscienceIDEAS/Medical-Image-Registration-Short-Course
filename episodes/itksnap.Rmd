@@ -130,6 +130,13 @@ ITK-SNAP started in 1999 with SNAP (SNake Automatic Partitioning) and then devel
 * Operating System: ITK-SNAP binaries are distributed for Linux (32 and 64 bit, [itksnap-4.0.2-20230925-Linux-gcc64 (701MB)]), Windows ([itksnap-4.2.0-20240422-win64-AMD64]), and MacOS Leopard (32 bit).
 
 #### Installation
+
+*In Windows 11
+- Open the following link: http://www.itksnap.org/pmwiki/pmwiki.php
+- Click on 'Downloads' on top right corner. Select 'Windows Self-Install Package (64 bit)' of itksnap 4.2.x 
+- Follow the default settings of installation.
+
+
 * In Ubuntu 22.04 x64 GNU/Linux
 ```
 FILENAME=itksnap-nightly-rel_4.0-Linux-gcc64.tar.gz  #Length: 200943059 (192M) [application/x-gzip]
@@ -156,7 +163,22 @@ Open ITK-SNAP application and the directory where you see "3.000000-CT Lung  3.0
 ![ITK-SNAP main window](../fig/itk-snap-viewing-dicoms.svg)
 
 ### Navigating DICOM images
-  * Two or N DICOMS as separate image(s)
+
+Here, we provide instructions for handling multiple DICOM images, applying overlays, viewing image information, and using color maps in ITK-SNAP.
+
+#### 1. Loading Multiple DICOM Images as Separate Images
+
+1. **Open the First DICOM Series**:
+   - Follow the steps above to load and view the first DICOM series.
+
+2. **Open the Second DICOM image in a New Window**:
+   - Go to `File` > `New itksnap Window`.
+   - Select `Open DICOM Series` and choose the second DICOM series.
+   - This will open the second series in a separate ITK-SNAP window.
+   - This can be repeated for multiple DICOM series.
+
+
+
   * Overlays
   * Info
   * Color Map
