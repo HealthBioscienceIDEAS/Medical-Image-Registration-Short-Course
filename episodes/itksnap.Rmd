@@ -131,13 +131,13 @@ ITK-SNAP started in 1999 with SNAP (SNake Automatic Partitioning) and then devel
 
 #### Installation
 
-*In Windows 11
+##### Windows 11
 - Open the following link: http://www.itksnap.org/pmwiki/pmwiki.php
 - Click on 'Downloads' on top right corner. Select 'Windows Self-Install Package (64 bit)' of itksnap 4.2.x 
 - Follow the default settings of installation.
 
 
-* In Ubuntu 22.04 x64 GNU/Linux
+##### Ubuntu 22.04 x64 GNU/Linux
 ```
 FILENAME=itksnap-nightly-rel_4.0-Linux-gcc64.tar.gz  #Length: 200943059 (192M) [application/x-gzip]
 cd ~/Downloads/
@@ -215,7 +215,10 @@ Here, we provide instructions for handling multiple DICOM images, applying overl
 
 ### * Converting DICOM images to nifti
 
+#### Windows
+Navigate the ITK-snap by clicking 'File' --> 'Save image' --> rename image and choose format as 'NiFTI'
 
+#### Ubuntu
 * Using [dicom2nifti](https://github.com/icometrix/dicom2nifti)
 ```
 from pathlib import Path 
