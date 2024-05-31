@@ -178,10 +178,40 @@ Here, we provide instructions for handling multiple DICOM images, applying overl
    - This can be repeated for multiple DICOM series.
 
 
+#### 2. Applying Overlays
 
-  * Overlays
-  * Info
-  * Color Map
+1. **Load Primary Image**:
+   - Open your primary DICOM series as described above.
+
+2. **Load Overlay Image**:
+   - Go to `File` > `Add Another Image`.
+   - Select the image you want to use as an overlay. This could be another DICOM series or a previously saved segmentation.
+
+3. **Adjust Overlay Settings**:
+   - Go to the `Layers` panel.
+   - Right click on the second DICOM Series and adjust the opacity and blending settings to properly visualise the overlay on the primary image.
+
+
+#### 4. Viewing Image Information
+
+1. **Access Image Information**:
+   - Go to `Tools` > `Image Information`.
+   - A dialog box will appear displaying metadata and other relevant information about the loaded DICOM images.
+
+
+#### 5. Applying Color Maps
+
+1. **Load the Image**:
+   - Open the desired DICOM series.
+
+2. **Open Color Map Settings**:
+   - Go to `Tools` > `Color Maps Editor`.
+
+3. **Apply and Adjust Color Map**:
+   - Choose a predefined color map from the list or create a custom one.
+   - Adjust the intensity and transparency settings as needed to enhance the visualisation of the images.
+
+
 
 ### * Converting DICOM images to nifti
 
