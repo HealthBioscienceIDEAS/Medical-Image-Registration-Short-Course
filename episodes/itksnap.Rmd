@@ -485,7 +485,28 @@ print(nii3ct_float32.header)
 
 
 
-### * cropping data
+### cropping data
+
+* Read the image data from disk using `get_fdata`  and then create a new array containing a copy of the desired slices:
+```
+nii3ct_float32 = nib.load("data/3_ct_lung__30__b31f_float32.nii.gz")
+nii3ct_float32.set_data_dtype(np.float32)
+print(nii3ct_float32.get_data_dtype())
+#float32
+
+image_data=nii3ct_float32.get_fdata()
+print(image_data.dtype, image_data.shape)
+#float64 (512, 512, 175)
+
+#plt.imshow(image_data[:,:,100], cmap="gray"); plt.show()
+plt.imshow(image_data[:,:,:], cmap="gray"); plt.show()
+#launch plot window
+```
+
+
+
+
+
 
 ### * updating the affine transforms
 
@@ -502,12 +523,12 @@ nib.save(processed_nifti, 'X_processed.nii.gz')
 
 
 ## References 
-
-http://www.itksnap.org/docs/viewtutorial.php 
-
-The NiBabel documentation also contains some useful information and tutorials for working with nifti images and understanding world coordinate systems and radiological vs neurological view.
-https://nipy.org/nibabel/nifti_images.html
-https://nipy.org/nibabel/coordinate_systems.html
-https://nipy.org/nibabel/neuro_radio_conventions.html
+* NiBabel: "The NiBabel documentation also contains some useful information and tutorials for working with nifti images and understanding world coordinate systems and radiological vs neurological view."
+	* https://nipy.org/nibabel/nifti_images.html  
+	* https://nipy.org/nibabel/coordinate_systems.html  
+	* https://nipy.org/nibabel/neuro_radio_conventions.html  
+* ITK-SNAP:
+	* [Tutorial: Getting Started with ITK-SnAP](http://www.itksnap.org/docs/viewtutorial.php)
+	* [ITK-SNAP 3.x Training Class Final Program](http://itksnap.org/files/handout_201409.pdf)
 
 
