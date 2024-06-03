@@ -376,7 +376,7 @@ plt.imshow(pixel_data[:,:,140], cmap="gray"); plt.show()
 
 
 
-## Modifying nifti images and headers with Nibabel
+## Modifying `NifTi` images and headers with Nibabel
 
 ### Using float64 data type
 * The image data for a Nifti1Image object can be accessed using the `get_fdata` function.
@@ -599,10 +599,13 @@ nii3ct_float32_cropped_with_nibabel_slicer.affine
 #       [   0.        ,    0.        ,    0.        ,    1.        ]])
 ```
 
-### * cropped and aligned image
+### Cropped and aligned image
+* Manual image registration
+For manaual image registration in ITK-SNAP go to Tools > image registration
+![ITK-SNAP main window](../fig/itk-snap-image-manual-registration.png)
 
-### * affine registration
-
+* Automatic registration (affine)
+You can use [niftyreg](https://nipype.readthedocs.io/en/latest/api/generated/nipype.interfaces.niftyreg.reg.html), [Reg_aladin](http://cmictig.cs.ucl.ac.uk/wiki/index.php/Reg_aladin) or [DL methods](https://github.com/Project-MONAI/tutorials/tree/main/3d_registration).
 
 ## References 
 * NiBabel: "The NiBabel documentation also contains some useful information and tutorials for working with nifti images and understanding world coordinate systems and radiological vs neurological view."
