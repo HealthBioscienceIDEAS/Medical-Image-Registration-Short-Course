@@ -426,9 +426,64 @@ Note. We do not need to manually modify the type of the image data – setting t
 nib.save(nii3ct, 'data/3_ct_lung__30__b31f_float32.nii.gz')
 ```
 
+### 16-bit integers vs 32 bit floats
+
+The file size of `3_ct_lung__30__b31f_float32.nii.gz` is larger than  `3_ct_lung__30__b31f.nii.gz` (60 MB, 46 MB, respectively) because of the conversion from 16 bit integers to 32 bit floats. 
+Both images are compressed, but the compression is more efficient for the floating point image as it is not double than the original.
+
+* int16
+```
+nii3ct_int16 = nib.load("data/3_ct_lung__30__b31f.nii.gz")
+
+print(nii3ct_int16.get_data_dtype())
+#int16
+
+print(nii3ct_int16.header)
+#<class 'nibabel.nifti1.Nifti1Header'> object, endian='<'
+#sizeof_hdr      : 348
+#data_type       : b''
+#db_name         : b''
+#extents         : 0
+#session_error   : 0
+#regular         : b''
+#dim_info        : 0
+#dim             : [  3 512 512 175   1   1   1   1]
+#intent_p1       : 0.0
+#intent_p2       : 0.0
+#intent_p3       : 0.0
+#intent_code     : none
+#datatype        : int16
+#bitpix          : 16
+#...
+```
+* float32
+```
+nii3ct_float32 = nib.load("data/3_ct_lung__30__b31f_float32.nii.gz")
+
+print(nii3ct_float32.get_data_dtype())
+#float32
+
+print(nii3ct_float32.header)
+#<class 'nibabel.nifti1.Nifti1Header'> object, endian='<'
+#sizeof_hdr      : 348
+#data_type       : b''
+#db_name         : b''
+#extents         : 0
+#session_error   : 0
+#regular         : b''
+#dim_info        : 0
+#dim             : [  3 512 512 175   1   1   1   1]
+#intent_p1       : 0.0
+#intent_p2       : 0.0
+#intent_p3       : 0.0
+#intent_code     : none
+#datatype        : float32
+#bitpix          : 32
+#slice_start     : 0
+#...
+```
 
 
-### * 16-bit integers vs 32 bit floats
 
 ### * cropping data
 
