@@ -257,7 +257,7 @@ python3 -m pip install -r requirements.txt
 ```
 
 ### Loading images
-1. Activate `mirVE` environment and open a python terminal under episodes path to run:
+1. Activate `mirVE` environment and open a python terminal under `*/episodes` path to run:
 ```
 #conda activate mirVE
 #python
@@ -378,7 +378,55 @@ plt.imshow(pixel_data[:,:,140], cmap="gray"); plt.show()
 
 ## Modifying nifti images and headers with Nibabel
 
-### * Using float64 data type
+### Using float64 data type
+* The image data for a Nifti1Image object can be accessed using the `get_fdata` function.
+Loading the data from disk and cast it to float64 type before returning the data as a numpy array.
+```
+image_data=nii3ct.get_fdata()
+print(type(image_data))
+#<class 'numpy.ndarray'>
+print(image_data.dtype)
+#float64
+print(image_data.shape)
+#(512, 512, 175)
+```
+
+* Use the `set_data_dtype` function to set the data type to float32. 
+
+Casting it to float64 prevents any integer-related errors and problems in downstream processing when using the data read by Nibabel. 
+However, this does not change the type of the image stored on disk, which as we have seen is int16 for this image, and this could still lead to downstream errors or unexpected behaviour for any processing that works directly on the images stored on disk. 
+Therefore, we are going to convert the image saved on disk to a floating point image. 
+We are going to use 32 bit rather than 64 bit floating point, as this is usually sufficiently accurate. 
+```
+print(nii3ct.get_data_dtype())
+#int16
+nii3ct.set_data_dtype(np.float32)
+print(nii3ct.get_data_dtype())
+#float32
+```
+
+We are also going to set the qform to unknown as suggested above.
+This also updates the corresponding fields in the header. 
+Use the `set_qform` function to set the `qform` code. 
+To just set the code and not modify the other `qform` values in the header, the first input should be None. 
+It is not necessary to modify the other `qform` values as they should be ignored when the code is set to unknown.
+```
+
+nii3ct.set_qform(None, code = 'unknown')
+print(nii3ct.header)
+...
+qform_code      : unknown
+...
+
+```
+
+The floating point image can now be written to disk using the save function. 
+Note. We do not need to manually modify the type of the image data – setting the data type for the Nifti1Image object tells it which type to use when writing the image data to disk.
+```
+nib.save(nii3ct, 'data/3_ct_lung__30__b31f_float32.nii.gz')
+```
+
+
 
 ### * 16-bit integers vs 32 bit floats
 
