@@ -485,7 +485,7 @@ print(nii3ct_float32.header)
 
 
 
-### cropping data
+### Cropping data
 
 * Read the image data from disk using `get_fdata`  and then create a new array containing a copy of the desired slices:
 ```
@@ -498,28 +498,110 @@ image_data=nii3ct_float32.get_fdata()
 print(image_data.dtype, image_data.shape)
 #float64 (512, 512, 175)
 
-#plt.imshow(image_data[:,:,100], cmap="gray"); plt.show()
-plt.imshow(image_data[:,:,:], cmap="gray"); plt.show()
+plt.imshow(image_data[:,:,100], cmap="gray"); plt.show()
 #launch plot window
+
+image_data_cropped = image_data[103:381,160:340,:].copy()
+#x[sagittal], y[coronal], z[axial] #voxel units
+
+nii3ct_float32_cropped = nib.nifti1.Nifti1Image(image_data_cropped, nii3ct_float32.get_sform(), nii3ct_float32.header)
+nii3ct_float32_cropped.shape
+#(278, 180, 175)
+
+print(nii3ct_float32_cropped.header)
+#<class 'nibabel.nifti1.Nifti1Header'> object, endian='<'
+#sizeof_hdr      : 348
+#data_type       : b''
+#db_name         : b''
+#extents         : 0
+#session_error   : 0
+#regular         : b''
+#dim_info        : 0
+#dim             : [  3 278 180 175   1   1   1   1]
+#intent_p1       : 0.0
+#intent_p2       : 0.0
+#intent_p3       : 0.0
+#intent_code     : none
+#datatype        : float32
+#bitpix          : 32
+#slice_start     : 0
+#pixdim          : [1.        0.9765625 0.9765625 2.        1.        1.        1.
+# 1.       ]
+#vox_offset      : 0.0
+#scl_slope       : nan
+#scl_inter       : nan
+#slice_end       : 0
+#slice_code      : unknown
+#xyzt_units      : 2
+#cal_max         : 0.0
+#cal_min         : 0.0
+#slice_duration  : 0.0
+#toffset         : 0.0
+#glmax           : 0
+#glmin           : 0
+#descrip         : b''
+#aux_file        : b''
+#qform_code      : unknown
+#sform_code      : aligned
+#quatern_b       : 0.0
+#quatern_c       : 0.0
+#quatern_d       : 1.0
+#qoffset_x       : 249.51172
+#qoffset_y       : 466.01172
+#qoffset_z       : -553.5
+#srow_x          : [ -0.9765625  -0.          0.        249.51172  ]
+#srow_y          : [ -0.         -0.9765625   0.        466.01172  ]
+#srow_z          : [   0.     0.     2.  -553.5]
+#intent_name     : b''
+#magic           : b'n+1'
+
+
+nib.save(nii3ct_float32_cropped, "data/3_ct_lung__30__b31f_float32_cropped.nii.gz")
 ```
 
+* Settgin world coordinates of voxel (103, 160, 0) in the uncropped image.
+```
+cropped_origin = nii3ct_float32.affine@np.array([103,160,0,1])
+cropped_origin
+#array([ 148.92578125,  309.76171875, -553.5       ,    1.        ])
+
+aff_mat_cropped = nii3ct_float32_cropped.get_sform()
+print(aff_mat_cropped)
+#array([[  -0.9765625 ,   -0.        ,    0.        ,  249.51171875],
+#       [  -0.        ,   -0.9765625 ,    0.        ,  466.01171875],
+#       [   0.        ,    0.        ,    2.        , -553.5       ],
+#       [   0.        ,    0.        ,    0.        ,    1.        ]])
+
+aff_mat_cropped[:, 3] = cropped_origin
+print(aff_mat_cropped)
+#[[  -0.9765625    -0.            0.          148.92578125]
+# [  -0.           -0.9765625     0.          309.76171875]
+# [   0.            0.            2.         -553.5       ]
+# [   0.            0.            0.            1.        ]]
 
 
+nii3ct_float32_cropped.set_sform(aff_mat_cropped)
+nii3ct_float32_cropped.affine
+#array([[  -0.9765625 ,   -0.        ,    0.        ,  148.92578125],
+#       [  -0.        ,   -0.9765625 ,    0.        ,  309.76171875],
+#       [   0.        ,    0.        ,    2.        , -553.5       ],
+#       [   0.        ,    0.        ,    0.        ,    1.        ]])
 
-
-
-### * updating the affine transforms
+nib.save(nii3ct_float32_cropped, "data/3_ct_lung__30__b31f_float32_cropped_affine.nii.gz")
+```
+* updating the affine transforms with `nibabel.slicer`
+```
+nii3ct_float32_cropped_with_nibabel_slicer = nii3ct_float32.slicer[103:381,160:340,:]
+nii3ct_float32_cropped_with_nibabel_slicer.affine
+#array([[  -0.9765625 ,    0.        ,    0.        ,  148.92578125],
+#       [   0.        ,   -0.9765625 ,    0.        ,  309.76171875],
+#       [   0.        ,    0.        ,    2.        , -553.5       ],
+#       [   0.        ,    0.        ,    0.        ,    1.        ]])
+```
 
 ### * cropped and aligned image
 
 ### * affine registration
-
-### Write NIfTI files
-
-```
-processed_nifti = nib.Nifti1Image(X_processed, nifti.affine)
-nib.save(processed_nifti, 'X_processed.nii.gz')
-```
 
 
 ## References 
