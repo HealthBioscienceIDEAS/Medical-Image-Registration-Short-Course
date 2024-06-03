@@ -21,24 +21,12 @@ exercises: 2
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Medical Imaging Data 
-In these exercises we will be working with real-world medical imaging data from the HNSCC collection on The Cancer Imaging Archive and the Cancer Imaging Archive (TCIA).
+In these exercises we will be working with real-world medical imaging data from the Cancer Imaging Archive (TCIA).
 
 ### Data resources
 
-#### the HNSCC collection on The Cancer Imaging Archive
-The data we are using comes from the HNSCC collection on The Cancer Imaging Archive [:link:](https://wiki.cancerimagingarchive.net/display/Public/HNSCC).
-This is a collection of data from several hundred subjects who underwent radiotherapy for
-head and neck cancer and includes the CT scans used to plan their radiotherapy as well as
-other radiotherapy and imaging data. The scans we are using have been defaced (had the
-facial details blurred) prior to sharing them with you for these exercises to help ensure the
-individuals cannot be reidentified. 
-
-#### The Cancer Imaging Archive (TCIA)
-The Cancer Imaging Archive (TCIA) is a resource of public datasets hosts a large archive of medical images of cancer accessible for public download. 
-Data may require extensive cleaning and pre-processing before it is suitable to be used.
-
 #### CT-vs-PET-Ventilation-Imaging 
-CT Ventilation as a Functional Imaging Modality for Lung Cancer Radiotherapy [:link:](https://www.cancerimagingarchive.net/collection/ct-vs-pet-ventilation-imaging/)
+CT Ventilation as a Functional Imaging Modality for Lung Cancer Radiotherapy from [TCIA](https://www.cancerimagingarchive.net/collection/ct-vs-pet-ventilation-imaging/).
 We recomend to focus on exhale/inhale breath hold CT (BHCT) Dicoms which belog to: 
 * The BHCT scans for CT-PET-VI-02 & CT-PET-VI-03 show very little motion between inhale and exhale
 * The BHCT scans for CT-PET-VI-05 have a different number of slices between the inhale and exhale
@@ -75,6 +63,17 @@ Data paths look like these:
     └── 8.000000-RespLow  2.0  B30s  80  Ex - 100  In-16454
 ```
 
+#### the HNSCC collection on The Cancer Imaging Archive
+The data we are using comes from the HNSCC collection on [The Cancer Imaging Archive](https://wiki.cancerimagingarchive.net/display/Public/HNSCC).
+This is a collection of data from several hundred subjects who underwent radiotherapy for
+head and neck cancer and includes the CT scans used to plan their radiotherapy as well as
+other radiotherapy and imaging data. The scans we are using have been defaced (had the
+facial details blurred) prior to sharing them with you for these exercises to help ensure the
+individuals cannot be reidentified. 
+
+#### The Cancer Imaging Archive (TCIA)
+The Cancer Imaging Archive (TCIA) is a resource of public datasets hosts a large archive of medical images of cancer accessible for public download. 
+Data may require extensive cleaning and pre-processing before it is suitable to be used.
 
 #### Notes 
 1. When using open datasets that contain images of humans, such as those from TCIA, for your
@@ -87,26 +86,23 @@ in, we are going to focus on DICOM and nifti as they are two of the most common 
 Most data that comes from a hospital will be in DICOM format, whereas nifti is a very
 popular format in the medical image analysis community.
 
-
 ### DICOM format
-The data is available on moodle as a zip file, `data_for_reg_exercises_4.zip`. 
-This contains data from two subjects, with a CT scan in DICOM format for subject 1 and a CT scan in nifti format for subject 2. 
+DICOM images typically have a separate file for every slice. 
+If you look at the data `3.000000-CT Lung  3.0  B31f-61322` you will see there are 175 individual files corresponding to 175 slices in the volume. 
+In addition to the image data for each slice, each file contains a header which can contain an extensive amount of extra information relating to the scan and subject. 
 
-DICOM images typically have a separate file for every slice. If you look at the data for subject
-1 you will see there are 123 individual files corresponding to 123 slices in the volume. 
-In addition to the image data for each slice, each file contains a header which can contain an
-extensive amount of extra information relating to the scan and subject. 
 In a clinical setting this will include patient identifiable information such as their name, address, and other relevant details. 
 Such information should be removed before the data is transferred from the clinical network for use in research. 
 If you ever discover patient identifiable information in the header of data you are using you should immediately alert your supervisor, manager or collaborator
 
 The majority of the information in the DICOM header is not directly useful for typical image processing and analysis tasks. 
 Furthermore, there are complicated ‘links’ (provided by unique identifiers, UIDs) between the DICOM headers of different files belonging to thesame scan or subject, which together with storing separate slices as separate files, makes working directly with DICOM rather cumbersome (at least if you want to do it correctly!).
-Therefore, a common first step of any image processing pipeline is to convert the DICOM image to a more suitable format such as nifti. 
+Therefore, a common first step of any image processing pipeline is to convert the DICOM image to a more suitable format such as `NifTi`. 
 Generally, you will only convert images back to DICOM if you need to import them into a clinical system that only works with DICOM.
 
 Notes.
-1. Converting images back to DICOM such that they are correctly interpreted by a clinical system can be very tricky and requires a good understanding of the DICOM standard. More information on the DICOM standard can be found here: https://www.dicomstandard.org
+1. Converting images back to DICOM such that they are correctly interpreted by a clinical system can be very tricky and requires a good understanding of the DICOM standard. 
+More information on the DICOM standard can be found here: https://www.dicomstandard.org
 
 ### NifTi format
 The Neuroimaging Informatics Technology Initiative (NIfTI) image format are usually stored as a single file containing the imaging data and header information.
@@ -123,19 +119,19 @@ During these exercises you will learn about some of the key information stored i
 
 ### Getting Started with ITK-SNAP
 #### History
-ITK-SNAP started in 1999 with SNAP (SNake Automatic Partitioning) and then developed by Paul Yushkevich with the guidance of Guido Gerig.
+ITK-SNAP started in 1999 with SNAP (SNake Automatic Partitioning) and developed by Paul Yushkevich with the guidance of Guido Gerig. 
+ITK-SNAP is open-source software distributed under the GNU General Public License. 
+ITK-SNAP is written in C++ and it leverages the Insight Segmentation and Registration Toolkit (ITK) library. 
 
 #### Hardware Requirements
 * Memory: "Overall 2Gb of memory should be enough for most users; 4Gb should suffice for users with large images." [:link:](http://www.itksnap.org/pmwiki/pmwiki.php?n=Documentation.HardwareRequirements#:~:text=Memory%20usage%20in%20SNAP%20is,for%20a%20512%20cubed%20image.)
 * Operating System: ITK-SNAP binaries are distributed for Linux (32 and 64 bit, [itksnap-4.0.2-20230925-Linux-gcc64 (701MB)]), Windows ([itksnap-4.2.0-20240422-win64-AMD64]), and MacOS Leopard (32 bit).
 
 #### Installation
-
 ##### Windows 11
 - Open the following link: http://www.itksnap.org/pmwiki/pmwiki.php
 - Click on 'Downloads' on top right corner. Select 'Windows Self-Install Package (64 bit)' of itksnap 4.2.x 
 - Follow the default settings of installation.
-
 
 ##### Ubuntu 22.04 x64 GNU/Linux
 ```
@@ -213,13 +209,12 @@ Here, we provide instructions for handling multiple DICOM images, applying overl
 
 
 
-### * Converting DICOM images to nifti
+### Converting DICOM images to NifTi
 
-#### Windows
-Navigate the ITK-snap by clicking 'File' --> 'Save image' --> rename image and choose format as 'NiFTI'
+#### Using ITK-SNAP
+Navigate the ITK-snap by clicking 'File' --> 'Save image' --> rename image and choose format as 'NiFTI'.
 
-#### Ubuntu
-* Using [dicom2nifti](https://github.com/icometrix/dicom2nifti)
+#### Using [dicom2nifti](https://github.com/icometrix/dicom2nifti)
 ```
 from pathlib import Path 
 import dicom2nifti 
@@ -227,7 +222,7 @@ dicoms = Path("~/3_000000-CT_Lung_30_B31f-61322")
 dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=True)
 ```
 
-## Viewing and understanding the nifti header with NiBabel
+## Viewing and understanding the NifTi header with NiBabel
 We are going to use the python package [NiBabel](https://nipy.org/nibabel/) to work with `NifTI` images. 
 We recommend to check [documentation](https://nipy.org/nibabel/#documentation) for further deatils on using nibabel library.
 
