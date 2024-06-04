@@ -188,11 +188,14 @@ Here, we provide instructions for handling multiple DICOM images, applying overl
    - Select the image you want to use as an overlay. This could be another DICOM series or a previously saved segmentation.
 
 ![ITK-SNAP additional image](../fig/open-additional-image.png)
-![ITK-SNAP additional image](../fig/overlay-wizard.png)
+
+![ITK-SNAP overlay](../fig/overlay-wizard.png)
+
 3. **Adjust Overlay Settings**:
    - Go to the `Layers` panel.
    - Right click on the second DICOM Series and adjust the opacity and blending settings to properly visualise the overlay on the primary image.
-![ITK-SNAP additional image](../fig/layers-panel.png)
+
+![ITK-SNAP layers panel](../fig/layers-panel.png)
 
 
 #### 4. Viewing Image Information
