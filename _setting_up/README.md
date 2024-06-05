@@ -140,6 +140,7 @@ options(repos = c(
 carpentries = "https://carpentries.r-universe.dev/",
 CRAN = "https://cran.rstudio.com/"
 ))
+install.packages(c("remotes"), dep =TRUE)
 ```
 
 4. Enter the following command: 
