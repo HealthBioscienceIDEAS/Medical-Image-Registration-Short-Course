@@ -62,7 +62,7 @@ contact: 'team@carpentries.org'
 episodes: 
 - introduction.Rmd
 - itksnap.Rmd
-- Exc3_step_by_step.Rmd
+- Exc3Steps.Rmd
 
 # Information for Learners
 learners: 
