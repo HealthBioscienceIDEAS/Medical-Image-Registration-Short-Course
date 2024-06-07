@@ -1,22 +1,18 @@
 ---
-title: 'exercise3stepbystep'
+title: 'Demons Image Registration'
 teaching: 10
 exercises: 2
 ---
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- How to understand and visualise volumetric medical data in ITK-SNAP?
+- How to understand and visualise three image in one pane for demons image registration algorithm?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Medical imaging data in DICOM and nifti formats
-- Getting started with ITK-SNAP
-- Viewing data
-- Converting data
-- Modifyiing data
+- Understanding Demons Image Registration code for 3 images viewing pane
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
