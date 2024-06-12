@@ -69,7 +69,7 @@ def demonsReg(source, target, sigma_elastic=1, sigma_fluid=1, num_lev=3, use_com
 ```
 
 
-## 3. Preparing Images
+## 3. Preparing Images for demons image registration algorithm
 
 We start by making copies of the full-resolution images.
 
