@@ -524,7 +524,7 @@ print(nii3ct_float32_cropped.header)
 nib.save(nii3ct_float32_cropped, "data/3_ct_lung__30__b31f_float32_cropped.nii.gz")
 ```
 
-* Settgin world coordinates of voxel (103, 160, 0) in the uncropped image.
+* Setting world coordinates of voxel (103, 160, 0) in the uncropped image.
 ```
 cropped_origin = nii3ct_float32.affine@np.array([103,160,0,1])
 cropped_origin
