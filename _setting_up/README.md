@@ -130,29 +130,35 @@ sandpaper: 'HealthBioscienceIDEAS/sandpaper@IDEAS'
 
 ## Steps on Windows
 
-1. Installing R using the following: https://cran.r-project.org/bin/windows/base/
+### **INSTRUCTIONS for installing R, Carpentries, and Sandpaper on Windows:**
 
-2. Using the default settings during the installation of **RGUi 4.x.x**
+1. Create new repo: https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course
 
-3. From RGui Console, enter the following command: 
+2. Clone repo `git clone https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course`
+
+3. Installing R using the following: https://cran.r-project.org/bin/windows/base/
+
+4. Using the default settings during the installation of **RGUi 4.x.x**
+
+5. From RGui Console, enter the following command: 
 ```
 options(repos = c(
 carpentries = "https://carpentries.r-universe.dev/",
 CRAN = "https://cran.rstudio.com/"
 ))
-install.packages(c("remotes"), dep =TRUE)
 ```
 
-4. Enter the following command: 
+6. Enter the following command: 
 `remotes::install_github("HealthBioscienceIDEAS/sandpaper", dependencies = TRUE)
 `
-5. Change path from RGUi to the GitHub folder of the medical image registration course. This is done from the Menu list by picking 'File' then 'Change Dir..'
+7. Change path from RGUi to the GitHub folder of the medical image registration course. This is done from the Menu list by picking 'File' then 'Change Dir..'
 
-6. Run the following command to start sandpaper: 
+8. Run the following command to start sandpaper: 
 `sandpaper::build_lesson()
 `
-7. You may notice some package not installed called _**Pandoc**_ after running the sandpaper command. If so, install Pandoc then run _step 6_ again.
+9. You may notice some package not installed called _**Pandoc**_ after running the sandpaper command. If so, install Pandoc then run _step 8_ again.
 Pandoc installation: https://pandoc.org/installing.html
+
 
 
 ## Steps in MAC
