@@ -450,6 +450,7 @@ print(nii3ct_float32.header)
 
 
 ### Cropping data
+Cropping data might offen contain background voxels which can be useful in some instances but might take up valuable RAM memory, especially for large images.
 
 * Read the image data from disk using `get_fdata`  and then create a new array containing a copy of the desired slices:
 ```
