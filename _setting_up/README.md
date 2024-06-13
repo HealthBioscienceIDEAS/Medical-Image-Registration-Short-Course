@@ -1,4 +1,4 @@
-# INSTRUCTIONS for installing R, Carpentries, and Sandpaper on Linux and Windows
+# INSTRUCTIONS for installing R, Carpentries, and previewing Sandpaper for multi OS (Linux, Windows and Mac)
 
 ## Steps in Ubuntu 22.04 x64
 1. Create new repo: https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course
@@ -146,6 +146,7 @@ options(repos = c(
 carpentries = "https://carpentries.r-universe.dev/",
 CRAN = "https://cran.rstudio.com/"
 ))
+install.packages(c("remotes"), dep =TRUE)
 ```
 
 6. Enter the following command: 
@@ -163,4 +164,22 @@ Pandoc installation: https://pandoc.org/installing.html
 
 ## Steps in MAC
 Packages via homebrew: freetype, fribidi, harfbuzz, libpng, git2. 
+
+
+## Previewing eposides in any OS platform
+1. Using your terminal clone repo
+```
+git clone git@github.com:HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course.git
+```
+
+2. Checkout `feature-branch-name`.
+```
+git checkout feature-branch-name
+``` 
+
+3. Run `sandpaper::build_lesson()` in R which will launch your internet browser with the episode
+```
+R
+sandpaper::build_lesson()
+```
 
