@@ -219,32 +219,6 @@ dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=True)
 We are going to use the python package [NiBabel](https://nipy.org/nibabel/) to work with `NifTI` images. 
 We recommend to check [documentation](https://nipy.org/nibabel/#documentation) for further deatils on using nibabel library.
 
-### Installing Dependencies
-Installing python virtual environment with dependencies (e.g., nibabel, etc).
-See further instructions [here](https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course/tree/main/_dependencies). 
-
-* Using conda
-```
-conda create -n "mirVE" python=3.11 pip -c conda-forge
-conda activate mirVE
-cd ~/_dependencies
-pip install -r requirements.txt
-```
-* Using python virtual environment
-```
-# Installing dependencies in Ubuntu 22.04
-sudo apt-get install -y python3-pip
-sudo apt-get install -y python3-venv
-# Create path for venv
-cd $HOME
-mkdir mirVE
-cd mirVE
-# Create virtual environment
-python3 -m venv mirVE
-source mirVE/bin/activate
-cd ~/_dependencies
-python3 -m pip install -r requirements.txt
-```
 
 ### Loading images
 1. Activate `mirVE` environment and open a python terminal under `*/episodes` path to run:

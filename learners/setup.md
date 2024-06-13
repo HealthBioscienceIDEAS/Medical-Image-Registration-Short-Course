@@ -16,6 +16,34 @@ Download the [data zip file](https://example.com/FIXME) and unzip it to your Des
 
 ## Software Setup
 
+### Installing Dependencies in Python Virtual environmnets
+Installing python virtual environment with dependencies (e.g., nibabel, etc).
+See further instructions [here](https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course/tree/main/_dependencies). 
+
+#### Using conda
+```
+conda create -n "mirVE" python=3.11 pip -c conda-forge
+conda config --set pip_interop_enabled True
+conda activate mirVE
+cd ~/_dependencies
+pip install -r requirements.txt
+```
+
+#### Using python virtual environment
+```
+# Installing dependencies in Ubuntu 22.04
+sudo apt-get install -y python3-pip
+sudo apt-get install -y python3-venv
+# Create path for venv
+cd $HOME
+mkdir mirVE
+cd mirVE
+# Create virtual environment
+python3 -m venv mirVE
+source mirVE/bin/activate
+cd ~/_dependencies
+python3 -m pip install -r requirements.txt
+```
 
 ### ITK-Snap
 
