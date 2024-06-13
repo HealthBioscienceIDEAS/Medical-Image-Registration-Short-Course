@@ -565,7 +565,8 @@ nii3ct_float32_cropped_with_nibabel_slicer.affine
 ```
 
 ### Cropped and aligned image
-* Manual image registration
+Automated image registrations can be prone to be failure if there are very large initial differences between the images. A manual alignment is subjective, but can provide a good enough starting guess that keeps the objective, automated registration more reliable.  
+* Manually aligning images
 For manaual image registration in ITK-SNAP go to Tools > image registration
 ![ITK-SNAP main window](../fig/itk-snap-image-manual-registration.png)
 
