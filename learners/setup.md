@@ -68,6 +68,10 @@ mkdir -p itksnap && cd itksnap
 wget https://sourceforge.net/projects/itk-snap/files/itk-snap/Nightly/$FILENAME/download -O $FILENAME
 tar -xvzf $FILENAME
 ```
+#### Mac
+```
+TOADD
+```
 
 
 ::::::::::::::::::::::::::::::::::::::: discussion

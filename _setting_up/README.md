@@ -154,3 +154,7 @@ install.packages(c("remotes"), dep =TRUE)
 7. You may notice some package not installed called _**Pandoc**_ after running the sandpaper command. If so, install Pandoc then run _step 6_ again.
 Pandoc installation: https://pandoc.org/installing.html
 
+
+## Steps in MAC
+Packages via homebrew: freetype, fribidi, harfbuzz, libpng, git2. 
+
