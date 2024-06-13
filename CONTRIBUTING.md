@@ -99,9 +99,17 @@ git push origin ISSUENUMBER-branch-name
 ```
 git checkout main
 git pull origin main
-git checkout RB 
+git checkout FEATURE_BRANCH
 git rebase main
-git push --force origin RB
+git push --force origin FEATURE_BRANCH
+```
+4.1 In case you are in a different `MY_FEATURE_BRANCH` branch, follow:
+```
+git checkout FEATURE_BRANCH
+git pull origin FEATURE_BRANCH
+git checkout MY_FEATURE_BRANCH 
+git rebase FEATURE_BRANCH
+git push --force origin MY_FEATURE_BRANCH
 ```
 5. Run `pre-commit` to tidy up code and documentation (see next section). 
 6. Request a PR review.
