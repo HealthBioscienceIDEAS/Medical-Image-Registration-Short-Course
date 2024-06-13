@@ -106,7 +106,10 @@ Use Terminal.app
 
 ### Linux
 
-Use Terminal
+Use Terminal to install
+```
+sudo apt-get install tree # to visualise files and paths
+```
 
 :::::::::::::::::::::::::
 
