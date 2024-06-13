@@ -16,6 +16,32 @@ Download the [data zip file](https://example.com/FIXME) and unzip it to your Des
 
 ## Software Setup
 
+
+### ITK-Snap
+
+#### Hardware Requirements
+* Memory: "Overall 2Gb of memory should be enough for most users; 4Gb should suffice for users with large images." [:link:](http://www.itksnap.org/pmwiki/pmwiki.php?n=Documentation.HardwareRequirements#:~:text=Memory%20usage%20in%20SNAP%20is,for%20a%20512%20cubed%20image.)
+* Multi - Operating System: 
+	* ITK-SNAP binaries are distributed for Linux (32 and 64 bit)), 
+	* Windows (64 bit), 
+	* and MacOS Leopard (64 bit).
+
+#### Installation
+##### Windows 11
+- Open the following link: https://sourceforge.net/projects/itk-snap/files/itk-snap/4.2.0/
+- Download `itksnap-4.2.0-20240422-win64-AMD64.exe` 
+- Install it by following default settings.
+
+##### Ubuntu 22.04 x64 GNU/Linux
+```
+FILENAME=itksnap-nightly-rel_4.0-Linux-gcc64.tar.gz  #Length: 200943059 (192M) [application/x-gzip]
+cd ~/Downloads/
+mkdir -p itksnap && cd itksnap
+wget https://sourceforge.net/projects/itk-snap/files/itk-snap/Nightly/$FILENAME/download -O $FILENAME
+tar -xvzf $FILENAME
+```
+
+
 ::::::::::::::::::::::::::::::::::::::: discussion
 
 ### Details
