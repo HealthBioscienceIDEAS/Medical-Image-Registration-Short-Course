@@ -393,7 +393,7 @@ nib.save(nii3ct, 'data/3_ct_lung__30__b31f_float32.nii.gz')
 ### 16-bit integers vs 32 bit floats
 
 The file size of `3_ct_lung__30__b31f_float32.nii.gz` is larger than  `3_ct_lung__30__b31f.nii.gz` (60 MB, 46 MB, respectively) because of the conversion from 16 bit integers to 32 bit floats. 
-Both images are compressed, but the compression is more efficient for the floating point image as it is not double than the original.
+Both images are compressed, but the compression is more efficient for the floating point image: while a 32-bit floating point variable is twice the size of a 16-bit integer, the floating image is less than double the size of the original integer image.
 
 * int16
 ```
