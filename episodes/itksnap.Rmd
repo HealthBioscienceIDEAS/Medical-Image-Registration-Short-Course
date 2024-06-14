@@ -1,5 +1,5 @@
 ---
-title: 'itksnap'
+title: 'A Practical Introduction to Working with Medical Image Data'
 teaching: 10
 exercises: 2
 ---
