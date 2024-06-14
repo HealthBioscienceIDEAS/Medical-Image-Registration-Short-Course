@@ -217,7 +217,7 @@ Here, we provide instructions for handling multiple DICOM images, applying overl
 Navigate the ITK-snap by clicking 'File' --> 'Save image' --> rename image and choose format as 'NiFTI'.
 
 #### Using [dicom2nifti](https://github.com/icometrix/dicom2nifti)
-```
+```python
 from pathlib import Path 
 import dicom2nifti 
 dicoms = Path("~/3_000000-CT_Lung_30_B31f-61322")
