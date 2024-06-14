@@ -247,12 +247,20 @@ nii3ct = nib.load("data/3_ct_lung__30__b31f.nii.gz")
 2. `NifTI` file properties:
 ```python
 print(type(nii3ct))
-
 # <class 'nibabel.nifti1.Nifti1Image'>
+```
+
+```python
 print(nii3ct.get_data_dtype())
 #int16
+```
+
+```python
 nii3ct.shape
 # (512, 512, 175)
+```
+
+```python
 nii3ct.affine
 ## dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=True) # nii.gz
 #array([[  -0.9765625 ,   -0.        ,    0.        ,  249.51171875],
@@ -342,15 +350,14 @@ The values in the first two rows corresponding to the x and y dimensions would b
 ### Obtaining image pixel data
 ```python
 pixel_data=nii3ct.get_fdata()
-
 print(pixel_data.dtype, pixel_data.shape)
 #float64 (512, 512, 175)
+```
 
+```python
 plt.imshow(pixel_data[:,:,140], cmap="gray"); plt.show()
 #launch plot window
 ```
-
-
 
 ## Modifying `NifTi` images and headers with Nibabel
 
@@ -361,8 +368,14 @@ Loading the data from disk and cast it to float64 type before returning the data
 image_data=nii3ct.get_fdata()
 print(type(image_data))
 #<class 'numpy.ndarray'>
+```
+
+```python
 print(image_data.dtype)
 #float64
+```
+
+```python
 print(image_data.shape)
 #(512, 512, 175)
 ```
@@ -376,6 +389,9 @@ We are going to use 32 bit rather than 64 bit floating point, as this is usually
 ```python
 print(nii3ct.get_data_dtype())
 #int16
+```
+
+```python
 nii3ct.set_data_dtype(np.float32)
 print(nii3ct.get_data_dtype())
 #float32
@@ -410,10 +426,14 @@ Both images are compressed, but the compression is more efficient for the floati
 * int16
 ```python
 nii3ct_int16 = nib.load("data/3_ct_lung__30__b31f.nii.gz")
+```
 
+```python
 print(nii3ct_int16.get_data_dtype())
 #int16
+```
 
+```python
 print(nii3ct_int16.header)
 #<class 'nibabel.nifti1.Nifti1Header'> object, endian='<'
 #sizeof_hdr      : 348
@@ -432,13 +452,18 @@ print(nii3ct_int16.header)
 #bitpix          : 16
 #...
 ```
+
 * float32
 ```python
 nii3ct_float32 = nib.load("data/3_ct_lung__30__b31f_float32.nii.gz")
+```
 
+```python
 print(nii3ct_float32.get_data_dtype())
 #float32
+```
 
+```python
 print(nii3ct_float32.header)
 #<class 'nibabel.nifti1.Nifti1Header'> object, endian='<'
 #sizeof_hdr      : 348
@@ -459,8 +484,6 @@ print(nii3ct_float32.header)
 #...
 ```
 
-
-
 ### Cropping data
 Cropping data might offen contain background voxels which can be useful in some instances but might take up valuable RAM memory, especially for large images.
 
@@ -470,21 +493,31 @@ nii3ct_float32 = nib.load("data/3_ct_lung__30__b31f_float32.nii.gz")
 nii3ct_float32.set_data_dtype(np.float32)
 print(nii3ct_float32.get_data_dtype())
 #float32
+```
 
+```python
 image_data=nii3ct_float32.get_fdata()
 print(image_data.dtype, image_data.shape)
 #float64 (512, 512, 175)
+```
 
+```python
 plt.imshow(image_data[:,:,100], cmap="gray"); plt.show()
 #launch plot window
+```
 
+```python
 image_data_cropped = image_data[103:381,160:340,:].copy()
 #x[sagittal], y[coronal], z[axial] #voxel units
+```
 
+```python
 nii3ct_float32_cropped = nib.nifti1.Nifti1Image(image_data_cropped, nii3ct_float32.get_sform(), nii3ct_float32.header)
 nii3ct_float32_cropped.shape
 #(278, 180, 175)
+```
 
+```python
 print(nii3ct_float32_cropped.header)
 #<class 'nibabel.nifti1.Nifti1Header'> object, endian='<'
 #sizeof_hdr      : 348
@@ -531,8 +564,9 @@ print(nii3ct_float32_cropped.header)
 #srow_z          : [   0.     0.     2.  -553.5]
 #intent_name     : b''
 #magic           : b'n+1'
+```
 
-
+```python
 nib.save(nii3ct_float32_cropped, "data/3_ct_lung__30__b31f_float32_cropped.nii.gz")
 ```
 
@@ -541,31 +575,40 @@ nib.save(nii3ct_float32_cropped, "data/3_ct_lung__30__b31f_float32_cropped.nii.g
 cropped_origin = nii3ct_float32.affine@np.array([103,160,0,1])
 cropped_origin
 #array([ 148.92578125,  309.76171875, -553.5       ,    1.        ])
+```
 
+```python
 aff_mat_cropped = nii3ct_float32_cropped.get_sform()
 print(aff_mat_cropped)
 #array([[  -0.9765625 ,   -0.        ,    0.        ,  249.51171875],
 #       [  -0.        ,   -0.9765625 ,    0.        ,  466.01171875],
 #       [   0.        ,    0.        ,    2.        , -553.5       ],
 #       [   0.        ,    0.        ,    0.        ,    1.        ]])
+```
 
+```python
 aff_mat_cropped[:, 3] = cropped_origin
 print(aff_mat_cropped)
 #[[  -0.9765625    -0.            0.          148.92578125]
 # [  -0.           -0.9765625     0.          309.76171875]
 # [   0.            0.            2.         -553.5       ]
 # [   0.            0.            0.            1.        ]]
+```
 
 
+```python
 nii3ct_float32_cropped.set_sform(aff_mat_cropped)
 nii3ct_float32_cropped.affine
 #array([[  -0.9765625 ,   -0.        ,    0.        ,  148.92578125],
 #       [  -0.        ,   -0.9765625 ,    0.        ,  309.76171875],
 #       [   0.        ,    0.        ,    2.        , -553.5       ],
 #       [   0.        ,    0.        ,    0.        ,    1.        ]])
+```
 
+```python
 nib.save(nii3ct_float32_cropped, "data/3_ct_lung__30__b31f_float32_cropped_affine.nii.gz")
 ```
+
 * updating the affine transforms with `nibabel.slicer`
 ```python
 nii3ct_float32_cropped_with_nibabel_slicer = nii3ct_float32.slicer[103:381,160:340,:]
