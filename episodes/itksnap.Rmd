@@ -129,6 +129,7 @@ ITK-SNAP is written in C++ and it leverages the Insight Segmentation and Registr
 
 ### ITK-SNAP application
 ITK-SNAP application shows three orthogonal slices and a fourth window for three-dimensional view segmentation. 
+
 ![Figure. ITK-SNAP main window](fig/itk-snap-main-window.svg)
 
 
@@ -576,6 +577,7 @@ nii3ct_float32_cropped_with_nibabel_slicer.affine
 Automated image registrations can be prone to be failure if there are very large initial differences between the images. A manual alignment is subjective, but can provide a good enough starting guess that keeps the objective, automated registration more reliable.  
 * Manually aligning images
 For manaual image registration in ITK-SNAP go to Tools > image registration
+
 ![Figure. ITK-SNAP main window](fig/itk-snap-image-manual-registration.png)
 
 * Automatic registration (affine)
