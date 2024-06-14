@@ -91,7 +91,9 @@ popular format in the medical image analysis community.
 ```
 
 ### DICOM format
-DICOM images typically have a separate file for every slice. 
+Digital Imaging and Communications in Medicine (DICOM) is a technical standard for the digital storage and transmission of medical images and related information.
+While DICOM images typically have a separate file for every slice, more modern DICOM images can come with all slices in a single file.
+
 If you look at the data `3.000000-CT Lung  3.0  B31f-61322` you will see there are 175 individual files corresponding to 175 slices in the volume. 
 In addition to the image data for each slice, each file contains a header which can contain an extensive amount of extra information relating to the scan and subject. 
 
