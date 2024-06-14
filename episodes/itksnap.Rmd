@@ -77,7 +77,8 @@ individuals cannot be reidentified.
 The Cancer Imaging Archive (TCIA) is a resource of public datasets hosts a large archive of medical images of cancer accessible for public download. 
 Data may require extensive cleaning and pre-processing before it is suitable to be used.
 
-#### Notes 
+Notes 
+```callout
 1. When using open datasets that contain images of humans, such as those from TCIA, for your
 own research, you will still need to get ethical approval (as you do for any non-open
 datasets you use) – this can usually be obtained from the local ethics committee (both
@@ -87,6 +88,7 @@ central ethics if your department does not have one.
 in, we are going to focus on DICOM and nifti as they are two of the most common formats.
 Most data that comes from a hospital will be in DICOM format, whereas nifti is a very
 popular format in the medical image analysis community.
+```
 
 ### DICOM format
 DICOM images typically have a separate file for every slice. 
@@ -102,6 +104,7 @@ Furthermore, there are complicated ‘links’ (provided by unique identifiers, 
 Therefore, a common first step of any image processing pipeline is to convert the DICOM image to a more suitable format such as `NifTi`. 
 Generally, most conversions go from DICOM to NIfTI. There are scenarios when you might want to convert from NIfTI **back** to DICOM, for example, if you need to import them into a clinical system that only works with DICOM.
 
+Notes
 ```callout
 Converting images back to DICOM such that they are correctly interpreted by a clinical system can be very tricky and requires a good understanding of the DICOM standard. 
 More information on the DICOM standard can be found here: https://www.dicomstandard.org
@@ -413,7 +416,12 @@ qform_code      : unknown
 ```
 
 The floating point image can now be written to disk using the save function. 
-Note. We do not need to manually modify the type of the image data – setting the data type for the Nifti1Image object tells it which type to use when writing the image data to disk.
+
+Notes.
+```callout
+We do not need to manually modify the type of the image data – setting the data type for the Nifti1Image object tells it which type to use when writing the image data to disk.
+```
+
 ```python
 nib.save(nii3ct, 'data/3_ct_lung__30__b31f_float32.nii.gz')
 ```
