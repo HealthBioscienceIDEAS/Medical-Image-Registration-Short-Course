@@ -235,7 +235,7 @@ dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=True)
 ## Viewing and understanding the NifTi header with NiBabel
 We are going to use the python package [NiBabel](https://nipy.org/nibabel/) to work with `NifTI` images. 
 We recommend to check [documentation](https://nipy.org/nibabel/#documentation) for further deatils on using nibabel library.
-
+Please see [instructions](../_dependencies) to install such dependecies.
 
 ### Loading images
 1. Open terminal, activate `mirVE` environment and run python
