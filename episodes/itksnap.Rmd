@@ -130,8 +130,7 @@ ITK-SNAP application shows three orthogonal slices and a fourth window for three
 
 
 ## Viewing and understanding DICOM data
-
-We are using DICOM data from "3.000000-CT Lung  3.0  B31f-61322  [175 items, totalling 92.4 MB]".
+We are using CT Lung DICOM dataset from `CT-PET-VI-02`: "3.000000-CT Lung  3.0  B31f-61322  [175 items, totalling 92.4 MB]".
 
 ### Opening and Viewing DICOM images
 
