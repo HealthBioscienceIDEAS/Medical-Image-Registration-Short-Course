@@ -102,10 +102,9 @@ Furthermore, there are complicated ‘links’ (provided by unique identifiers, 
 Therefore, a common first step of any image processing pipeline is to convert the DICOM image to a more suitable format such as `NifTi`. 
 Generally, most conversions go from DICOM to NIfTI. There are scenarios when you might want to convert from NIfTI **back** to DICOM, for example, if you need to import them into a clinical system that only works with DICOM.
 
-Notes.
-1. Converting images back to DICOM such that they are correctly interpreted by a clinical system can be very tricky and requires a good understanding of the DICOM standard. 
+```callout
+Converting images back to DICOM such that they are correctly interpreted by a clinical system can be very tricky and requires a good understanding of the DICOM standard. 
 More information on the DICOM standard can be found here: https://www.dicomstandard.org
-
 ### NifTi format
 The Neuroimaging Informatics Technology Initiative (NIfTI) image format are usually stored as a single file containing the imaging data and header information.
 It also is possible to store the header and image data in separate files but this is not very common.
