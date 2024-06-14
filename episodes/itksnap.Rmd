@@ -6,17 +6,19 @@ exercises: 2
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- How to understand and visualise volumetric medical data in ITK-SNAP?
+- How can we visualize volumetric data?
+- How do locations in an image get mapped to real-world coordinates?
+- How can we register different types of images together using ITK-SNAP?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Medical imaging data in DICOM and nifti formats
-- Getting started with ITK-SNAP
-- Viewing data
-- Converting data
-- Modifyiing data
+- Describe the structure of medical imaging data and popular formats (DICOM and nifti)
+- Discover and display medical imaging data in ITK-SNAP
+- Demonstrate how to convert between different medical image formats
+- Inspecting the nifti header with `nibabel`
+- Manipulate image data (cropping images) with `nibabel` and learn how it is displayed on screen with ITK-SNAP
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
