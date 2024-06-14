@@ -14,10 +14,10 @@ exercises: 2
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Describe the structure of medical imaging data and popular formats (DICOM and nifti)
+- Describe the structure of medical imaging data and popular formats (DICOM and NifTi)
 - Discover and display medical imaging data in ITK-SNAP
 - Demonstrate how to convert between different medical image formats
-- Inspecting the nifti header with `nibabel`
+- Inspecting the NifTi header with `nibabel`
 - Manipulate image data (cropping images) with `nibabel` and learn how it is displayed on screen with ITK-SNAP
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
@@ -85,8 +85,8 @@ datasets you use) – this can usually be obtained from the local ethics committ
 Medical Physics and Computer Science have their own local ethics committee) or from UCL
 central ethics if your department does not have one.
 2. Although there are many formats that medical imaging data can come
-in, we are going to focus on DICOM and nifti as they are two of the most common formats.
-Most data that comes from a hospital will be in DICOM format, whereas nifti is a very
+in, we are going to focus on DICOM and NifTi as they are two of the most common formats.
+Most data that comes from a hospital will be in DICOM format, whereas NifTi is a very
 popular format in the medical image analysis community.
 ```
 
@@ -114,12 +114,12 @@ More information on the DICOM standard can be found here: https://www.dicomstand
 The Neuroimaging Informatics Technology Initiative (NIfTI) image format are usually stored as a single file containing the imaging data and header information.
 It also is possible to store the header and image data in separate files but this is not very common.
 
-There are actually two formats for nifti files, nifti-1 and nifti-2, with the later allowing for very large images. 
+There are actually two formats for NifTi files, NifTi-1 and NifTi-2, with the later allowing for very large images. 
 However, the formats are very similar, and the header contains the same info (but some of it stored slightly differently). 
 They can be worked with and manipulated in the same way, and it is only when loading and saving the files (which is handled by NiBabel’s functions) that a distinction really needs to be made. 
-The nifti header contains much less information than DICOM, but it usually contains all the key information required for interpreting, manipulating, and processing the image. 
+The NifTi header contains much less information than DICOM, but it usually contains all the key information required for interpreting, manipulating, and processing the image. 
 
-During these exercises you will learn about some of the key information stored in the nifti header. For more information, please see Anderson Winkler's blog on the [NIfTI-1]( https://brainder.org/2012/09/23/the-nifti-file-format/) and[NIfTI-2]( https://brainder.org/2015/04/03/the-nifti-2-file-format/) formats.
+During these exercises you will learn about some of the key information stored in the NifTi header. For more information, please see Anderson Winkler's blog on the [NIfTI-1]( https://brainder.org/2012/09/23/the-nifti-file-format/) and[NIfTI-2]( https://brainder.org/2015/04/03/the-nifti-2-file-format/) formats.
 
 ## ITK-SNAP
 
@@ -217,7 +217,7 @@ Here, we provide instructions for handling multiple DICOM images, applying overl
 ### Converting DICOM images to NifTi
 
 #### Using ITK-SNAP
-Navigate the ITK-snap by clicking 'File' --> 'Save image' --> rename image and choose format as 'NiFTI'.
+In the ITK-SNAP application, save the file by clicking 'File' --> 'Save image' --> rename image and choose format as 'NiFTI'.
 
 #### Using [dicom2nifti](https://github.com/icometrix/dicom2nifti)
 ```python
@@ -347,7 +347,7 @@ print(nii3ct.get_qform())
 ### coordinate system  
 The original DICOM images assume the world coordinate system is LPS (i.e. values increase when moving to the left, posterior, and superior).
 See [here](https://nipy.org/nibabel/dicom/dicom_orientation.html), if you obtained a similar affine transform from the DICOM headers.
-The values in the first two rows corresponding to the x and y dimensions would be the negative of those in the nifti header.
+The values in the first two rows corresponding to the x and y dimensions would be the negative of those in the NifTi header.
 
 
 ### Obtaining image pixel data
@@ -638,7 +638,7 @@ For manaual image registration in ITK-SNAP go to Tools > image registration
 You can use [niftyreg](https://nipype.readthedocs.io/en/latest/api/generated/nipype.interfaces.niftyreg.reg.html), [Reg_aladin](http://cmictig.cs.ucl.ac.uk/wiki/index.php/Reg_aladin) or [DL methods](https://github.com/Project-MONAI/tutorials/tree/main/3d_registration).
 
 ## References 
-* NiBabel: "The NiBabel documentation also contains some useful information and tutorials for working with nifti images and understanding world coordinate systems and radiological vs neurological view."
+* NiBabel: "The NiBabel documentation also contains some useful information and tutorials for working with NifTi images and understanding world coordinate systems and radiological vs neurological view."
 	* https://nipy.org/nibabel/nifti_images.html  
 	* https://nipy.org/nibabel/coordinate_systems.html  
 	* https://nipy.org/nibabel/neuro_radio_conventions.html  
