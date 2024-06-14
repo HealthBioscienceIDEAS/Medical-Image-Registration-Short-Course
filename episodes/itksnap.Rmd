@@ -169,13 +169,13 @@ Here, we provide instructions for handling multiple DICOM images, applying overl
 
 ![Figure. ITK-SNAP new window](fig/new-itk-snap-window.png)
 
-#### 2. Applying Overlays
+#### 2. Applying Overlays (shown in top of other images)
 
 1. **Load Primary Image**:
    - Open your primary DICOM series as described above.
 
 2. **Load Overlay Image**:
-   - Go to `File` > `Add Another Image`.
+   - Go to `File` > `Add Another Image ...`.
    - Select the image you want to use as an overlay. This could be another DICOM series or a previously saved segmentation.
 
 ![Figure. ITK-SNAP additional image](fig/open-additional-image.png)
@@ -193,7 +193,7 @@ Here, we provide instructions for handling multiple DICOM images, applying overl
 
 1. **Access Image Information**:
    - Go to `Tools` > `Image Information`.
-   - A dialog box will appear displaying metadata and other relevant information about the loaded DICOM images.
+   - A dialog box will appear displaying metadata and other relevant information about the loaded DICOM images (e.g. values for image header and cursor coordinates).
 
 ![Figure. ITK-SNAP additional image](fig/image-info.png)
 
