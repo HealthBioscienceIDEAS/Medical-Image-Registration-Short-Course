@@ -112,9 +112,10 @@ More information on the DICOM standard can be found here: https://www.dicomstand
 
 ### NifTi format
 The Neuroimaging Informatics Technology Initiative (NIfTI) image format are usually stored as a single file containing the imaging data and header information.
-It also is possible to store the header and image data in separate files but this is not very common.
-
+While the NifTI file format was originally developed by the neuroimaging community it is not specific to neuroimaging and is now widely used for many different medical imaging applications outside of the brain.
 During these exercises you will learn about some of the key information stored in the NifTi header.
+
+NifTI files can also store the header and image data in separate files but this is not very common. 
 For more information, please see Anderson Winkler's blog on the [NIfTI-1]( https://brainder.org/2012/09/23/the-nifti-file-format/) and[NIfTI-2]( https://brainder.org/2015/04/03/the-nifti-2-file-format/) formats.
 
 ## Visualisation of volumetric data with ITK-SNAP
