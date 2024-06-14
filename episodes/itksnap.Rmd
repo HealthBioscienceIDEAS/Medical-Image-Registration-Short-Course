@@ -98,7 +98,7 @@ Such information should be removed before the data is transferred from the clini
 If you ever discover patient identifiable information in the header of data you are using you should immediately alert your supervisor, manager or collaborator
 
 The majority of the information in the DICOM header is not directly useful for typical image processing and analysis tasks. 
-Furthermore, there are complicated ‘links’ (provided by unique identifiers, UIDs) between the DICOM headers of different files belonging to thesame scan or subject, which together with storing separate slices as separate files, makes working directly with DICOM rather cumbersome (at least if you want to do it correctly!).
+Furthermore, there are complicated ‘links’ (provided by unique identifiers, UIDs) between the DICOM headers of different files belonging to the same scan or subject. Together with DICOM routinely storing each slice as a separate files, it makes processing an entire imaging volume stored as DICOM format rather cumbersome, and the extra housekeeping required could lead to a greater chance of an error being made.
 Therefore, a common first step of any image processing pipeline is to convert the DICOM image to a more suitable format such as `NifTi`. 
 Generally, you will only convert images back to DICOM if you need to import them into a clinical system that only works with DICOM.
 
