@@ -114,11 +114,6 @@ More information on the DICOM standard can be found here: https://www.dicomstand
 The Neuroimaging Informatics Technology Initiative (NIfTI) image format are usually stored as a single file containing the imaging data and header information.
 It also is possible to store the header and image data in separate files but this is not very common.
 
-There are actually two formats for NifTi files, NifTi-1 and NifTi-2, with the later allowing for very large images. 
-However, the formats are very similar, and the header contains the same info (but some of it stored slightly differently). 
-They can be worked with and manipulated in the same way, and it is only when loading and saving the files (which is handled by NiBabel’s functions) that a distinction really needs to be made. 
-The NifTi header contains much less information than DICOM, but it usually contains all the key information required for interpreting, manipulating, and processing the image. 
-
 During these exercises you will learn about some of the key information stored in the NifTi header.
 For more information, please see Anderson Winkler's blog on the [NIfTI-1]( https://brainder.org/2012/09/23/the-nifti-file-format/) and[NIfTI-2]( https://brainder.org/2015/04/03/the-nifti-2-file-format/) formats.
 
