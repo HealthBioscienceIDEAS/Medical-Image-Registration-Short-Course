@@ -129,7 +129,7 @@ ITK-SNAP is written in C++ and it leverages the Insight Segmentation and Registr
 
 ### ITK-SNAP application
 ITK-SNAP application shows three orthogonal slices and a fourth window for three-dimensional view segmentation. 
-![ITK-SNAP main window](../fig/itk-snap-main-window.svg)
+![Figure. ITK-SNAP main window](fig/itk-snap-main-window.svg)
 
 
 ## Viewing and understanding DICOM data
@@ -146,7 +146,7 @@ It will contain numerous files that being with `1-`, followed by a large number 
 Take this directory and drop it into ITK-SNAP application,  select File format to `DICOM Image Series`. 
 Then click `Next`, followed by `Finish` 
 
-![ITK-SNAP main window](../fig/itk-snap-viewing-dicoms.svg)
+![Figure. ITK-SNAP main window](fig/itk-snap-viewing-dicoms.svg)
 
 ### Navigating DICOM images
 
@@ -163,7 +163,7 @@ Here, we provide instructions for handling multiple DICOM images, applying overl
    - This will open the second series in a separate ITK-SNAP window.
    - This can be repeated for multiple DICOM series.
 
-![ITK-SNAP new window](../fig/new-itk-snap-window.png)
+![Figure. ITK-SNAP new window](fig/new-itk-snap-window.png)
 
 #### 2. Applying Overlays
 
@@ -174,15 +174,15 @@ Here, we provide instructions for handling multiple DICOM images, applying overl
    - Go to `File` > `Add Another Image`.
    - Select the image you want to use as an overlay. This could be another DICOM series or a previously saved segmentation.
 
-![ITK-SNAP additional image](../fig/open-additional-image.png)
+![Figure. ITK-SNAP additional image](fig/open-additional-image.png)
 
-![ITK-SNAP overlay](../fig/overlay-wizard.png)
+![Figure. ITK-SNAP overlay](fig/overlay-wizard.png)
 
 3. **Adjust Overlay Settings**:
    - Go to the `Layers` panel.
    - Right click on the second DICOM Series and adjust the opacity and blending settings to properly visualise the overlay on the primary image.
 
-![ITK-SNAP layers panel](../fig/layers-panel.png)
+![Figure. ITK-SNAP layers panel](fig/layers-panel.png)
 
 
 #### 4. Viewing Image Information
@@ -191,7 +191,7 @@ Here, we provide instructions for handling multiple DICOM images, applying overl
    - Go to `Tools` > `Image Information`.
    - A dialog box will appear displaying metadata and other relevant information about the loaded DICOM images.
 
-![ITK-SNAP additional image](../fig/image-info.png)
+![Figure. ITK-SNAP additional image](fig/image-info.png)
 
 
 
@@ -207,7 +207,7 @@ Here, we provide instructions for handling multiple DICOM images, applying overl
    - Choose a predefined color map from the list or create a custom one.
    - Adjust the intensity and transparency settings as needed to enhance the visualisation of the images.
 
-![ITK-SNAP additional image](../fig/colour-map-editor.png)
+![Figure. ITK-SNAP additional image](fig/colour-map-editor.png)
 
 
 ### Converting DICOM images to NifTi
@@ -576,7 +576,7 @@ nii3ct_float32_cropped_with_nibabel_slicer.affine
 Automated image registrations can be prone to be failure if there are very large initial differences between the images. A manual alignment is subjective, but can provide a good enough starting guess that keeps the objective, automated registration more reliable.  
 * Manually aligning images
 For manaual image registration in ITK-SNAP go to Tools > image registration
-![ITK-SNAP main window](../fig/itk-snap-image-manual-registration.png)
+![Figure. ITK-SNAP main window](fig/itk-snap-image-manual-registration.png)
 
 * Automatic registration (affine)
 You can use [niftyreg](https://nipype.readthedocs.io/en/latest/api/generated/nipype.interfaces.niftyreg.reg.html), [Reg_aladin](http://cmictig.cs.ucl.ac.uk/wiki/index.php/Reg_aladin) or [DL methods](https://github.com/Project-MONAI/tutorials/tree/main/3d_registration).
