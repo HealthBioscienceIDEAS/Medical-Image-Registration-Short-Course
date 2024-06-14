@@ -31,15 +31,15 @@ We are using CT Ventilation as a Functional Imaging Modality for Lung Cancer Rad
 The CT-vs-PET-Ventilation-Imaging collection is distributed under the Creative Commons Attribution 4.0 International License (https://creativecommons.org/licenses/by/4.0/). 
 The `CT-vs-PET-Ventilation-Imaging` dataset contains 20 lung cancer patients underwent exhale/inhale breath hold CT (BHCT), free-breathing four-dimensional CT (4DCT) and Galligas PET ventilation scans in a single session on a combined 4DPET/CT scanner.    
 
-We recomend using the BHCT scans for participants `CT-PET-VI-02` and `CT-PET-VI-03` showing very little motion between inhale and exhale (for PET scan and accompanying CT scan), and BHCT scans for participants `CT-PET-VI-05` and `CT-PET-VI-06` (the inhale and exhale CT scans), where 05 has a different number of slices between the inhale and exhale:
+We recomend using the BHCT scans for participants `CT-PET-VI-02` and `CT-PET-VI-03` showing very little motion between inhale and exhale (for PET scan and accompanying CT scan), and BHCT scans for participants `CT-PET-VI-05` and `CT-PET-VI-07` (the inhale and exhale CT scans), where 05 has a different number of slices between the inhale and exhale:
 
 * CT-PET-VI-02
 ```bash
 CT-PET-VI-02$ tree -d
 .
 └── 05-28-1996-RTRTRespLowBreathRateRNS Adult-05441
-    ├── 1000.000000-PET SUV Factors-26496
     ├── 3.000000-CT Lung  3.0  B31f-61322
+    ├── 4.000000-Galligas Lung-03537
 ```
 
 * CT-PET-VI-03
@@ -47,8 +47,8 @@ CT-PET-VI-02$ tree -d
 /CT-PET-VI-03$ tree -d
 .
 ├── 06-25-1996-RTRTRespLowBreathRateRNS Adult-43080
-│   ├── 1000.000000-PET SUV Factors-06580
 │   ├── 3.000000-CT Lung  3.0  B31f-08354
+│   └── 4.000000-Galligas Lung-15379
 ```
 
 * CT-PET-VI-05
@@ -57,15 +57,17 @@ CT-PET-VI-02$ tree -d
 CT-PET-VI-05$ tree -d
 .
 └── 12-10-1996-RTRTRespLowBreathRateRNS Adult-37585
-    ├── 3.000000-CT Lung  3.0  B31f-90638
+    ├── 5.000000-Thorax Insp  2.0  B70f-45546
+    ├── 7.000000-Thorax Exp  2.0  B70f-31579
 ```
 
-* CT-PET-VI-06
+* CT-PET-VI-07
 ```bash
-CT-PET-VI-06$ tree -d
+/CT-PET-VI-07$ tree -d
 .
-└── 01-27-1997-RTRTRespLowBreathRateRNS Adult-52536
-    ├── 3.000000-CT Lung  3.0  B31f-97044
+└── 02-14-1997-RTRTRespLowBreathRateRNS Adult-80512
+    ├── 5.000000-Thorax Insp  2.0  B70f-20440
+    ├── 7.000000-Thorax Exp  2.0  B70f-03567
 ```
 
 Refer to `Summary and Setup` section for further details on CT-vs-PET-Ventilation-Imaging dataset.
@@ -133,22 +135,69 @@ ITK-SNAP application shows three orthogonal slices and a fourth window for three
 We are using CT Lung DICOM dataset from `CT-PET-VI-02`: "3.000000-CT Lung  3.0  B31f-61322  [175 items, totalling 92.4 MB]".
 
 ### Opening and Viewing DICOM images
+* **Open ITK-SNAP application**
+* **Load inhale scan using file browser**
+	- Open the itk-snap application. If you have used it before it will display recent images when you open it, and you can select one of these to open it. 
 
-* Open DICOM images  
+	If the image you want to open is not listed under recent images, you can open it either by clicking the 'Open Image...' button at the bottom right of the window, or File->Open Main Image. 
+	When you do this a small window opens where you can enter the path of the file you want to open, or click Browse in your file explorer (exFinder in Mac and nautilus in Ubuntu) to open a file browser (for instance, "3.000000-CT Lung  3.0  B31f-61322").
+	Do this and select the first slice from the Inhale_BH_CT folder, which is called 1-001.dcm. The set the File Format to DICOM Image Series and then click `Next`.
+	You will then be asked to Select DICOM series to open, but as this folder only includes one series you can just click `Next`.
+	Click `Finish`
 
-Open the ITK-SNAP application. 
-Then in your file explorer (exFinder in Mac and nautilus in Ubuntu), go to the directory called "3.000000-CT Lung  3.0  B31f-61322". 
-It will contain numerous files that being with `1-`, followed by a large number of digits and end with a `.dcm` file extension. 
-Take this directory and drop it into ITK-SNAP application,  select File format to `DICOM Image Series`. 
-Then click `Next`, followed by `Finish` 
+![Figure. ITK-SNAP opening image file](fig/itk-snap-opening-dicoms.svg)
 
 ![Figure. ITK-SNAP main window](fig/itk-snap-viewing-dicoms.svg)
 
-### Navigating DICOM images
 
+### Navigating DICOM images
 Here, we provide instructions for handling multiple DICOM images, applying overlays, viewing image information, and using color maps in ITK-SNAP.
 
-#### 1. Loading Multiple DICOM Images as Separate Images
+#### Navigate around image, see intensity value, and adjust intensity window
+* To navigate around the image, i.e. change the displayed slices, you can left clicking in the displayed slices, using the mouse wheel, or the slider next to the displayed slices.
+* To zoom, you can use the right mouse button (or control + button 1), and pan using the centre mouse button (or alt + button 1).
+
+![Figure. ITK-SNAP cursor inspector](fig/itk-snap-cursor-inspector.png)
+
+* **Load additional image using exhale scan by drag and drop**
+	- Images can also be opened by simply dragging them on to the itksnap window. 
+	In a file explorer (Finder in Mac) go to the exhale_BH_CT folder and drag any of the dicom files on to the itksnap window. 
+	A small window will pop up asking What should itksnap do with this image? 
+	If you select Load as Main Image it will replace the current image. 
+	Instead select Load as Additional Image - this will enable easy comparison of the two images.
+
+![Figure. ITK-SNAP additional image](fig/itk-snap-additional-image.svg)
+
+#### **Using thumbnails to see image differences**
+	- Once the second image is loaded you will see two thumbnails in the top corner of each slice display
+	- Click on these to swap the displayed slices from one image to the other - this will enable you to easily see the similarities and differences between the images.
+	- You will also see that both images now appear in the Cursor Inspector, where you can see the intensity value at the cursor for both images. 
+	- You can also change the displayed image by clicking on it in the Cursor Inspector
+
+![Figure. ITK-SNAP thumbnails](fig/itk-snap-thumbnails.png)
+
+#### **Colour overlay**
+* In some cases you may want to display an image as a colour overlay on top of another image, e.g. displaying a PET image overlaid on the corresponding CT.
+1. **Load Primary Image**:
+   - Open your primary DICOM series of the `CT_for_PET` image either using the drag and drop method or `File->Open Image` as described above.
+	- This time select Load as Main Image. This will load in the new image replacing the two that were previously loaded.
+	- In some cases you may want to display an image as a colour overlay on top of another image, e.g. displaying a PET image overlaid on the corresponding CT.
+	Load the CT_for_PET image either using the drag and drop method or File->Open Image as described above
+	This time select Load as Main Image. This will load in the new image replacing the two that were previously loaded.
+
+![Figure. ITK-SNAP thumbnails](fig/itk-snap-colour-overlay.svg)
+
+#### **Colour overlay as a semi-transparent overlay**
+	- To load the image as a colour overlay you need to use File->Add Another Image... (e.g., `5.000000-Thorax Insp  2.0  B70f-29873`).
+	- Click on Browse and select any one of the files in the PET folder (e.g., `7.000000-Thorax Exp  2.0  B70f-73355`).
+	- Make sure File Format is DICOM Image Series (it should be). Click Next and then Next again. 
+	- When the image has loaded select As a semi-transparent overlay. you can also set the overlay color map here - select Hot from the dropdown menu and click Next. 
+	- The image summary will then be displayed, along with a warning about possible loss of precision (which can be ignored). click Finish
+
+![Figure. ITK-SNAP semi-transparent overlays](fig/itk-snap-semi-transparent-overlay.svg)
+
+
+### Loading Multiple DICOM Images as Separate Images
 
 1. **Open the First DICOM Series**:
    - Follow the steps above to load and view the first DICOM series.
@@ -161,40 +210,24 @@ Here, we provide instructions for handling multiple DICOM images, applying overl
 
 ![Figure. ITK-SNAP new window](fig/new-itk-snap-window.png)
 
-#### 2. Applying Overlays (shown in top of other images)
 
-1. **Load Primary Image**:
-   - Open your primary DICOM series as described above.
+### Layer inspector tools
+* Load `3.000000-CT Lung  3.0  B31f-61322` and `4.000000-Galligas Lung-03537` from CT-PET-VI-02, using hot semi-transparency (as shown above).
+* Go to `Tools->Layer Inspector`. This opens the Image Layer Inspector window. you will see the two images on the left, and five tabs along the top of the window.
+* PET image appears in Cursor Inspector (called Galligas Lung) in italic and CT image as CT Lung in bold. 
 
-2. **Load Overlay Image**:
-   - Go to `File` > `Add Another Image ...`.
-   - Select the image you want to use as an overlay. This could be another DICOM series or a previously saved segmentation.
+* **The General tab** displays the filename and the nickname for the selected image. 
+	* The Nickname can be edited. For the PET image the general tab also displays a slider to set the opacity, and the option to display it as a separate image or semi-transparent overlay. 
 
-![Figure. ITK-SNAP additional image](fig/open-additional-image.png)
+![Figure. ITK-SNAP: Layer inspector with general tab](fig/itk-snap-layer-inspector-general-tab.png)
 
-![Figure. ITK-SNAP overlay](fig/overlay-wizard.png)
+* **The Contrast tab** enables you to adjust how the image intensities are displayed for the different images. e.g. select the lung image and set the maximum value to 1000 (push enter after typing the number) and this will make the structures in the lung easier to see.
 
-3. **Adjust Overlay Settings**:
-   - Go to the `Layers` panel.
-   - Right click on the second DICOM Series and adjust the opacity and blending settings to properly visualise the overlay on the primary image.
+![Figure. ITK-SNAP: Layer inspector with contrast tab](fig/itk-snap-layer-inspector-contrast-tab.png)
 
-![Figure. ITK-SNAP layers panel](fig/layers-panel.png)
-
-
-#### 4. Viewing Image Information
-
-1. **Access Image Information**:
-   - Go to `Tools` > `Image Information`.
-   - A dialog box will appear displaying metadata and other relevant information about the loaded DICOM images (e.g. values for image header and cursor coordinates).
-
-![Figure. ITK-SNAP additional image](fig/image-info.png)
-
-
-
-#### 5. Applying Color Maps
-Images contain numerical voxels at each image. 
-One of the key elements of an imaging viewer is to provide different means to map those values into grey scales or different colors. 
-We will show you how to apply different color maps or lookup tables to your data and how this affects how the images are presented to the user. 
+* **The color map tab** can be used to select and manipulate the colour map
+	* One of the key elements of an imaging viewer is to provide different means to map those values into grey scales or different colors. 
+	* We will show you how to apply different color maps or lookup tables to your data and how this affects how the images are presented to the user. 
 
 1. **Load the Image**:
    - Open the desired DICOM series.
@@ -206,7 +239,23 @@ We will show you how to apply different color maps or lookup tables to your data
    - Choose a predefined color map from the list. You might also create a customised map.
    - Adjust the intensity and transparency settings as needed to enhance the visualisation of the images.
 
-![Figure. ITK-SNAP additional image](fig/colour-map-editor.png)
+![Figure. ITK-SNAP: Layer inspector with color map tab](fig/itk-snap-layer-inspector-color-map-tab.png)
+
+* **The info tab** displays the Image Header information for the images and also gives the Cursor Coordinates in both Voxel and World units.
+	* A dialog box will appear displaying metadata and other relevant information about the loaded DICOM images (e.g. values for image header and cursor coordinates).
+	* If you look at the info tab for both the CT image and PET image you will see that the header information for the images is different, and the cursor coordinates in voxel units for the PET image are not whole numbers.
+	* This is because the displayed slices are from the main (CT) image, and the overlaid (PET) image slices are interpolated at the corresponding locations.
+
+![Figure. ITK-SNAP: Layer inspector with info tab](fig/itk-snap-layer-inspector-info-tab.png)
+
+* **The metadata tab** contains (some of) the information from the DICOM header of the images
+
+![Figure. ITK-SNAP: Layer inspector with metadata tab](fig/itk-snap-layer-inspector-metadata-tab.png)
+
+
+
+
+
 
 
 ### Converting DICOM images to NifTi
