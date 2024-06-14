@@ -200,6 +200,9 @@ Here, we provide instructions for handling multiple DICOM images, applying overl
 
 
 #### 5. Applying Color Maps
+Images contain numerical voxels at each image. 
+One of the key elements of an imaging viewer is to provide different means to map those values into grey scales or different colors. 
+We will show you how to apply different color maps or lookup tables to your data and how this affects how the images are presented to the user. 
 
 1. **Load the Image**:
    - Open the desired DICOM series.
@@ -208,13 +211,15 @@ Here, we provide instructions for handling multiple DICOM images, applying overl
    - Go to `Tools` > `Color Maps Editor`.
 
 3. **Apply and Adjust Color Map**:
-   - Choose a predefined color map from the list or create a custom one.
+   - Choose a predefined color map from the list. You might also create a customised map.
    - Adjust the intensity and transparency settings as needed to enhance the visualisation of the images.
 
 ![Figure. ITK-SNAP additional image](fig/colour-map-editor.png)
 
 
 ### Converting DICOM images to NifTi
+As mentioned earlier in the exercise, the NIfTI image format tends to be much easier to work with when processing and analysing medical image data.
+We will now work on converting DICOM images to a NIfTI image volume. 
 
 #### Using ITK-SNAP
 In the ITK-SNAP application, save the file by clicking 'File' --> 'Save image' --> rename image and choose format as 'NiFTI'.
@@ -346,9 +351,8 @@ print(nii3ct.get_qform())
 
 ### coordinate system  
 The original DICOM images assume the world coordinate system is LPS (i.e. values increase when moving to the left, posterior, and superior).
-See [here](https://nipy.org/nibabel/dicom/dicom_orientation.html), if you obtained a similar affine transform from the DICOM headers.
+See this helpful information on [DICOM orientations](https://nipy.org/nibabel/dicom/dicom_orientation.html), and determine if you obtained a similar affine transform from the DICOM headers.
 The values in the first two rows corresponding to the x and y dimensions would be the negative of those in the NifTi header.
-
 
 ### Obtaining image pixel data
 ```python
