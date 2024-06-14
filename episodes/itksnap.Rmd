@@ -124,11 +124,11 @@ During these exercises you will learn about some of the key information stored i
 ## ITK-SNAP
 
 ### Getting Started with ITK-SNAP
-#### History
+#### Introduction
 ITK-SNAP started in 1999 with SNAP (SNake Automatic Partitioning) and developed by Paul Yushkevich with the guidance of Guido Gerig. 
 ITK-SNAP is open-source software distributed under the GNU General Public License. 
 ITK-SNAP is written in C++ and it leverages the Insight Segmentation and Registration Toolkit (ITK) library. 
-
+See `Summary and Setup` section for requirements and installation of ITK-SNAP
 
 ### ITK-SNAP application
 ITK-SNAP application shows three orthogonal slices and a fourth window for three-dimensional view segmentation. 
