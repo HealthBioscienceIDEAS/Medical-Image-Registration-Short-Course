@@ -230,11 +230,8 @@ We recommend to check [documentation](https://nipy.org/nibabel/#documentation) f
 
 
 ### Loading images
-1. Activate `mirVE` environment and open a python terminal under `*/episodes` path to run:
-```
-#conda activate mirVE
-#python
-
+1. Open terminal, activate `mirVE` environment: `conda activate mirVE`, and run python under `*/episodes` path to run:
+```python
 import numpy as np
 import nibabel as nib
 import matplotlib.pyplot as plt
@@ -242,7 +239,7 @@ nii3ct = nib.load("data/3_ct_lung__30__b31f.nii.gz")
 ```
 
 2. `NifTI` file properties:
-```
+```python
 print(type(nii3ct))
 
 # <class 'nibabel.nifti1.Nifti1Image'>
@@ -264,7 +261,7 @@ nii3ct.affine
 ```
 
 ### Header features 
-```
+```python
 print(nii3ct.header)
 
 #<class 'nibabel.nifti1.Nifti1Header'> object, endian='<'
@@ -315,7 +312,7 @@ print(nii3ct.header)
 ```
 
 ### qform   
-```
+```python
 print(nii3ct.get_qform())
 ## dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=True) # nii.gz
 #[[  -0.9765625     0.            0.          249.51171875]
@@ -337,7 +334,7 @@ The values in the first two rows corresponding to the x and y dimensions would b
 
 
 ### Obtaining image pixel data
-```
+```python
 pixel_data=nii3ct.get_fdata()
 
 print(pixel_data.dtype, pixel_data.shape)
@@ -354,7 +351,7 @@ plt.imshow(pixel_data[:,:,140], cmap="gray"); plt.show()
 ### Using float64 data type
 * The image data for a Nifti1Image object can be accessed using the `get_fdata` function.
 Loading the data from disk and cast it to float64 type before returning the data as a numpy array.
-```
+```python
 image_data=nii3ct.get_fdata()
 print(type(image_data))
 #<class 'numpy.ndarray'>
@@ -370,7 +367,7 @@ Casting it to float64 prevents any integer-related errors and problems in downst
 However, this does not change the type of the image stored on disk, which as we have seen is int16 for this image, and this could still lead to downstream errors or unexpected behaviour for any processing that works directly on the images stored on disk. 
 Therefore, we are going to convert the image saved on disk to a floating point image. 
 We are going to use 32 bit rather than 64 bit floating point, as this is usually sufficiently accurate. 
-```
+```python
 print(nii3ct.get_data_dtype())
 #int16
 nii3ct.set_data_dtype(np.float32)
@@ -383,8 +380,8 @@ This also updates the corresponding fields in the header.
 Use the `set_qform` function to set the `qform` code. 
 To just set the code and not modify the other `qform` values in the header, the first input should be None. 
 It is not necessary to modify the other `qform` values as they should be ignored when the code is set to unknown.
-```
 
+```python
 nii3ct.set_qform(None, code = 'unknown')
 print(nii3ct.header)
 ...
@@ -395,7 +392,7 @@ qform_code      : unknown
 
 The floating point image can now be written to disk using the save function. 
 Note. We do not need to manually modify the type of the image data – setting the data type for the Nifti1Image object tells it which type to use when writing the image data to disk.
-```
+```python
 nib.save(nii3ct, 'data/3_ct_lung__30__b31f_float32.nii.gz')
 ```
 
@@ -405,7 +402,7 @@ The file size of `3_ct_lung__30__b31f_float32.nii.gz` is larger than  `3_ct_lung
 Both images are compressed, but the compression is more efficient for the floating point image: while a 32-bit floating point variable is twice the size of a 16-bit integer, the floating image is less than double the size of the original integer image.
 
 * int16
-```
+```python
 nii3ct_int16 = nib.load("data/3_ct_lung__30__b31f.nii.gz")
 
 print(nii3ct_int16.get_data_dtype())
@@ -430,7 +427,7 @@ print(nii3ct_int16.header)
 #...
 ```
 * float32
-```
+```python
 nii3ct_float32 = nib.load("data/3_ct_lung__30__b31f_float32.nii.gz")
 
 print(nii3ct_float32.get_data_dtype())
@@ -462,7 +459,7 @@ print(nii3ct_float32.header)
 Cropping data might offen contain background voxels which can be useful in some instances but might take up valuable RAM memory, especially for large images.
 
 * Read the image data from disk using `get_fdata`  and then create a new array containing a copy of the desired slices:
-```
+```python
 nii3ct_float32 = nib.load("data/3_ct_lung__30__b31f_float32.nii.gz")
 nii3ct_float32.set_data_dtype(np.float32)
 print(nii3ct_float32.get_data_dtype())
@@ -534,7 +531,7 @@ nib.save(nii3ct_float32_cropped, "data/3_ct_lung__30__b31f_float32_cropped.nii.g
 ```
 
 * Setting world coordinates of voxel (103, 160, 0) in the uncropped image.
-```
+```python
 cropped_origin = nii3ct_float32.affine@np.array([103,160,0,1])
 cropped_origin
 #array([ 148.92578125,  309.76171875, -553.5       ,    1.        ])
@@ -564,7 +561,7 @@ nii3ct_float32_cropped.affine
 nib.save(nii3ct_float32_cropped, "data/3_ct_lung__30__b31f_float32_cropped_affine.nii.gz")
 ```
 * updating the affine transforms with `nibabel.slicer`
-```
+```python
 nii3ct_float32_cropped_with_nibabel_slicer = nii3ct_float32.slicer[103:381,160:340,:]
 nii3ct_float32_cropped_with_nibabel_slicer.affine
 #array([[  -0.9765625 ,    0.        ,    0.        ,  148.92578125],
