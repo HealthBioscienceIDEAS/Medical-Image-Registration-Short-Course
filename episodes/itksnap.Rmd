@@ -230,7 +230,13 @@ We recommend to check [documentation](https://nipy.org/nibabel/#documentation) f
 
 
 ### Loading images
-1. Open terminal, activate `mirVE` environment: `conda activate mirVE`, and run python under `*/episodes` path to run:
+1. Open terminal, activate `mirVE` environment and run python
+```bash
+conda activate mirVE
+python
+```
+
+2. Run python commands under `*/episodes` path:
 ```python
 import numpy as np
 import nibabel as nib
