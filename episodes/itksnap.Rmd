@@ -27,14 +27,49 @@ In these exercises we will be working with real-world medical imaging data from 
 
 ### Data resources
 We are using CT Ventilation as a Functional Imaging Modality for Lung Cancer Radiotherapy (also known as `CT-vs-PET-Ventilation-Imaging dataset`) from [TCIA](https://www.cancerimagingarchive.net/collection/ct-vs-pet-ventilation-imaging/).
-`CT-vs-PET-Ventilation-Imaging` dataset contains 20 lung cancer patients underwent exhale/inhale breath hold CT (BHCT), free-breathing four-dimensional CT (4DCT) and Galligas PET ventilation scans in a single session on a combined 4DPET/CT scanner. The purpose of the study was to enable comparisons between: (i) CT ventilation images derived from exhale/inhale BHCT scans, (ii) CT ventilation images derived from free-breathing 4DCT scans, and (iii) Galligas PET (nuclear medicine) ventilation scans. 
-See `Summary and Setup` section for further details on CT-vs-PET-Ventilation-Imaging dataset.
+The CT-vs-PET-Ventilation-Imaging collection is distributed under the Creative Commons Attribution 4.0 International License (https://creativecommons.org/licenses/by/4.0/). 
+The `CT-vs-PET-Ventilation-Imaging` dataset contains 20 lung cancer patients underwent exhale/inhale breath hold CT (BHCT), free-breathing four-dimensional CT (4DCT) and Galligas PET ventilation scans in a single session on a combined 4DPET/CT scanner.    
 
-We recomend to focus on exhale/inhale breath hold CT (BHCT) Dicoms which belog to:    
-* The BHCT scans for CT-PET-VI-02 & CT-PET-VI-03 show very little motion between inhale and exhale   
-* The BHCT scans for CT-PET-VI-05 have a different number of slices between the inhale and exhale   
+We recomend using the BHCT scans for participants `CT-PET-VI-02` and `CT-PET-VI-03` showing very little motion between inhale and exhale (for PET scan and accompanying CT scan), and BHCT scans for participants `CT-PET-VI-05` and `CT-PET-VI-06` (the inhale and exhale CT scans), where 05 has a different number of slices between the inhale and exhale:
 
-For example, this episode will use  DICOM data "CT-PET-VI-02/3.000000-CT Lung 3.0 B31f-61322" but others can be used!
+* CT-PET-VI-02
+```bash
+CT-PET-VI-02$ tree -d
+.
+└── 05-28-1996-RTRTRespLowBreathRateRNS Adult-05441
+    ├── 1000.000000-PET SUV Factors-26496
+    ├── 3.000000-CT Lung  3.0  B31f-61322
+```
+
+* CT-PET-VI-03
+```bash
+/CT-PET-VI-03$ tree -d
+.
+├── 06-25-1996-RTRTRespLowBreathRateRNS Adult-43080
+│   ├── 1000.000000-PET SUV Factors-06580
+│   ├── 3.000000-CT Lung  3.0  B31f-08354
+```
+
+* CT-PET-VI-05
+
+```bash
+CT-PET-VI-05$ tree -d
+.
+└── 12-10-1996-RTRTRespLowBreathRateRNS Adult-37585
+    ├── 3.000000-CT Lung  3.0  B31f-90638
+```
+
+* CT-PET-VI-06
+```bash
+CT-PET-VI-06$ tree -d
+.
+└── 01-27-1997-RTRTRespLowBreathRateRNS Adult-52536
+    ├── 3.000000-CT Lung  3.0  B31f-97044
+```
+
+Refer to `Summary and Setup` section for further details on CT-vs-PET-Ventilation-Imaging dataset.
+
+For examples in this episode, we are going to use DICOM data "CT-PET-VI-02/3.000000-CT Lung 3.0 B31f-61322" but others can be used!
 
 ![Figure. CT-PET-VI-02 dataset](fig/CT-PET-VI-02.png)
 
