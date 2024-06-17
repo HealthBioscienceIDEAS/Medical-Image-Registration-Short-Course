@@ -60,7 +60,9 @@ contact: 'team@carpentries.org'
 
 # Order of episodes in your lesson
 episodes: 
-- introduction.Rmd
+#- introduction.Rmd
+- itksnap.Rmd
+- excthreesteps.Rmd
 
 # Information for Learners
 learners: 
