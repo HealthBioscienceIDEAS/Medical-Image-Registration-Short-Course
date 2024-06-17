@@ -231,6 +231,8 @@ if lev == 1:
 In this step, the code initialises the display of results before starting the iterative process. This includes displaying the source image, target image, warped image, deformation field, and update field. The dispImage and dispDefField functions are used to visualise these images and fields. The function pauses after the initial display to allow the user to position the figures as desired before continuing with the registration process.
 
 
+![Initial Display Results](fig/Figure_1.png)
+
 
 ## 5. Main Iterative Loop
 
@@ -347,6 +349,8 @@ for it in range(max_it):
     prev_MSD = MSD.copy()
 ```
 
+
+
 ## 6. Final Results Display
 
 After completing the iterative registration process, the final step is to display the warped image and the deformation field. This provides a visual representation of the registration outcome.
@@ -368,6 +372,7 @@ dispDefField(up_field_to_display, spacing=disp_spacing, plot_type=disp_method_up
 plt.xlim(x_lims)
 plt.ylim(y_lims)
 ```
+
 
 
 ## 7. Return Results
