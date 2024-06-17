@@ -22,16 +22,18 @@ This document explains the implementation of a 2D image registration algorithm u
 
 ## 1. Importing Libraries
 
-First, we import the necessary libraries for image processing, transformation, and visualisation.
+First, we import the necessary libraries for image processing, transformation, and visualisation. The utils3 module is another Python file containing utility functions used for tasks such as displaying images and handling deformed and updated fields.
 
 ```python
-import matplotlib.pyplot as plt
-import numpy as np
-from skimage.transform import rescale, resize
-from scipy.ndimage.filters import gaussian_filter
-from utils3 import dispImage, resampImageWithDefField, calcMSD, dispDefField
-```
+import matplotlib
+matplotlib.use('TkAgg')  # Set the backend for matplotlib
+import matplotlib.pyplot as plt  # Import matplotlib for plotting
 
+import numpy as np  # Import numpy for numerical operations
+from skimage.transform import rescale, resize  # Import functions for image transformation from scikit-image
+from scipy.ndimage import gaussian_filter  # Import gaussian_filter function from scipy's ndimage module
+from utils3 import dispImage, resampImageWithDefField, calcMSD, dispDefField  # Import specific functions from a custom module
+```
 
 ## 2. Function Definition
 
