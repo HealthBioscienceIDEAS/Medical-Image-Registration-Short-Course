@@ -157,7 +157,16 @@
 <div class="accordion accordion-flush" id="accordionFlush2">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading2">
-        <a href="introduction.html">1. introduction</a>
+        <a href="itksnap.html">1. A Practical Introduction to Working with Medical Image Data</a>
+    </div><!--/div.accordion-header-->
+        
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush3">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading3">
+        <a href="excthreesteps.html">2. Demons Image Registration</a>
     </div><!--/div.accordion-header-->
         
   </div><!--/div.accordion-item-->
@@ -205,11 +214,11 @@
         <!-- START: inst/pkgdown/templates/content-syllabus.html -->
   <div class="col-xl-8 col-lg-12 primary-content">
     <nav class="lesson-content mx-md-4" aria-label="Next Chapter"><!-- content for small screens --><div class="d-block d-sm-block d-md-none">
-        <a class="chapter-link float-end" href="../instructor/introduction.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link float-end" href="../instructor/itksnap.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
-        <a class="chapter-link float-end" href="../instructor/introduction.html" rel="next">Next: introduction... <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link float-end" href="../instructor/itksnap.html" rel="next">Next: A Practical... <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <hr></nav><main id="main-content" class="main-content"><h1 class="schedule-heading">Summary and Schedule</h1>
       
@@ -227,13 +236,26 @@ any links that you are not going to use.
 <span class="visually-hidden">Duration: </span>00h 00m
 </td>
 <td>
- 1. <a href="introduction.html">introduction</a>
+ 1. <a href="itksnap.html">A Practical Introduction to Working with
+Medical Image Data</a>
 </td>
 <td>
-How do you write a lesson using R Markdown and <a href="https://carpentries.github.io/sandpaper/" class="external-link">sandpaper</a>?
+How can we visualize volumetric data?<br>How do locations in an image
+get mapped to real-world coordinates?<br>How can we register different
+types of images together using ITK-SNAP?
 </td>
 </tr><tr><td>
 <span class="visually-hidden">Duration: </span>00h 12m
+</td>
+<td>
+ 2. <a href="excthreesteps.html">Demons Image Registration</a>
+</td>
+<td>
+How to understand and visualise three image in one pane for demons image
+registration algorithm?
+</td>
+</tr><tr><td>
+<span class="visually-hidden">Duration: </span>00h 24m
 </td>
 <td>
 Finish
@@ -256,9 +278,111 @@ FIXME: place any data you want learners to use in `episodes/data` and then use
        link to it, replacing the example.com link.
 --><p>Download the <a href="https://example.com/FIXME" class="external-link">data zip file</a>
 and unzip it to your Desktop</p>
+<div class="section level3">
+<h3 id="ct-vs-pet-ventilation-imaging">CT-vs-PET-Ventilation-Imaging<a class="anchor" aria-label="anchor" href="#ct-vs-pet-ventilation-imaging"></a></h3>
+<p>CT Ventilation as a Functional Imaging Modality for Lung Cancer
+Radiotherapy from <a href="https://www.cancerimagingarchive.net/collection/ct-vs-pet-ventilation-imaging/" class="external-link">TCIA</a>.
+We recomend to focus on exhale/inhale breath hold CT (BHCT) Dicoms which
+belog to: * The BHCT scans for CT-PET-VI-02 &amp; CT-PET-VI-03 show very
+little motion between inhale and exhale * The BHCT scans for
+CT-PET-VI-05 have a different number of slices between the inhale and
+exhale</p>
+<p>Data paths look like these:</p>
+<pre><code>/CT-PET-VI-02$ tree -d 
+.
+├── 1000.000000-PET SUV Factors-26496 [1 item, with size 42.1 kB]
+├── 3.000000-CT Lung  3.0  B31f-61322  [175 items, totalling 92.4 MB]
+├── 4.000000-Galligas Lung-03537 [159 items, totalling 51.5 MB]
+├── 5.000000-Thorax Insp  2.0  B70f-29873 [167 items, totalling 88.1 MB]
+├── 7.000000-Thorax Exp  2.0  B70f-73355 [167 items, totalling 88.1 MB]
+└── 8.000000-RespLow  2.0  B30s  80  Ex - 100  In-44317 [810 items, totalling 426.9 MB]
+
+/CT-PET-VI-03$ tree -d
+.
+├── 06-25-1996-RTRTRespLowBreathRateRNS Adult-43080
+│   ├── 1000.000000-PET SUV Factors-06580
+│   ├── 3.000000-CT Lung  3.0  B31f-08354
+│   └── 4.000000-Galligas Lung-15379
+└── 06-25-1996-RTRTRespLowBreathRateRNS Adult-87093
+    ├── 5.000000-Thorax Insp  2.0  B70f-42000
+    ├── 7.000000-Thorax Exp  2.0  B70f-45310
+    └── 8.000000-RespLow  2.0  B30s  80  Ex - 100  In-54790
+
+/CT-PET-VI-05$ tree -d
+└── 12-10-1996-RTRTRespLowBreathRateRNS Adult-37585
+    ├── 1000.000000-PET SUV Factors-63910
+    ├── 3.000000-CT Lung  3.0  B31f-90638
+    ├── 4.000000-Galligas Lung-26361
+    ├── 5.000000-Thorax Insp  2.0  B70f-45546
+    ├── 7.000000-Thorax Exp  2.0  B70f-31579
+    └── 8.000000-RespLow  2.0  B30s  80  Ex - 100  In-16454</code></pre>
+</div>
 </section><section id="software-setup"><h2 class="section-heading">Software Setup<a class="anchor" aria-label="anchor" href="#software-setup"></a>
 </h2>
-<hr class="half-width"><div id="details" class="callout discussion">
+<hr class="half-width"><div class="section level3">
+<h3 id="installing-dependencies-in-python-virtual-environmnets">Installing Dependencies in Python Virtual environmnets<a class="anchor" aria-label="anchor" href="#installing-dependencies-in-python-virtual-environmnets"></a></h3>
+<p>Installing python virtual environment with dependencies (e.g.,
+nibabel, etc). See further instructions <a href="https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course/tree/main/_dependencies" class="external-link">here</a>.</p>
+<div class="section level4">
+<h4 id="using-conda">Using conda<a class="anchor" aria-label="anchor" href="#using-conda"></a></h4>
+<pre><code>conda create -n "mirVE" python=3.11 pip -c conda-forge
+conda config --set pip_interop_enabled True
+conda activate mirVE
+cd ~/_dependencies
+pip install -r requirements.txt</code></pre>
+</div>
+<div class="section level4">
+<h4 id="using-python-virtual-environment">Using python virtual environment<a class="anchor" aria-label="anchor" href="#using-python-virtual-environment"></a></h4>
+<pre><code># Installing dependencies in Ubuntu 22.04
+sudo apt-get install -y python3-pip
+sudo apt-get install -y python3-venv
+# Create path for venv
+cd $HOME
+mkdir mirVE
+cd mirVE
+# Create virtual environment
+python3 -m venv mirVE
+source mirVE/bin/activate
+cd ~/_dependencies
+python3 -m pip install -r requirements.txt</code></pre>
+</div>
+</div>
+<div class="section level3">
+<h3 id="itk-snap">ITK-Snap<a class="anchor" aria-label="anchor" href="#itk-snap"></a></h3>
+<div class="section level4">
+<h4 id="hardware-requirements">Hardware Requirements<a class="anchor" aria-label="anchor" href="#hardware-requirements"></a></h4>
+<ul><li>Memory: “Overall 2Gb of memory should be enough for most users; 4Gb
+should suffice for users with large images.” <a href="http://www.itksnap.org/pmwiki/pmwiki.php?n=Documentation.HardwareRequirements#:~:text=Memory%20usage%20in%20SNAP%20is,for%20a%20512%20cubed%20image." class="external-link"><span class="emoji" data-emoji="link">🔗</span></a>
+</li>
+<li>Multi - Operating System:
+<ul><li>ITK-SNAP binaries are distributed for Linux (32 and 64 bit)),</li>
+<li>Windows (64 bit),</li>
+<li>and MacOS Leopard (64 bit).</li>
+</ul></li>
+</ul></div>
+<div class="section level4">
+<h4 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a></h4>
+<div class="section level5">
+<h5 id="windows-11">Windows 11<a class="anchor" aria-label="anchor" href="#windows-11"></a></h5>
+<ul><li>Open the following link: <a href="https://sourceforge.net/projects/itk-snap/files/itk-snap/4.2.0/" class="external-link uri">https://sourceforge.net/projects/itk-snap/files/itk-snap/4.2.0/</a>
+</li>
+<li>Download <code>itksnap-4.2.0-20240422-win64-AMD64.exe</code>
+</li>
+<li>Install it by following default settings.</li>
+</ul></div>
+<div class="section level5">
+<h5 id="ubuntu-22-04-x64-gnulinux">Ubuntu 22.04 x64 GNU/Linux<a class="anchor" aria-label="anchor" href="#ubuntu-22-04-x64-gnulinux"></a></h5>
+<pre><code>FILENAME=itksnap-nightly-rel_4.0-Linux-gcc64.tar.gz  #Length: 200943059 (192M) [application/x-gzip]
+cd ~/Downloads/
+mkdir -p itksnap &amp;&amp; cd itksnap
+wget https://sourceforge.net/projects/itk-snap/files/itk-snap/Nightly/$FILENAME/download -O $FILENAME
+tar -xvzf $FILENAME</code></pre>
+</div>
+</div>
+<div class="section level4">
+<h4 id="mac">Mac<a class="anchor" aria-label="anchor" href="#mac"></a></h4>
+<pre><code><span><span class="va">TOADD</span></span></code></pre>
+<div id="details" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
 </div>
@@ -281,7 +405,7 @@ e.g. online setup) in the solutions blocks.</p>
   Windows
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>Use PuTTY</p>
 </div>
@@ -295,7 +419,7 @@ e.g. online setup) in the solutions blocks.</p>
   MacOS
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>Use Terminal.app</p>
 </div>
@@ -309,9 +433,10 @@ e.g. online setup) in the solutions blocks.</p>
   Linux
   </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
-<p>Use Terminal</p>
+<p>Use Terminal to install</p>
+<pre><code>sudo apt-get install tree # to visualise files and paths</code></pre>
 </div>
 </div>
 </div>
@@ -320,12 +445,14 @@ e.g. online setup) in the solutions blocks.</p>
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use. 
  -->
+</div>
+</div>
 </section></section></main><nav class="bottom-pagination mx-md-4" aria-label="Next Chapter"><!-- content for small screens --><div class="d-block d-sm-block d-md-none">
-        <a class="chapter-link float-end" href="../instructor/introduction.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link float-end" href="../instructor/itksnap.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
-        <a class="chapter-link float-end" href="../instructor/introduction.html" rel="next">Next: introduction... <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link float-end" href="../instructor/itksnap.html" rel="next">Next: A Practical... <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
     </nav></div>
 <!-- END  : inst/pkgdown/templates/content-syllabus.html -->
@@ -369,8 +496,8 @@ any links that you are not going to use.
   "url": "https://HealthBioscienceIDEAS.github.io/Medical-Image-Registration-Short-Course/instructor/index.html",
   "identifier": "https://HealthBioscienceIDEAS.github.io/Medical-Image-Registration-Short-Course/instructor/index.html",
   "dateCreated": "2024-05-13",
-  "dateModified": "2024-06-11",
-  "datePublished": "2024-06-11"
+  "dateModified": "2024-06-17",
+  "datePublished": "2024-06-17"
 }
 
   </script><script>
