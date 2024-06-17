@@ -233,9 +233,6 @@ In this step, the code initialises the display of results before starting the it
 
 ![Initial Display Results](fig/Figure_1.png)
 
-![Initial Display Results](fig/Figure_1.png)
-
-
 ## 5. Main Iterative Loop
 
 The main iterative loop within the `demonsReg` function updates the deformation field based on demons forces and applies regularisation techniques. It continues until the maximum number of iterations is reached or until there is no improvement in the Mean Squared Difference (MSD) between the target and warped images.
