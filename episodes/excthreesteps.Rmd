@@ -232,6 +232,7 @@ In this step, the code initialises the display of results before starting the it
 
 
 ![Initial Display Results](fig/Figure_1.png)
+![Initial Display Results](fig/Figure_1.png)
 
 ## 5. Main Iterative Loop
 
