@@ -378,7 +378,6 @@ In this step, we perform the main iterative loop where the actual image registra
 
 
 
-
 ## 10. Displaying Final Results
 
 In this step, we visualise the final results of the image registration process. This includes displaying the warped image, the deformation field, and the updated deformation field using subplots.
@@ -432,7 +431,7 @@ cine_MR_img_2 = skimage.io.imread('.../cine_MR_2.png')
 cine_MR_img_3 = skimage.io.imread('.../cine_MR_3.png')
 ```
 
-
+Converting all images into double data
 
 ```python
 import numpy as np
