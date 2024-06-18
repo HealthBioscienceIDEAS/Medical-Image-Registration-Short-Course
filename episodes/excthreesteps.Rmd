@@ -30,7 +30,7 @@ This document explains the implementation of a 2D image registration algorithm u
 
 ## 1. Importing Libraries
 
-First, we import the necessary libraries for image processing, transformation, and visualisation. The `utils3` module is another Python file containing utility functions used for tasks such as displaying images and handling deformed and updated fields.
+First, we import the necessary libraries for image processing, transformation, and visualisation. The `utils3` module is another Python file containing utility functions used for tasks such as displaying images and handling deformed and updated fields. Both `demonsReg.py` and `utils3.py` are available in `src/mirc/utils`
 
 ```python
 import matplotlib
@@ -429,7 +429,7 @@ In this step, we visualise the final results of the image registration process. 
 
 ## 11. Preparing Images for calling the demonsReg function
 
-Follow `exampleSolution3.py` for running the function. Below, we describe how we prepare images: `cine_MR_img_1.png`, `cine_MR_img_2.png`, and `cine_MR_img_3.png`. These images will be available in Data folder. 
+Follow `exampleSolution3.py` [available in src/mirc/Example] for running the function. Below, we describe how we prepare images: `cine_MR_img_1.png`, `cine_MR_img_2.png`, and `cine_MR_img_3.png`. These images are available in `episodes/data`. 
 
 
 ```python
