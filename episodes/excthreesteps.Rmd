@@ -434,9 +434,9 @@ Follow `exampleSolution3.py` for running the function. Below, we describe how we
 
 ```python
 import skimage.io
-cine_MR_img_1 = skimage.io.imread('.../cine_MR_1.png') 
-cine_MR_img_2 = skimage.io.imread('.../cine_MR_2.png')
-cine_MR_img_3 = skimage.io.imread('.../cine_MR_3.png')
+cine_MR_img_1 = skimage.io.imread('cine_MR_1.png') 
+cine_MR_img_2 = skimage.io.imread('cine_MR_2.png')
+cine_MR_img_3 = skimage.io.imread('cine_MR_3.png')
 ```
 
 Converting all images into double data for standard orientation.
