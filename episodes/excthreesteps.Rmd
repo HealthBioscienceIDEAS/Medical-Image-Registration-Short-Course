@@ -22,7 +22,7 @@ This document explains the implementation of a 2D image registration algorithm u
 
 ## 1. Importing Libraries
 
-First, we import the necessary libraries for image processing, transformation, and visualisation. The utils3 module is another Python file containing utility functions used for tasks such as displaying images and handling deformed and updated fields.
+First, we import the necessary libraries for image processing, transformation, and visualisation. The `utils3` module is another Python file containing utility functions used for tasks such as displaying images and handling deformed and updated fields.
 
 ```python
 import matplotlib
@@ -228,7 +228,7 @@ if lev == 1:
   input('position the figures as desired and then push enter to run the registration')
 ```
 
-In this step, the code initialises the display of results before starting the iterative process. This includes displaying the source image, target image, warped image, deformation field, and update field. The dispImage and dispDefField functions are used to visualise these images and fields. The function pauses after the initial display to allow the user to position the figures as desired before continuing with the registration process.
+In this step, the code initialises the display of results before starting the iterative process. This includes displaying the source image, target image, warped image, deformation field, and update field. The dispImage and dispDefField functions from `utils3` are used to visualise these images and fields. The function pauses after the initial display to allow the user to position the figures as desired before continuing with the registration process.
 
 ![Initial Display Results](fig/Figure_1.png)
 
