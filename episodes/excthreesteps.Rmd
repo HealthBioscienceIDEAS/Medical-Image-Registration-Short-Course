@@ -422,4 +422,35 @@ In this step, we visualize the final results of the image registration process. 
 
 ## 11. Preparing Images for calling the demonsReg function
 
+Follow `exampleSolution3.py` for running the function. Below, we describe how we prepare images: `cine_MR_img_1.png`, `cine_MR_img_2.png`, and `cine_MR_img_3.png`. These images will be available in Data folder. 
 
+
+```python
+import skimage.io
+cine_MR_img_1 = skimage.io.imread('.../cine_MR_1.png') 
+cine_MR_img_2 = skimage.io.imread('.../cine_MR_2.png')
+cine_MR_img_3 = skimage.io.imread('.../cine_MR_3.png')
+```
+
+
+
+```python
+import numpy as np
+# ***************
+# ADD CODE HERE TO CONVERT ALL THE IMAGES TO DOUBLE DATA TYPE AND TO REORIENTATE THEM
+# INTO 'STANDARD ORIENTATION'
+cine_MR_img_1 = np.double(cine_MR_img_1)
+cine_MR_img_2 = np.double(cine_MR_img_2)
+cine_MR_img_3 = np.double(cine_MR_img_3)
+
+cine_MR_img_1 = np.flip(cine_MR_img_1.T, 1)
+cine_MR_img_2 = np.flip(cine_MR_img_2.T, 1)
+cine_MR_img_3 = np.flip(cine_MR_img_3.T, 1)
+```
+
+
+Calling the function:
+
+```python
+demonsReg(cine_MR_img_1, cine_MR_img_2)
+```
