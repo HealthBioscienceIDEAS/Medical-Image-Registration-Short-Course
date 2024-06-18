@@ -2,3 +2,5 @@ numpy
 matplotlib
 dicom2nifti
 nibabel
+scikit-image
+scipy
