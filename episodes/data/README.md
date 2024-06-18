@@ -39,7 +39,7 @@ Data paths look like these:
 ```
 
 
-## Data is converted using:
+### Data is converted using:
 ```
 from pathlib import Path 
 import dicom2nifti 
@@ -47,4 +47,8 @@ dicoms = Path("~/3_000000-CT_Lung_30_B31f-61322")
 dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=True)
 ```
 
+
+## Demons Image Registration Exercise Data
+
+Please check `data` folder inside `episodes` for accessing `cine_MR_img_1.png`, `cine_MR_img_2.png`, and `cine_MR_img_3.png` that are used for demonReg.py and `exampleSolution3.py`.
 
