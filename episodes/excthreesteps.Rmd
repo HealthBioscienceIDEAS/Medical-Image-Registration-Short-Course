@@ -230,48 +230,49 @@ if lev == 1:
 
 In this step, the code initialises the display of results before starting the iterative process. This includes displaying the source image, target image, warped image, deformation field, and update field. The dispImage and dispDefField functions are used to visualise these images and fields. The function pauses after the initial display to allow the user to position the figures as desired before continuing with the registration process.
 
-
-![Initial Display Results](fig/Figure_1.png)
 ![Initial Display Results](fig/Figure_1.png)
 
-## 5. Main Iterative Loop
 
-The main iterative loop within the `demonsReg` function updates the deformation field based on demons forces and applies regularisation techniques. It continues until the maximum number of iterations is reached or until there is no improvement in the Mean Squared Difference (MSD) between the target and warped images.
+
+
+## 9. Main Iterative Loop for Image Registration
+In this step, we perform the main iterative loop where the actual image registration occurs. The loop continues until the maximum number of iterations is reached or until convergence criteria are met. The loop updates the deformation field iteratively to minimize the Mean Squared Difference (MSD) between the target and warped images.
 
 ```python
-# Main Iterative Loop
-for it in range(max_it):
-    # Calculate update from demons forces
-    #
-    # if the warped image gradient is used (instead of the target image gradient)
-    # this needs to be calculated 
-    if not use_target_grad:
+    # main iterative loop - repeat until max number of iterations reached
+    for it in range(max_it):
+      
+      # calculate update from demons forces
+      #
+      # if the warped image gradient is used (instead of the target image gradient)
+      # this needs to be calculated 
+      if not use_target_grad:
         [img_grad_x, img_grad_y] = np.gradient(warped_image)
         
-    # calculate difference image
-    diff = target - warped_image
-    # calculate denominator of demons forces
-    denom = np.power(img_grad_x, 2) + np.power(img_grad_y, 2) + np.power(diff, 2)
-    # calculate x and y components of numerator of demons forces
-    numer_x = diff * img_grad_x
-    numer_y = diff * img_grad_y
-    # calculate the x and y components of the update
-    #denom[denom < 0.01] = np.nan
-    update_x = numer_x / denom
-    update_y = numer_y / denom
-    
-    # set nan values to 0
-    update_x[np.isnan(update_x)] = 0
-    update_y[np.isnan(update_y)] = 0
-    
-    # if fluid like regularisation used smooth the update
-    if sigma_fluid > 0:
+      # calculate difference image
+      diff = target - warped_image
+      # calculate denominator of demons forces
+      denom = np.power(img_grad_x, 2) + np.power(img_grad_y, 2) + np.power(diff, 2)
+      # calculate x and y components of numerator of demons forces
+      numer_x = diff * img_grad_x
+      numer_y = diff * img_grad_y
+      # calculate the x and y components of the update
+      #denom[denom < 0.01] = np.nan
+      update_x = numer_x / denom
+      update_y = numer_y / denom
+      
+      # set nan values to 0
+      update_x[np.isnan(update_x)] = 0
+      update_y[np.isnan(update_y)] = 0
+            
+      # if fluid like regularisation used smooth the update
+      if sigma_fluid > 0:
         update_x = gaussian_filter(update_x, sigma_fluid, mode='nearest')
         update_y = gaussian_filter(update_y, sigma_fluid, mode='nearest')
-    
-    # update displacement field using addition (original demons) or
-    # composition (diffeomorphic demons)
-    if use_composition:
+      
+      # update displacement field using addition (original demons) or
+      # composition (diffeomorphic demons)
+      if use_composition:
         # compose update with current transformation - this is done by
         # transforming (resampling) the current transformation using the
         # update. we can use the same function as used for resampling
@@ -292,93 +293,85 @@ for it in range(max_it):
         # replace nans in disp field with 0s
         disp_field_x[np.isnan(disp_field_x)] = 0
         disp_field_y[np.isnan(disp_field_y)] = 0
-    else:
+      else:
         # add the update to the current displacement field
         disp_field_x = disp_field_x + update_x
         disp_field_y = disp_field_y + update_y
-    
-    
-    # if elastic like regularisation used smooth the displacement field
-    if sigma_elastic > 0:
+      
+      
+      # if elastic like regularisation used smooth the displacement field
+      if sigma_elastic > 0:
         disp_field_x = gaussian_filter(disp_field_x, sigma_elastic, mode='nearest')
         disp_field_y = gaussian_filter(disp_field_y, sigma_elastic, mode='nearest')
-    
-    # update deformation field from disp field
-    def_field[:, :, 0] = disp_field_x + X
-    def_field[:, :, 1] = disp_field_y + Y
+      
+      # update deformation field from disp field
+      def_field[:, :, 0] = disp_field_x + X
+      def_field[:, :, 1] = disp_field_y + Y
             
-    # transform the image using the updated deformation field
-    warped_image = resampImageWithDefField(source, def_field)
+      # transform the image using the updated deformation field
+      warped_image = resampImageWithDefField(source, def_field)
 
-    # update images if required for this iteration
-    if disp_freq > 0 and it % disp_freq == 0:
-        plt.figure(3)
-        dispImage(warped_image)
+      # update images if required for this iteration
+      if disp_freq > 0 and it % disp_freq == 0:
+        # Create a single figure with 3 subplots in one row and three columns
+        fig, axs = plt.subplots(1, 3, figsize=(12, 6))
+
+        # Plotting the warped image in the first subplot
+        plt.sca(axs[0])
+        dispImage(warped_image, title='Warped Image')
         plt.pause(0.05)
-        plt.figure(4)
-        plt.clf()
+
+        # Plotting the deformation field in the second subplot
+        plt.sca(axs[1])
         dispDefField(def_field, spacing=disp_spacing, plot_type=disp_method_df)
         plt.xlim(x_lims)
         plt.ylim(y_lims)
+        plt.title('Deformation Field')
         plt.pause(0.05)
-        plt.figure(5)
-        plt.clf()
+
+        # Plotting the updated deformation field in the third subplot
+        plt.sca(axs[2])
         up_field_to_display = scale_update_for_display * np.dstack((update_x, update_y))
         up_field_to_display += np.dstack((X, Y))
         dispDefField(up_field_to_display, spacing=disp_spacing, plot_type=disp_method_up)
         plt.xlim(x_lims)
         plt.ylim(y_lims)
-        plt.pause(0.05)
-    
-    # calculate MSD between target and warped image
-    MSD = calcMSD(target, warped_image)
+        plt.title('Updated Deformation Field')
+        plt.pause(0.1)
+        
+        plt.figtext(0.5, 0.92, 'Level {0:d}, Iteration {1:d}: MSD = {2:.6f}'.format(lev, it, prev_MSD), ha='center', va='top', fontsize=10, color='black')
+        
+        # Adjust layout for better spacing
+        plt.tight_layout()
 
-    # display numerical results
-    print('Level {0:d}, Iteration {1:d}: MSD = {2:f}\n'.format(lev, it, MSD))
-    
-    # check for improvement in MSD if required
-    if check_MSD and MSD >= prev_MSD:
+        # Display the figure
+        plt.show()
+      
+      # calculate MSD between target and warped image
+      MSD = calcMSD(target, warped_image)
+
+      # display numerical results
+      print('Level {0:d}, Iteration {1:d}: MSD = {2:f}\n'.format(lev, it, MSD))
+      
+      # check for improvement in MSD if required
+      if check_MSD and MSD >= prev_MSD:
         # restore previous results and finish level
         def_field = def_field_prev
         warped_image = resampImageWithDefField(source, def_field)
         print('No improvement in MSD')
         break
-    
-    # update previous values of def_field and MSD
-    def_field_prev = def_field.copy()
-    prev_MSD = MSD.copy()
+      
+      # update previous values of def_field and MSD
+      def_field_prev = def_field.copy()
+      prev_MSD = MSD.copy()
 ```
 
+### 9.1. Results after Level 1 iterations:
+![Level 1 Results](fig/level1-iteration15.png)
 
+### 9.2. Results after Level 2 iterations:
+![Level 2 Results](fig/level2-iteration20.png)
 
-## 6. Final Results Display
+### 9.3. Results after Level 3 iterations:
+![Level 3 Results](fig/level3-iteration70.png)
 
-After completing the iterative registration process, the final step is to display the warped image and the deformation field. This provides a visual representation of the registration outcome.
-
-```python
-# Final Results: Display warped image and deformation field
-plt.figure(3)
-dispImage(warped_image)
-plt.figure(4)
-plt.clf()
-dispDefField(def_field, spacing=disp_spacing, plot_type=disp_method_df)
-plt.xlim(x_lims)
-plt.ylim(y_lims)
-plt.figure(5)
-plt.clf()
-up_field_to_display = scale_update_for_display * np.dstack((update_x, update_y))
-up_field_to_display += np.dstack((X, Y))
-dispDefField(up_field_to_display, spacing=disp_spacing, plot_type=disp_method_up)
-plt.xlim(x_lims)
-plt.ylim(y_lims)
-```
-
-
-
-## 7. Return Results
-
-The final step of the registration function is to return the warped image and the deformation field. These outputs can be further analysed or used for downstream processing as needed.
-
-```python
-return warped_image, def_field
-```
