@@ -18,6 +18,14 @@ exercises: 2
 
 # Demons Image Registration Algorithm with Multi-Pane Display
 
+## Activate Conda environment
+Open terminal, activate `mirVE` environment and run python
+
+```bash
+conda activate mirVE
+python
+```
+
 This document explains the implementation of a 2D image registration algorithm using the Demons algorithm. The implementation includes visualisation updates within a single window containing three panes for easier comparison of source, target, and warped images.
 
 ## 1. Importing Libraries
