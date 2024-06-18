@@ -175,7 +175,7 @@ if use_target_grad:
 
 
 ## 8. Display Initial Results
-This step sets up the initial visualization of the registration process. Five subplots are created to show the source image, target image, the warped source image, the deformation field, and the update field. This helps in monitoring the progress of the registration process visually.
+This step sets up the initial visualisation of the registration process. Five subplots are created to show the source image, target image, the warped source image, the deformation field, and the update field. This helps in monitoring the progress of the registration process visually.
 
 
 ```python
@@ -236,7 +236,7 @@ In this step, the code initialises the display of results before starting the it
 
 
 ## 9. Main Iterative Loop for Image Registration
-In this step, we perform the main iterative loop where the actual image registration occurs. The loop continues until the maximum number of iterations is reached or until convergence criteria are met. The loop updates the deformation field iteratively to minimize the Mean Squared Difference (MSD) between the target and warped images.
+In this step, we perform the main iterative loop where the actual image registration occurs. The loop continues until the maximum number of iterations is reached or until convergence criteria are met. The loop updates the deformation field iteratively to minimise the Mean Squared Difference (MSD) between the target and warped images.
 
 ```python
     # main iterative loop - repeat until max number of iterations reached
@@ -381,7 +381,7 @@ In this step, we perform the main iterative loop where the actual image registra
 
 ## 10. Displaying Final Results
 
-In this step, we visualize the final results of the image registration process. This includes displaying the warped image, the deformation field, and the updated deformation field using subplots.
+In this step, we visualise the final results of the image registration process. This includes displaying the warped image, the deformation field, and the updated deformation field using subplots.
 
 
 ```python
@@ -449,7 +449,7 @@ cine_MR_img_3 = np.flip(cine_MR_img_3.T, 1)
 ```
 
 
-Calling the function:
+### Calling the function:
 
 ```python
 demonsReg(cine_MR_img_1, cine_MR_img_2)
