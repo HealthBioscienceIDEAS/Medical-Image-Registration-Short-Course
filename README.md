@@ -1,5 +1,6 @@
 <div style="text-align: center;" align="center">
   <h1> :medical_symbol:  Medical-Image-Registration-Short-Course </h1>
+  <a href="https://healthbioscienceideas.github.io/Medical-Image-Registration-Short-Course/">Sandpaper :page_with_curl:</a>
 </div>
 
 ## :nut_and_bolt: Setting up and preview sandpaper 
@@ -35,8 +36,9 @@ This project exists thanks to all the people who contribute.
 
 ## Licensing and copyright
 Copyright 2024 University College London.
-`Medical-Image-Registration-Short-Course` is released under the  CC BY 4.0 license
+`Medical-Image-Registration-Short-Course` is released under the  CC BY 4.0 license.
 Please see the [license file](LICENSE.md) for details.
 
 ## Acknowledgements
-Supported by <TO_ADD_FUNDERS>
+Funded by [UKRI Innovation Scholars](https://www.ukri.org/opportunity/innovation-scholars-data-science-training-in-health-bioscience/) Health and Bioscience IDEAS project (MR/V03863X/1)
+
