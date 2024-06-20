@@ -1,6 +1,6 @@
 <div style="text-align: center;" align="center">
   <h1> :medical_symbol:  Medical-Image-Registration-Short-Course </h1>
-  <h1> : https://healthbioscienceideas.github.io/Medical-Image-Registration-Short-Course </h1>
+  <h1> [:page_with_curl:](https://healthbioscienceideas.github.io/Medical-Image-Registration-Short-Course) </h1>
 </div>
 
 ## :nut_and_bolt: Setting up and preview sandpaper 
