@@ -1,7 +1,9 @@
-## Medical-Image-Registration-Short-Course
-This is the lesson repository for [Medical-Image-Registration-Short-Course](https://healthbioscienceideas.github.io/Medical-Image-Registration-Short-Course)
+<div style="text-align: center;" align="center">
+  <h1> :medical_symbol:  Medical-Image-Registration-Short-Course </h1>
+  <h1> : https://healthbioscienceideas.github.io/Medical-Image-Registration-Short-Course </h1>
+</div>
 
-## Setting up and preview sandpaper 
+## :nut_and_bolt: Setting up and preview sandpaper 
 See [details](_setting_up) to setup sandpaper and its dependencies. Otherwise you are ready to preview your work:
 ```
 R
@@ -22,15 +24,15 @@ git clone git@github.com:HealthBioscienceIDEAS/Medical-Image-Registration-Short-
 ```
 
 ## Maintainers
-* [Jamie Mcclelland](https://github.com/jamie-mcclelland)
 * [Dave Cash](https://github.com/davecash75)
-* [Zakaria Senousy](https://github.com/zsenousy)
-* [Miguel Xochicale](https://github.com/mxochicale)
-* [Stephen Thompson](https://github.com/thompson318)
+* [Jamie Mcclelland](https://github.com/jamie-mcclelland)
 
 ## Contributors
 This project exists thanks to all the people who contribute.
 * [Milan Malfait](https://github.com/milanmlft)
+* [Zakaria Senousy](https://github.com/zsenousy)
+* [Stephen Thompson](https://github.com/thompson318)
+* [Miguel Xochicale](https://github.com/mxochicale)
 
 ## Licensing and copyright
 Copyright 2024 University College London.
