@@ -69,24 +69,27 @@ platform. Our workshops typically contain a mixture of Windows, macOS, and
 Linux users; in order to be usable, our lessons must run equally well on all
 three.
 
-### Using GitHub
+### :octocat: Using GitHub
+
+#### Setting up your repository locally. 
+1. Generate your SSH keys as suggested [here](https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+2. Clone the repository by typing (or copying) the following lines in a terminal
+```
+git clone git@github.com:HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course.git
+```
 
 #### Committing and pushing changes 
-1. Clone this repo 
-```
-git clone git@github.com:UCL/real-time-ai-for-surgery.git
-``` 
-2. Create new branch using issue number
+1. Create new branch using issue number
 ```
 git checkout -b ISSUENUMBER-branch-name 
 ```
-3. Commit changes and push to your branch
+2. Commit changes and push to your branch
 ```
 git add .
 git commit -m 'short message (#ISSUENUMBER)'
 git push origin ISSUENUMBER-branch-name
 ```
-4. Submit a Pull Request against the `main` branch. 
+3. Submit a Pull Request against the `main` branch. 
 
 #### Pull Request (PR) and merge to `main` branch
 1. Select branch that contain your commits.

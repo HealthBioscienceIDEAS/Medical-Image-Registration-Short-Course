@@ -2,10 +2,16 @@
 title: Setup
 ---
 
-FIXME: Setup instructions live in this document. Please specify the tools and
-the data sets the Learner needs to have installed.
 
-## Data Sets
+## Github setup
+1. You might have already a [GitHub](https://github.com), otherwise please [create one](https://github.com/join)
+2. Generate your SSH keys as suggested [here](https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+3. Clone the repository by typing (or copying) the following lines in a terminal
+```
+git clone git@github.com:HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course.git
+```
+
+## Dataset
 
 <!--
 FIXME: place any data you want learners to use in `episodes/data` and then use
@@ -95,34 +101,12 @@ python3 -m pip install -r requirements.txt
 	* Windows (64 bit), 
 	* and MacOS Leopard (64 bit).
 
-#### Installation
-##### Windows 11
-- Open the following link: https://sourceforge.net/projects/itk-snap/files/itk-snap/4.2.0/
-- Download `itksnap-4.2.0-20240422-win64-AMD64.exe` 
-- Install it by following default settings.
-
-##### Ubuntu 22.04 x64 GNU/Linux
-```
-FILENAME=itksnap-nightly-rel_4.0-Linux-gcc64.tar.gz  #Length: 200943059 (192M) [application/x-gzip]
-cd ~/Downloads/
-mkdir -p itksnap && cd itksnap
-wget https://sourceforge.net/projects/itk-snap/files/itk-snap/Nightly/$FILENAME/download -O $FILENAME
-tar -xvzf $FILENAME
-```
-#### Mac
-```
-TOADD
-```
-
 
 ::::::::::::::::::::::::::::::::::::::: discussion
 
-### Details
+### Installation
 
-Setup for different systems can be presented in dropdown menus via a `solution`
-tag. They will join to this discussion block, so you can give a general overview
-of the software used in this lesson here and fill out the individual operating
-systems (and potentially add more, e.g. online setup) in the solutions blocks.
+Installing ITK-SNAP in differen operating systems
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -130,27 +114,39 @@ systems (and potentially add more, e.g. online setup) in the solutions blocks.
 
 ### Windows
 
-Use PuTTY
+- Open the following link: https://sourceforge.net/projects/itk-snap/files/itk-snap/4.2.0/
+- Download `itksnap-4.2.0-20240422-win64-AMD64.exe` 
+- Install it by following default settings.
 
 :::::::::::::::::::::::::
+
+
+:::::::::::::::: solution
+
+### Linux (tested on Ubuntu 22.04 x64 GNU/Linux)
+
+- Open your Terminal to install it
+```
+sudo apt-get install tree # to visualise files and paths
+FILENAME=itksnap-nightly-rel_4.0-Linux-gcc64.tar.gz  #Length: 200943059 (192M) [application/x-gzip]
+cd ~/Downloads/
+mkdir -p itksnap && cd itksnap
+wget https://sourceforge.net/projects/itk-snap/files/itk-snap/Nightly/$FILENAME/download -O $FILENAME
+tar -xvzf $FILENAME
+```
+
+:::::::::::::::::::::::::
+
 
 :::::::::::::::: solution
 
 ### MacOS
 
-Use Terminal.app
-
-:::::::::::::::::::::::::
-
-
-:::::::::::::::: solution
-
-### Linux
-
-Use Terminal to install
-```
-sudo apt-get install tree # to visualise files and paths
-```
+- Open the following link: https://sourceforge.net/projects/itk-snap/files/itk-snap/4.2.0/ and download  `itksnap-4.2.0-20240422-Darwin-x86_64.dmg`	
+- Double click the icon for the file you downloaded (e.g., itksnap-3.2.0-rc2-20140919-MacOS-x86_64.dmg).
+- Drag the icon ITK-SNAP.app to the Applications folder.
+- Drag the icon itksnap on top of the icon `usr_local_bin` in that folder.
+- To add the ITK-SNAP launcher to your Dock, open the Applications folder and drag the ITK-SNAP.app icon onto the dock.
 
 :::::::::::::::::::::::::
 
