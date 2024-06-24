@@ -1,4 +1,5 @@
-## Contributing
+# Contributing to `Medical-Image-Registration-Short-Course`  
+👍🎉 First off, thanks for taking the time to contribute! 🎉👍
 
 [The Carpentries][cp-site] ([Software Carpentry][swc-site], [Data
 Carpentry][dc-site], and [Library Carpentry][lc-site]) are open source
@@ -20,21 +21,17 @@ The easiest way to get started is to file an issue to tell us about a spelling
 mistake, some awkward wording, or a factual error. This is a good way to
 introduce yourself and to meet some of our community members.
 
-1. If you do not have a [GitHub][github] account, you can [send us comments by
-   email][contact]. However, we will be able to respond more quickly if you use
-   one of the other methods described below.
+1. If you have a [GitHub][github] account, or are willing to [create
+   one][github-join], but do not know how to use Git, 
+   you can open an issue (bug report, feature request, or something is not working)
+   https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course/issues/new/choose
+   This allows us to assign the item to someone and to respond to it in a threaded discussion.
 
-2. If you have a [GitHub][github] account, or are willing to [create
-   one][github-join], but do not know how to use Git, you can report problems
-   or suggest improvements by [creating an issue][issues]. This allows us to
-   assign the item to someone and to respond to it in a threaded discussion.
-
-3. If you are comfortable with Git, and would like to add or change material,
+2. If you are comfortable with Git, and would like to add or change material,
    you can submit a pull request (PR). Instructions for doing this are
    [included below](#using-github).
 
-Note: if you want to build the website locally, please refer to [The Workbench
-documentation][template-doc].
+Note: if you want to build the website locally, please refer to [setting up][_setting_up].
 
 ### Where to Contribute
 
@@ -130,7 +127,7 @@ encourage others to do so. The maintainers are community volunteers, and have
 final say over what gets merged into the lesson.
 
 ### Other Resources
-
+#### The Carpentries 
 The Carpentries is a global organisation with volunteers and learners all over
 the world. We share values of inclusivity and a passion for sharing knowledge,
 teaching and learning. There are several ways to connect with The Carpentries
@@ -155,4 +152,3 @@ email][contact].
 [swc-lessons]: https://software-carpentry.org/lessons/
 [swc-site]: https://software-carpentry.org/
 [lc-site]: https://librarycarpentry.org/
-[template-doc]: https://carpentries.github.io/workbench/
