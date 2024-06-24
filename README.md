@@ -1,6 +1,6 @@
 <div style="text-align: center;" align="center">
   <h1> :medical_symbol:  Medical-Image-Registration-Short-Course </h1>
-  <a href="https://healthbioscienceideas.github.io/Medical-Image-Registration-Short-Course/">Sandpaper :page_with_curl:</a>
+  <h2> <a href="https://healthbioscienceideas.github.io/Medical-Image-Registration-Short-Course/">:page_with_curl: Sandpaper</a> </h2>
 </div>
 
 ## :nut_and_bolt: Setting up and preview sandpaper 
@@ -12,9 +12,8 @@ sandpaper::build_lesson()
 
 ## 🤝 Contributing
 Medical-Image-Registration-Short-Course follows the [Contributor Covenant Code of Conduct](.github/CODE_OF_CONDUCT.md).
-Contributions, issues and feature requests are welcome.
-Feel free to open new [issues](https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course/issues) if you want to contribute. 
-[Check the contributing guide](CONTRIBUTING.md)
+Contributions, issues and feature requests are welcome, so feel free to open new [issues](https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course/issues).
+We also suggest to checking [the contributing guide](CONTRIBUTING.md).
 
 ## :octocat: Cloning repository
 * Generate your SSH keys as suggested [here](https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
@@ -41,4 +40,3 @@ Please see the [license file](LICENSE.md) for details.
 
 ## Acknowledgements
 Funded by [UKRI Innovation Scholars](https://www.ukri.org/opportunity/innovation-scholars-data-science-training-in-health-bioscience/) Health and Bioscience IDEAS project (MR/V03863X/1)
-
