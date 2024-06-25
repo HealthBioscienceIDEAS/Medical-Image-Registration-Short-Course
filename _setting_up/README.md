@@ -1,4 +1,4 @@
-# INSTRUCTIONS for installing R, Carpentries, and previewing Sandpaper for multi OS (Linux, Windows and Mac)
+# Installing R, Carpentries packages, and previewing Sandpaper in multi OS (Linux, Windows and Mac)
 
 ## Steps in Ubuntu 22.04 x64
 1. Create new repo: https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course
@@ -130,8 +130,6 @@ sandpaper: 'HealthBioscienceIDEAS/sandpaper@IDEAS'
 
 ## Steps on Windows
 
-### **INSTRUCTIONS for installing R, Carpentries, and Sandpaper on Windows:**
-
 1. Create new repo: https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course
 
 2. Clone repo `git clone https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course`
@@ -160,13 +158,11 @@ install.packages(c("remotes"), dep =TRUE)
 9. You may notice some package not installed called _**Pandoc**_ after running the sandpaper command. If so, install Pandoc then run _step 8_ again.
 Pandoc installation: https://pandoc.org/installing.html
 
-
-
 ## Steps in MAC
 Packages via homebrew: freetype, fribidi, harfbuzz, libpng, git2. 
 
-
-## Previewing eposides in any OS platform
+# Previewing eposides in any OS platform
+## In your local machine
 1. Using your terminal clone repo
 ```
 git clone git@github.com:HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course.git
@@ -182,4 +178,7 @@ git checkout feature-branch-name
 R
 sandpaper::build_lesson()
 ```
+## In GitHub
+You can also preview your episodes once you have a Pull-Request.
+1. Select branch called md-outputs-<PR-number> for each PR where it stores the rendered markdown files. This is controlled by the [pr-receive](https://carpentries.github.io/sandpaper-docs/pull-request.html#reviewing-a-pull-request) workflow. 
 
