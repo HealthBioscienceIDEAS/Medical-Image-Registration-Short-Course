@@ -49,7 +49,7 @@ The `demonsReg` function is designed for registering two 2D images using the Dem
 
 ```python
 def demonsReg(source, target, sigma_elastic=1, sigma_fluid=1, num_lev=3, use_composition=False,
-              use_target_grad=False, max_it=1000, check_MSD=True, disp_freq=5, disp_spacing=2, 
+              use_target_grad=False, max_it=1000, check_MSD=True, disp_freq=3, disp_spacing=2, 
               scale_update_for_display=10, disp_method_df='grid', disp_method_up='arrows'):
     """
     Perform a registration between the 2D source image and the 2D target
@@ -230,24 +230,63 @@ plt.subplots_adjust(top=0.95)
 
 # Display the figure
 plt.show()
-
-# if first level pause so user can position figure
-if lev == 1:
-  input('position the figures as desired and then push enter to run the registration')
 ```
 
-In this step, the code initialises the display of results before starting the iterative process. This includes displaying the source image, target image, warped image, deformation field, and update field. The dispImage and dispDefField functions from `utils3` are used to visualise these images and fields. The function pauses after the initial display to allow the user to position the figures as desired before continuing with the registration process.
+In this step, the code initialises the display of results before starting the iterative process. This includes displaying the source image, target image, warped image, deformation field, and update field. The dispImage and dispDefField functions from `utils3` are used to visualise these images and fields.
 
 ![Initial Display Results](fig/Figure_1.png)
 
 
+## 9. Figure to do Live update of Registration process
+
+After showing the initial display of source, target, and warped images and deformation and update fields, we introduce `live_update` function which works on updating warped_image, deformation field and update field subplots during the registration process. This function is used inside the main iterative loop of the registration process (See next step).
+
+```python
+    
+    fig, axs = plt.subplots(1, 3, figsize=(12, 6))
+
+    # Function to update the display
+    def live_update():
+        # Clear the axes
+        for ax in axs:
+            ax.clear()
+
+        # Plotting the warped image in the first subplot
+        plt.sca(axs[0])
+        dispImage(warped_image, title='Warped Image')
+
+        # Plotting the deformation field in the second subplot
+        plt.sca(axs[1])
+        dispDefField(def_field, spacing=disp_spacing, plot_type=disp_method_df)
+        axs[1].set_xlim(x_lims)
+        axs[1].set_ylim(y_lims)
+        axs[1].set_title('Deformation Field')
+
+        # Plotting the updated deformation field in the third subplot
+        plt.sca(axs[2])
+        up_field_to_display = scale_update_for_display * np.dstack((update_x, update_y))
+        up_field_to_display += np.dstack((X, Y))
+        dispDefField(up_field_to_display, spacing=disp_spacing, plot_type=disp_method_up)
+        axs[2].set_xlim(x_lims)
+        axs[2].set_ylim(y_lims)
+        axs[2].set_title('Update Field')
+
+        # Adjust layout for better spacing
+        plt.tight_layout()
+
+        # Redraw the figure
+        fig.canvas.draw()
+        fig.canvas.flush_events()  # Ensure the figure updates immediately
+
+        plt.pause(0.5)
+```
 
 
-## 9. Main Iterative Loop for Image Registration
+## 10. Main Iterative Loop for Image Registration
 In this step, we perform the main iterative loop where the actual image registration occurs. The loop continues until the maximum number of iterations is reached or until convergence criteria are met. The loop updates the deformation field iteratively to minimise the Mean Squared Difference (MSD) between the target and warped images.
 
 ```python
-    # main iterative loop - repeat until max number of iterations reached
+# main iterative loop - repeat until max number of iterations reached
     for it in range(max_it):
       
       # calculate update from demons forces
@@ -322,38 +361,7 @@ In this step, we perform the main iterative loop where the actual image registra
       # update images if required for this iteration
       if disp_freq > 0 and it % disp_freq == 0:
         # Create a single figure with 3 subplots in one row and three columns
-        fig, axs = plt.subplots(1, 3, figsize=(12, 6))
-
-        # Plotting the warped image in the first subplot
-        plt.sca(axs[0])
-        dispImage(warped_image, title='Warped Image')
-        plt.pause(0.05)
-
-        # Plotting the deformation field in the second subplot
-        plt.sca(axs[1])
-        dispDefField(def_field, spacing=disp_spacing, plot_type=disp_method_df)
-        plt.xlim(x_lims)
-        plt.ylim(y_lims)
-        plt.title('Deformation Field')
-        plt.pause(0.05)
-
-        # Plotting the updated deformation field in the third subplot
-        plt.sca(axs[2])
-        up_field_to_display = scale_update_for_display * np.dstack((update_x, update_y))
-        up_field_to_display += np.dstack((X, Y))
-        dispDefField(up_field_to_display, spacing=disp_spacing, plot_type=disp_method_up)
-        plt.xlim(x_lims)
-        plt.ylim(y_lims)
-        plt.title('Updated Deformation Field')
-        plt.pause(0.1)
-        
-        plt.figtext(0.5, 0.92, 'Level {0:d}, Iteration {1:d}: MSD = {2:.6f}'.format(lev, it, prev_MSD), ha='center', va='top', fontsize=10, color='black')
-        
-        # Adjust layout for better spacing
-        plt.tight_layout()
-
-        # Display the figure
-        plt.show()
+        live_update()
       
       # calculate MSD between target and warped image
       MSD = calcMSD(target, warped_image)
@@ -372,7 +380,11 @@ In this step, we perform the main iterative loop where the actual image registra
       # update previous values of def_field and MSD
       def_field_prev = def_field.copy()
       prev_MSD = MSD.copy()
+      
+    plt.show()
 ```
+
+
 
 ### 9.1. Results after Level 1 iterations:
 ![Level 1 Results](fig/level1-iteration15.png)
