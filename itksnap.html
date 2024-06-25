@@ -639,17 +639,19 @@ volume.</p>
 <h4 id="using-itk-snap">Using ITK-SNAP<a class="anchor" aria-label="anchor" href="#using-itk-snap"></a></h4>
 <p>In the ITK-SNAP application, save the file by clicking ‘File’ –&gt;
 ‘Save image’ –&gt; rename image and choose format as ‘NiFTI’.</p>
+<p>Notes.</p>
+<pre class="callout"><code>For Linux users. You might get this error `Error: exception occurred during image IO. Exception: std::expedition` to which he suggest using dicom2nifti library.</code></pre>
 </div>
 <div class="section level4">
 <h4 id="using-dicom2nifti">Using <a href="https://github.com/icometrix/dicom2nifti" class="external-link">dicom2nifti</a>
 <a class="anchor" aria-label="anchor" href="#using-dicom2nifti"></a></h4>
-<div class="codewrapper sourceCode" id="cb7">
+<div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path </span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="im">import</span> dicom2nifti </span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>dicoms <span class="op">=</span> Path(<span class="st">"~/3_000000-CT_Lung_30_B31f-61322"</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>dicom2nifti.convert_directory(dicoms, <span class="st">"."</span>, compression<span class="op">=</span><span class="va">True</span>, reorient<span class="op">=</span><span class="va">True</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path </span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="im">import</span> dicom2nifti </span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>dicoms <span class="op">=</span> Path(<span class="st">"~/3_000000-CT_Lung_30_B31f-61322"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>dicom2nifti.convert_directory(dicoms, <span class="st">"."</span>, compression<span class="op">=</span><span class="va">True</span>, reorient<span class="op">=</span><span class="va">True</span>)</span></code></pre>
 </div>
 </div>
 </div>
@@ -662,127 +664,127 @@ further deatils on using nibabel library. Please see <a href="_dependencies">ins
 <h3 id="loading-images">Loading images<a class="anchor" aria-label="anchor" href="#loading-images"></a></h3>
 <ol style="list-style-type: decimal"><li>Open terminal, activate <code>mirVE</code> environment and run
 python</li>
-</ol><div class="codewrapper sourceCode" id="cb8">
+</ol><div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="ex">conda</span> activate mirVE</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="ex">python</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="ex">conda</span> activate mirVE</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="ex">python</span></span></code></pre>
 </div>
 <ol start="2" style="list-style-type: decimal"><li>Run python commands under <code>*/episodes</code> path:</li>
-</ol><div class="codewrapper sourceCode" id="cb9">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="im">import</span> nibabel <span class="im">as</span> nib</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>nii3ct <span class="op">=</span> nib.load(<span class="st">"data/3_ct_lung__30__b31f.nii.gz"</span>)</span></code></pre>
-</div>
-<ol start="2" style="list-style-type: decimal"><li>
-<code>NifTI</code> file properties:</li>
 </ol><div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(nii3ct))</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co"># &lt;class 'nibabel.nifti1.Nifti1Image'&gt;</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="im">import</span> nibabel <span class="im">as</span> nib</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>nii3ct <span class="op">=</span> nib.load(<span class="st">"data/3_ct_lung__30__b31f.nii.gz"</span>)</span></code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb11">
+<ol start="2" style="list-style-type: decimal"><li>
+<code>NifTI</code> file properties:</li>
+</ol><div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="bu">print</span>(nii3ct.get_data_dtype())</span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="co">#int16</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(nii3ct))</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="co"># &lt;class 'nibabel.nifti1.Nifti1Image'&gt;</span></span></code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>nii3ct.shape</span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="co"># (512, 512, 175)</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="bu">print</span>(nii3ct.get_data_dtype())</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="co">#int16</span></span></code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>nii3ct.affine</span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co">## dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=True) # nii.gz</span></span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="co">#array([[  -0.9765625 ,   -0.        ,    0.        ,  249.51171875],</span></span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#       [  -0.        ,   -0.9765625 ,    0.        ,  466.01171875],</span></span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="co">#       [   0.        ,    0.        ,    2.        , -553.5       ],</span></span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="co">#       [   0.        ,    0.        ,    0.        ,    1.        ]])</span></span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="co">## dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=False) # nii.gz</span></span>
-<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="co">#array([[  -0.9765625 ,    0.        ,    0.        ,  249.51171875],</span></span>
-<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="co">#       [  -0.        ,    0.9765625 ,    0.        ,  -33.01171875],</span></span>
-<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="co">#       [   0.        ,   -0.        ,    2.        , -553.5       ],</span></span>
-<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co">#       [   0.        ,    0.        ,    0.        ,    1.        ]])</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>nii3ct.shape</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co"># (512, 512, 175)</span></span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb14">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>nii3ct.affine</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="co">## dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=True) # nii.gz</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#array([[  -0.9765625 ,   -0.        ,    0.        ,  249.51171875],</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#       [  -0.        ,   -0.9765625 ,    0.        ,  466.01171875],</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co">#       [   0.        ,    0.        ,    2.        , -553.5       ],</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co">#       [   0.        ,    0.        ,    0.        ,    1.        ]])</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">## dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=False) # nii.gz</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#array([[  -0.9765625 ,    0.        ,    0.        ,  249.51171875],</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co">#       [  -0.        ,    0.9765625 ,    0.        ,  -33.01171875],</span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="co">#       [   0.        ,   -0.        ,    2.        , -553.5       ],</span></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="co">#       [   0.        ,    0.        ,    0.        ,    1.        ]])</span></span></code></pre>
 </div>
 </div>
 <div class="section level3">
 <h3 id="header-features">Header features<a class="anchor" aria-label="anchor" href="#header-features"></a></h3>
-<div class="codewrapper sourceCode" id="cb14">
+<div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="bu">print</span>(nii3ct.header)</span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co">#&lt;class 'nibabel.nifti1.Nifti1Header'&gt; object, endian='&lt;'</span></span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#sizeof_hdr      : 348</span></span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co">#data_type       : b''</span></span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co">#db_name         : b''</span></span>
-<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">#extents         : 0</span></span>
-<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#session_error   : 0</span></span>
-<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co">#regular         : b''</span></span>
-<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="co">#dim_info        : 0</span></span>
-<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="co">#dim             : [  3 512 512 175   1   1   1   1]</span></span>
-<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="co">#intent_p1       : 0.0</span></span>
-<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="co">#intent_p2       : 0.0</span></span>
-<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="co">#intent_p3       : 0.0</span></span>
-<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="co">#intent_code     : none</span></span>
-<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a><span class="co">#datatype        : int16</span></span>
-<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="co">#bitpix          : 16</span></span>
-<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a><span class="co">#slice_start     : 0</span></span>
-<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a><span class="co">#pixdim          : [-1.         0.9765625  0.9765625  2.         1.         1.</span></span>
-<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a><span class="co">#  1.         1.       ]</span></span>
-<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a><span class="co">#vox_offset      : 0.0</span></span>
-<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a><span class="co">#scl_slope       : nan</span></span>
-<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a><span class="co">#scl_inter       : nan</span></span>
-<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a><span class="co">#slice_end       : 0</span></span>
-<span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a><span class="co">#slice_code      : unknown</span></span>
-<span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a><span class="co">#xyzt_units      : 2</span></span>
-<span id="cb14-27"><a href="#cb14-27" tabindex="-1"></a><span class="co">#cal_max         : 0.0</span></span>
-<span id="cb14-28"><a href="#cb14-28" tabindex="-1"></a><span class="co">#cal_min         : 0.0</span></span>
-<span id="cb14-29"><a href="#cb14-29" tabindex="-1"></a><span class="co">#slice_duration  : 0.0</span></span>
-<span id="cb14-30"><a href="#cb14-30" tabindex="-1"></a><span class="co">#toffset         : 0.0</span></span>
-<span id="cb14-31"><a href="#cb14-31" tabindex="-1"></a><span class="co">#glmax           : 0</span></span>
-<span id="cb14-32"><a href="#cb14-32" tabindex="-1"></a><span class="co">#glmin           : 0</span></span>
-<span id="cb14-33"><a href="#cb14-33" tabindex="-1"></a><span class="co">#descrip         : b''</span></span>
-<span id="cb14-34"><a href="#cb14-34" tabindex="-1"></a><span class="co">#aux_file        : b''</span></span>
-<span id="cb14-35"><a href="#cb14-35" tabindex="-1"></a><span class="co">#qform_code      : unknown</span></span>
-<span id="cb14-36"><a href="#cb14-36" tabindex="-1"></a><span class="co">#sform_code      : aligned</span></span>
-<span id="cb14-37"><a href="#cb14-37" tabindex="-1"></a><span class="co">#quatern_b       : 0.0</span></span>
-<span id="cb14-38"><a href="#cb14-38" tabindex="-1"></a><span class="co">#quatern_c       : 1.0</span></span>
-<span id="cb14-39"><a href="#cb14-39" tabindex="-1"></a><span class="co">#quatern_d       : 0.0</span></span>
-<span id="cb14-40"><a href="#cb14-40" tabindex="-1"></a><span class="co">#qoffset_x       : 249.51172</span></span>
-<span id="cb14-41"><a href="#cb14-41" tabindex="-1"></a><span class="co">#qoffset_y       : -33.01172</span></span>
-<span id="cb14-42"><a href="#cb14-42" tabindex="-1"></a><span class="co">#qoffset_z       : -553.5</span></span>
-<span id="cb14-43"><a href="#cb14-43" tabindex="-1"></a><span class="co">#srow_x          : [ -0.9765625   0.          0.        249.51172  ]</span></span>
-<span id="cb14-44"><a href="#cb14-44" tabindex="-1"></a><span class="co">#srow_y          : [ -0.          0.9765625   0.        -33.01172  ]</span></span>
-<span id="cb14-45"><a href="#cb14-45" tabindex="-1"></a><span class="co">#srow_z          : [   0.    -0.     2.  -553.5]</span></span>
-<span id="cb14-46"><a href="#cb14-46" tabindex="-1"></a><span class="co">#intent_name     : b''</span></span>
-<span id="cb14-47"><a href="#cb14-47" tabindex="-1"></a><span class="co">#magic           : b'n+1'</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="bu">print</span>(nii3ct.header)</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co">#&lt;class 'nibabel.nifti1.Nifti1Header'&gt; object, endian='&lt;'</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co">#sizeof_hdr      : 348</span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co">#data_type       : b''</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="co">#db_name         : b''</span></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co">#extents         : 0</span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="co">#session_error   : 0</span></span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co">#regular         : b''</span></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co">#dim_info        : 0</span></span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="co">#dim             : [  3 512 512 175   1   1   1   1]</span></span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a><span class="co">#intent_p1       : 0.0</span></span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a><span class="co">#intent_p2       : 0.0</span></span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a><span class="co">#intent_p3       : 0.0</span></span>
+<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a><span class="co">#intent_code     : none</span></span>
+<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a><span class="co">#datatype        : int16</span></span>
+<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a><span class="co">#bitpix          : 16</span></span>
+<span id="cb15-18"><a href="#cb15-18" tabindex="-1"></a><span class="co">#slice_start     : 0</span></span>
+<span id="cb15-19"><a href="#cb15-19" tabindex="-1"></a><span class="co">#pixdim          : [-1.         0.9765625  0.9765625  2.         1.         1.</span></span>
+<span id="cb15-20"><a href="#cb15-20" tabindex="-1"></a><span class="co">#  1.         1.       ]</span></span>
+<span id="cb15-21"><a href="#cb15-21" tabindex="-1"></a><span class="co">#vox_offset      : 0.0</span></span>
+<span id="cb15-22"><a href="#cb15-22" tabindex="-1"></a><span class="co">#scl_slope       : nan</span></span>
+<span id="cb15-23"><a href="#cb15-23" tabindex="-1"></a><span class="co">#scl_inter       : nan</span></span>
+<span id="cb15-24"><a href="#cb15-24" tabindex="-1"></a><span class="co">#slice_end       : 0</span></span>
+<span id="cb15-25"><a href="#cb15-25" tabindex="-1"></a><span class="co">#slice_code      : unknown</span></span>
+<span id="cb15-26"><a href="#cb15-26" tabindex="-1"></a><span class="co">#xyzt_units      : 2</span></span>
+<span id="cb15-27"><a href="#cb15-27" tabindex="-1"></a><span class="co">#cal_max         : 0.0</span></span>
+<span id="cb15-28"><a href="#cb15-28" tabindex="-1"></a><span class="co">#cal_min         : 0.0</span></span>
+<span id="cb15-29"><a href="#cb15-29" tabindex="-1"></a><span class="co">#slice_duration  : 0.0</span></span>
+<span id="cb15-30"><a href="#cb15-30" tabindex="-1"></a><span class="co">#toffset         : 0.0</span></span>
+<span id="cb15-31"><a href="#cb15-31" tabindex="-1"></a><span class="co">#glmax           : 0</span></span>
+<span id="cb15-32"><a href="#cb15-32" tabindex="-1"></a><span class="co">#glmin           : 0</span></span>
+<span id="cb15-33"><a href="#cb15-33" tabindex="-1"></a><span class="co">#descrip         : b''</span></span>
+<span id="cb15-34"><a href="#cb15-34" tabindex="-1"></a><span class="co">#aux_file        : b''</span></span>
+<span id="cb15-35"><a href="#cb15-35" tabindex="-1"></a><span class="co">#qform_code      : unknown</span></span>
+<span id="cb15-36"><a href="#cb15-36" tabindex="-1"></a><span class="co">#sform_code      : aligned</span></span>
+<span id="cb15-37"><a href="#cb15-37" tabindex="-1"></a><span class="co">#quatern_b       : 0.0</span></span>
+<span id="cb15-38"><a href="#cb15-38" tabindex="-1"></a><span class="co">#quatern_c       : 1.0</span></span>
+<span id="cb15-39"><a href="#cb15-39" tabindex="-1"></a><span class="co">#quatern_d       : 0.0</span></span>
+<span id="cb15-40"><a href="#cb15-40" tabindex="-1"></a><span class="co">#qoffset_x       : 249.51172</span></span>
+<span id="cb15-41"><a href="#cb15-41" tabindex="-1"></a><span class="co">#qoffset_y       : -33.01172</span></span>
+<span id="cb15-42"><a href="#cb15-42" tabindex="-1"></a><span class="co">#qoffset_z       : -553.5</span></span>
+<span id="cb15-43"><a href="#cb15-43" tabindex="-1"></a><span class="co">#srow_x          : [ -0.9765625   0.          0.        249.51172  ]</span></span>
+<span id="cb15-44"><a href="#cb15-44" tabindex="-1"></a><span class="co">#srow_y          : [ -0.          0.9765625   0.        -33.01172  ]</span></span>
+<span id="cb15-45"><a href="#cb15-45" tabindex="-1"></a><span class="co">#srow_z          : [   0.    -0.     2.  -553.5]</span></span>
+<span id="cb15-46"><a href="#cb15-46" tabindex="-1"></a><span class="co">#intent_name     : b''</span></span>
+<span id="cb15-47"><a href="#cb15-47" tabindex="-1"></a><span class="co">#magic           : b'n+1'</span></span></code></pre>
 </div>
 </div>
 <div class="section level3">
 <h3 id="qform">qform<a class="anchor" aria-label="anchor" href="#qform"></a></h3>
-<div class="codewrapper sourceCode" id="cb15">
+<div class="codewrapper sourceCode" id="cb16">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="bu">print</span>(nii3ct.get_qform())</span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="co">## dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=True) # nii.gz</span></span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co">#[[  -0.9765625     0.            0.          249.51171875]</span></span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co"># [   0.            0.9765625     0.          -33.01171875]</span></span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co"># [   0.            0.            2.         -553.5       ]</span></span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="co"># [   0.            0.            0.            1.        ]]</span></span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co">## dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=False) # nii.gz</span></span>
-<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="co">#[[  -0.9765625     0.            0.          249.51171875]</span></span>
-<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="co"># [   0.           -0.9765625     0.          466.01171875]</span></span>
-<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co"># [   0.            0.            2.         -553.5       ]</span></span>
-<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="co"># [   0.            0.            0.            1.        ]]</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="bu">print</span>(nii3ct.get_qform())</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="co">## dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=True) # nii.gz</span></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="co">#[[  -0.9765625     0.            0.          249.51171875]</span></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a><span class="co"># [   0.            0.9765625     0.          -33.01171875]</span></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="co"># [   0.            0.            2.         -553.5       ]</span></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="co"># [   0.            0.            0.            1.        ]]</span></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a><span class="co">## dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=False) # nii.gz</span></span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="co">#[[  -0.9765625     0.            0.          249.51171875]</span></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a><span class="co"># [   0.           -0.9765625     0.          466.01171875]</span></span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a><span class="co"># [   0.            0.            2.         -553.5       ]</span></span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a><span class="co"># [   0.            0.            0.            1.        ]]</span></span></code></pre>
 </div>
 </div>
 <div class="section level3">
@@ -797,18 +799,18 @@ in the NifTi header.</p>
 </div>
 <div class="section level3">
 <h3 id="obtaining-image-pixel-data">Obtaining image pixel data<a class="anchor" aria-label="anchor" href="#obtaining-image-pixel-data"></a></h3>
-<div class="codewrapper sourceCode" id="cb16">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>pixel_data<span class="op">=</span>nii3ct.get_fdata()</span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="bu">print</span>(pixel_data.dtype, pixel_data.shape)</span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="co">#float64 (512, 512, 175)</span></span></code></pre>
-</div>
 <div class="codewrapper sourceCode" id="cb17">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>plt.imshow(pixel_data[:,:,<span class="dv">140</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)<span class="op">;</span> plt.show()</span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="co">#launch plot window</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>pixel_data<span class="op">=</span>nii3ct.get_fdata()</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="bu">print</span>(pixel_data.dtype, pixel_data.shape)</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="co">#float64 (512, 512, 175)</span></span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb18">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>plt.imshow(pixel_data[:,:,<span class="dv">140</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)<span class="op">;</span> plt.show()</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="co">#launch plot window</span></span></code></pre>
 </div>
 </div>
 </section><section id="modifying-nifti-images-and-headers-with-nibabel"><h2 class="section-heading">Modifying <code>NifTi</code> images and headers with Nibabel<a class="anchor" aria-label="anchor" href="#modifying-nifti-images-and-headers-with-nibabel"></a>
@@ -818,24 +820,24 @@ in the NifTi header.</p>
 <ul><li>The image data for a Nifti1Image object can be accessed using the
 <code>get_fdata</code> function. Loading the data from disk and cast it
 to float64 type before returning the data as a numpy array.</li>
-</ul><div class="codewrapper sourceCode" id="cb18">
+</ul><div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>image_data<span class="op">=</span>nii3ct.get_fdata()</span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(image_data))</span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a><span class="co">#&lt;class 'numpy.ndarray'&gt;</span></span></code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb19">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="bu">print</span>(image_data.dtype)</span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="co">#float64</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>image_data<span class="op">=</span>nii3ct.get_fdata()</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(image_data))</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="co">#&lt;class 'numpy.ndarray'&gt;</span></span></code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb20">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="bu">print</span>(image_data.shape)</span>
-<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="co">#(512, 512, 175)</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="bu">print</span>(image_data.dtype)</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="co">#float64</span></span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb21">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="bu">print</span>(image_data.shape)</span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="co">#(512, 512, 175)</span></span></code></pre>
 </div>
 <ul><li>Use the <code>set_data_dtype</code> function to set the data type to
 float32.</li>
@@ -848,18 +850,18 @@ works directly on the images stored on disk. Therefore, we are going to
 convert the image saved on disk to a floating point image. We are going
 to use 32 bit rather than 64 bit floating point, as this is usually
 sufficiently accurate.</p>
-<div class="codewrapper sourceCode" id="cb21">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="bu">print</span>(nii3ct.get_data_dtype())</span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="co">#int16</span></span></code></pre>
-</div>
 <div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>nii3ct.set_data_dtype(np.float32)</span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="bu">print</span>(nii3ct.get_data_dtype())</span>
-<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="co">#float32</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="bu">print</span>(nii3ct.get_data_dtype())</span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="co">#int16</span></span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb23">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>nii3ct.set_data_dtype(np.float32)</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="bu">print</span>(nii3ct.get_data_dtype())</span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="co">#float32</span></span></code></pre>
 </div>
 <p>We are also going to set the qform to unknown as suggested above.
 This also updates the corresponding fields in the header. Use the
@@ -868,23 +870,23 @@ just set the code and not modify the other <code>qform</code> values in
 the header, the first input should be None. It is not necessary to
 modify the other <code>qform</code> values as they should be ignored
 when the code is set to unknown.</p>
-<div class="codewrapper sourceCode" id="cb23">
+<div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>nii3ct.set_qform(<span class="va">None</span>, code <span class="op">=</span> <span class="st">'unknown'</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="bu">print</span>(nii3ct.header)</span>
-<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>...</span>
-<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>qform_code      : unknown</span>
-<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>...</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>nii3ct.set_qform(<span class="va">None</span>, code <span class="op">=</span> <span class="st">'unknown'</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="bu">print</span>(nii3ct.header)</span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>...</span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>qform_code      : unknown</span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a>...</span></code></pre>
 </div>
 <p>The floating point image can now be written to disk using the save
 function.</p>
 <p>Notes.</p>
 <pre class="callout"><code>We do not need to manually modify the type of the image data – setting the data type for the Nifti1Image object tells it which type to use when writing the image data to disk.</code></pre>
-<div class="codewrapper sourceCode" id="cb25">
+<div class="codewrapper sourceCode" id="cb26">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>nib.save(nii3ct, <span class="st">'data/3_ct_lung__30__b31f_float32.nii.gz'</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>nib.save(nii3ct, <span class="st">'data/3_ct_lung__30__b31f_float32.nii.gz'</span>)</span></code></pre>
 </div>
 </div>
 <div class="section level3">
@@ -897,71 +899,71 @@ efficient for the floating point image: while a 32-bit floating point
 variable is twice the size of a 16-bit integer, the floating image is
 less than double the size of the original integer image.</p>
 <ul><li>int16</li>
-</ul><div class="codewrapper sourceCode" id="cb26">
+</ul><div class="codewrapper sourceCode" id="cb27">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>nii3ct_int16 <span class="op">=</span> nib.load(<span class="st">"data/3_ct_lung__30__b31f.nii.gz"</span>)</span></code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb27">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="bu">print</span>(nii3ct_int16.get_data_dtype())</span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="co">#int16</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>nii3ct_int16 <span class="op">=</span> nib.load(<span class="st">"data/3_ct_lung__30__b31f.nii.gz"</span>)</span></code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb28">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="bu">print</span>(nii3ct_int16.header)</span>
-<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="co">#&lt;class 'nibabel.nifti1.Nifti1Header'&gt; object, endian='&lt;'</span></span>
-<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="co">#sizeof_hdr      : 348</span></span>
-<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a><span class="co">#data_type       : b''</span></span>
-<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a><span class="co">#db_name         : b''</span></span>
-<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a><span class="co">#extents         : 0</span></span>
-<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a><span class="co">#session_error   : 0</span></span>
-<span id="cb28-8"><a href="#cb28-8" tabindex="-1"></a><span class="co">#regular         : b''</span></span>
-<span id="cb28-9"><a href="#cb28-9" tabindex="-1"></a><span class="co">#dim_info        : 0</span></span>
-<span id="cb28-10"><a href="#cb28-10" tabindex="-1"></a><span class="co">#dim             : [  3 512 512 175   1   1   1   1]</span></span>
-<span id="cb28-11"><a href="#cb28-11" tabindex="-1"></a><span class="co">#intent_p1       : 0.0</span></span>
-<span id="cb28-12"><a href="#cb28-12" tabindex="-1"></a><span class="co">#intent_p2       : 0.0</span></span>
-<span id="cb28-13"><a href="#cb28-13" tabindex="-1"></a><span class="co">#intent_p3       : 0.0</span></span>
-<span id="cb28-14"><a href="#cb28-14" tabindex="-1"></a><span class="co">#intent_code     : none</span></span>
-<span id="cb28-15"><a href="#cb28-15" tabindex="-1"></a><span class="co">#datatype        : int16</span></span>
-<span id="cb28-16"><a href="#cb28-16" tabindex="-1"></a><span class="co">#bitpix          : 16</span></span>
-<span id="cb28-17"><a href="#cb28-17" tabindex="-1"></a><span class="co">#...</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="bu">print</span>(nii3ct_int16.get_data_dtype())</span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="co">#int16</span></span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb29">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="bu">print</span>(nii3ct_int16.header)</span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="co">#&lt;class 'nibabel.nifti1.Nifti1Header'&gt; object, endian='&lt;'</span></span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a><span class="co">#sizeof_hdr      : 348</span></span>
+<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a><span class="co">#data_type       : b''</span></span>
+<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a><span class="co">#db_name         : b''</span></span>
+<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a><span class="co">#extents         : 0</span></span>
+<span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a><span class="co">#session_error   : 0</span></span>
+<span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a><span class="co">#regular         : b''</span></span>
+<span id="cb29-9"><a href="#cb29-9" tabindex="-1"></a><span class="co">#dim_info        : 0</span></span>
+<span id="cb29-10"><a href="#cb29-10" tabindex="-1"></a><span class="co">#dim             : [  3 512 512 175   1   1   1   1]</span></span>
+<span id="cb29-11"><a href="#cb29-11" tabindex="-1"></a><span class="co">#intent_p1       : 0.0</span></span>
+<span id="cb29-12"><a href="#cb29-12" tabindex="-1"></a><span class="co">#intent_p2       : 0.0</span></span>
+<span id="cb29-13"><a href="#cb29-13" tabindex="-1"></a><span class="co">#intent_p3       : 0.0</span></span>
+<span id="cb29-14"><a href="#cb29-14" tabindex="-1"></a><span class="co">#intent_code     : none</span></span>
+<span id="cb29-15"><a href="#cb29-15" tabindex="-1"></a><span class="co">#datatype        : int16</span></span>
+<span id="cb29-16"><a href="#cb29-16" tabindex="-1"></a><span class="co">#bitpix          : 16</span></span>
+<span id="cb29-17"><a href="#cb29-17" tabindex="-1"></a><span class="co">#...</span></span></code></pre>
 </div>
 <ul><li>float32</li>
-</ul><div class="codewrapper sourceCode" id="cb29">
+</ul><div class="codewrapper sourceCode" id="cb30">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>nii3ct_float32 <span class="op">=</span> nib.load(<span class="st">"data/3_ct_lung__30__b31f_float32.nii.gz"</span>)</span></code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb30">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="bu">print</span>(nii3ct_float32.get_data_dtype())</span>
-<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a><span class="co">#float32</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>nii3ct_float32 <span class="op">=</span> nib.load(<span class="st">"data/3_ct_lung__30__b31f_float32.nii.gz"</span>)</span></code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb31">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="bu">print</span>(nii3ct_float32.header)</span>
-<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a><span class="co">#&lt;class 'nibabel.nifti1.Nifti1Header'&gt; object, endian='&lt;'</span></span>
-<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a><span class="co">#sizeof_hdr      : 348</span></span>
-<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a><span class="co">#data_type       : b''</span></span>
-<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a><span class="co">#db_name         : b''</span></span>
-<span id="cb31-6"><a href="#cb31-6" tabindex="-1"></a><span class="co">#extents         : 0</span></span>
-<span id="cb31-7"><a href="#cb31-7" tabindex="-1"></a><span class="co">#session_error   : 0</span></span>
-<span id="cb31-8"><a href="#cb31-8" tabindex="-1"></a><span class="co">#regular         : b''</span></span>
-<span id="cb31-9"><a href="#cb31-9" tabindex="-1"></a><span class="co">#dim_info        : 0</span></span>
-<span id="cb31-10"><a href="#cb31-10" tabindex="-1"></a><span class="co">#dim             : [  3 512 512 175   1   1   1   1]</span></span>
-<span id="cb31-11"><a href="#cb31-11" tabindex="-1"></a><span class="co">#intent_p1       : 0.0</span></span>
-<span id="cb31-12"><a href="#cb31-12" tabindex="-1"></a><span class="co">#intent_p2       : 0.0</span></span>
-<span id="cb31-13"><a href="#cb31-13" tabindex="-1"></a><span class="co">#intent_p3       : 0.0</span></span>
-<span id="cb31-14"><a href="#cb31-14" tabindex="-1"></a><span class="co">#intent_code     : none</span></span>
-<span id="cb31-15"><a href="#cb31-15" tabindex="-1"></a><span class="co">#datatype        : float32</span></span>
-<span id="cb31-16"><a href="#cb31-16" tabindex="-1"></a><span class="co">#bitpix          : 32</span></span>
-<span id="cb31-17"><a href="#cb31-17" tabindex="-1"></a><span class="co">#slice_start     : 0</span></span>
-<span id="cb31-18"><a href="#cb31-18" tabindex="-1"></a><span class="co">#...</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="bu">print</span>(nii3ct_float32.get_data_dtype())</span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a><span class="co">#float32</span></span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb32">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="bu">print</span>(nii3ct_float32.header)</span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a><span class="co">#&lt;class 'nibabel.nifti1.Nifti1Header'&gt; object, endian='&lt;'</span></span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a><span class="co">#sizeof_hdr      : 348</span></span>
+<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a><span class="co">#data_type       : b''</span></span>
+<span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a><span class="co">#db_name         : b''</span></span>
+<span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a><span class="co">#extents         : 0</span></span>
+<span id="cb32-7"><a href="#cb32-7" tabindex="-1"></a><span class="co">#session_error   : 0</span></span>
+<span id="cb32-8"><a href="#cb32-8" tabindex="-1"></a><span class="co">#regular         : b''</span></span>
+<span id="cb32-9"><a href="#cb32-9" tabindex="-1"></a><span class="co">#dim_info        : 0</span></span>
+<span id="cb32-10"><a href="#cb32-10" tabindex="-1"></a><span class="co">#dim             : [  3 512 512 175   1   1   1   1]</span></span>
+<span id="cb32-11"><a href="#cb32-11" tabindex="-1"></a><span class="co">#intent_p1       : 0.0</span></span>
+<span id="cb32-12"><a href="#cb32-12" tabindex="-1"></a><span class="co">#intent_p2       : 0.0</span></span>
+<span id="cb32-13"><a href="#cb32-13" tabindex="-1"></a><span class="co">#intent_p3       : 0.0</span></span>
+<span id="cb32-14"><a href="#cb32-14" tabindex="-1"></a><span class="co">#intent_code     : none</span></span>
+<span id="cb32-15"><a href="#cb32-15" tabindex="-1"></a><span class="co">#datatype        : float32</span></span>
+<span id="cb32-16"><a href="#cb32-16" tabindex="-1"></a><span class="co">#bitpix          : 32</span></span>
+<span id="cb32-17"><a href="#cb32-17" tabindex="-1"></a><span class="co">#slice_start     : 0</span></span>
+<span id="cb32-18"><a href="#cb32-18" tabindex="-1"></a><span class="co">#...</span></span></code></pre>
 </div>
 </div>
 <div class="section level3">
@@ -971,150 +973,150 @@ useful in some instances but might take up valuable RAM memory,
 especially for large images.</p>
 <ul><li>Read the image data from disk using <code>get_fdata</code> and then
 create a new array containing a copy of the desired slices:</li>
-</ul><div class="codewrapper sourceCode" id="cb32">
+</ul><div class="codewrapper sourceCode" id="cb33">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>nii3ct_float32 <span class="op">=</span> nib.load(<span class="st">"data/3_ct_lung__30__b31f_float32.nii.gz"</span>)</span>
-<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>nii3ct_float32.set_data_dtype(np.float32)</span>
-<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a><span class="bu">print</span>(nii3ct_float32.get_data_dtype())</span>
-<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a><span class="co">#float32</span></span></code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb33">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>image_data<span class="op">=</span>nii3ct_float32.get_fdata()</span>
-<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a><span class="bu">print</span>(image_data.dtype, image_data.shape)</span>
-<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a><span class="co">#float64 (512, 512, 175)</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>nii3ct_float32 <span class="op">=</span> nib.load(<span class="st">"data/3_ct_lung__30__b31f_float32.nii.gz"</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>nii3ct_float32.set_data_dtype(np.float32)</span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a><span class="bu">print</span>(nii3ct_float32.get_data_dtype())</span>
+<span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a><span class="co">#float32</span></span></code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb34">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>plt.imshow(image_data[:,:,<span class="dv">100</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)<span class="op">;</span> plt.show()</span>
-<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a><span class="co">#launch plot window</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>image_data<span class="op">=</span>nii3ct_float32.get_fdata()</span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a><span class="bu">print</span>(image_data.dtype, image_data.shape)</span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a><span class="co">#float64 (512, 512, 175)</span></span></code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb35">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a>image_data_cropped <span class="op">=</span> image_data[<span class="dv">103</span>:<span class="dv">381</span>,<span class="dv">160</span>:<span class="dv">340</span>,:].copy()</span>
-<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a><span class="co">#x[sagittal], y[coronal], z[axial] #voxel units</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a>plt.imshow(image_data[:,:,<span class="dv">100</span>], cmap<span class="op">=</span><span class="st">"gray"</span>)<span class="op">;</span> plt.show()</span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a><span class="co">#launch plot window</span></span></code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb36">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a>nii3ct_float32_cropped <span class="op">=</span> nib.nifti1.Nifti1Image(image_data_cropped, nii3ct_float32.get_sform(), nii3ct_float32.header)</span>
-<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a>nii3ct_float32_cropped.shape</span>
-<span id="cb36-3"><a href="#cb36-3" tabindex="-1"></a><span class="co">#(278, 180, 175)</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a>image_data_cropped <span class="op">=</span> image_data[<span class="dv">103</span>:<span class="dv">381</span>,<span class="dv">160</span>:<span class="dv">340</span>,:].copy()</span>
+<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a><span class="co">#x[sagittal], y[coronal], z[axial] #voxel units</span></span></code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb37">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a><span class="bu">print</span>(nii3ct_float32_cropped.header)</span>
-<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a><span class="co">#&lt;class 'nibabel.nifti1.Nifti1Header'&gt; object, endian='&lt;'</span></span>
-<span id="cb37-3"><a href="#cb37-3" tabindex="-1"></a><span class="co">#sizeof_hdr      : 348</span></span>
-<span id="cb37-4"><a href="#cb37-4" tabindex="-1"></a><span class="co">#data_type       : b''</span></span>
-<span id="cb37-5"><a href="#cb37-5" tabindex="-1"></a><span class="co">#db_name         : b''</span></span>
-<span id="cb37-6"><a href="#cb37-6" tabindex="-1"></a><span class="co">#extents         : 0</span></span>
-<span id="cb37-7"><a href="#cb37-7" tabindex="-1"></a><span class="co">#session_error   : 0</span></span>
-<span id="cb37-8"><a href="#cb37-8" tabindex="-1"></a><span class="co">#regular         : b''</span></span>
-<span id="cb37-9"><a href="#cb37-9" tabindex="-1"></a><span class="co">#dim_info        : 0</span></span>
-<span id="cb37-10"><a href="#cb37-10" tabindex="-1"></a><span class="co">#dim             : [  3 278 180 175   1   1   1   1]</span></span>
-<span id="cb37-11"><a href="#cb37-11" tabindex="-1"></a><span class="co">#intent_p1       : 0.0</span></span>
-<span id="cb37-12"><a href="#cb37-12" tabindex="-1"></a><span class="co">#intent_p2       : 0.0</span></span>
-<span id="cb37-13"><a href="#cb37-13" tabindex="-1"></a><span class="co">#intent_p3       : 0.0</span></span>
-<span id="cb37-14"><a href="#cb37-14" tabindex="-1"></a><span class="co">#intent_code     : none</span></span>
-<span id="cb37-15"><a href="#cb37-15" tabindex="-1"></a><span class="co">#datatype        : float32</span></span>
-<span id="cb37-16"><a href="#cb37-16" tabindex="-1"></a><span class="co">#bitpix          : 32</span></span>
-<span id="cb37-17"><a href="#cb37-17" tabindex="-1"></a><span class="co">#slice_start     : 0</span></span>
-<span id="cb37-18"><a href="#cb37-18" tabindex="-1"></a><span class="co">#pixdim          : [1.        0.9765625 0.9765625 2.        1.        1.        1.</span></span>
-<span id="cb37-19"><a href="#cb37-19" tabindex="-1"></a><span class="co"># 1.       ]</span></span>
-<span id="cb37-20"><a href="#cb37-20" tabindex="-1"></a><span class="co">#vox_offset      : 0.0</span></span>
-<span id="cb37-21"><a href="#cb37-21" tabindex="-1"></a><span class="co">#scl_slope       : nan</span></span>
-<span id="cb37-22"><a href="#cb37-22" tabindex="-1"></a><span class="co">#scl_inter       : nan</span></span>
-<span id="cb37-23"><a href="#cb37-23" tabindex="-1"></a><span class="co">#slice_end       : 0</span></span>
-<span id="cb37-24"><a href="#cb37-24" tabindex="-1"></a><span class="co">#slice_code      : unknown</span></span>
-<span id="cb37-25"><a href="#cb37-25" tabindex="-1"></a><span class="co">#xyzt_units      : 2</span></span>
-<span id="cb37-26"><a href="#cb37-26" tabindex="-1"></a><span class="co">#cal_max         : 0.0</span></span>
-<span id="cb37-27"><a href="#cb37-27" tabindex="-1"></a><span class="co">#cal_min         : 0.0</span></span>
-<span id="cb37-28"><a href="#cb37-28" tabindex="-1"></a><span class="co">#slice_duration  : 0.0</span></span>
-<span id="cb37-29"><a href="#cb37-29" tabindex="-1"></a><span class="co">#toffset         : 0.0</span></span>
-<span id="cb37-30"><a href="#cb37-30" tabindex="-1"></a><span class="co">#glmax           : 0</span></span>
-<span id="cb37-31"><a href="#cb37-31" tabindex="-1"></a><span class="co">#glmin           : 0</span></span>
-<span id="cb37-32"><a href="#cb37-32" tabindex="-1"></a><span class="co">#descrip         : b''</span></span>
-<span id="cb37-33"><a href="#cb37-33" tabindex="-1"></a><span class="co">#aux_file        : b''</span></span>
-<span id="cb37-34"><a href="#cb37-34" tabindex="-1"></a><span class="co">#qform_code      : unknown</span></span>
-<span id="cb37-35"><a href="#cb37-35" tabindex="-1"></a><span class="co">#sform_code      : aligned</span></span>
-<span id="cb37-36"><a href="#cb37-36" tabindex="-1"></a><span class="co">#quatern_b       : 0.0</span></span>
-<span id="cb37-37"><a href="#cb37-37" tabindex="-1"></a><span class="co">#quatern_c       : 0.0</span></span>
-<span id="cb37-38"><a href="#cb37-38" tabindex="-1"></a><span class="co">#quatern_d       : 1.0</span></span>
-<span id="cb37-39"><a href="#cb37-39" tabindex="-1"></a><span class="co">#qoffset_x       : 249.51172</span></span>
-<span id="cb37-40"><a href="#cb37-40" tabindex="-1"></a><span class="co">#qoffset_y       : 466.01172</span></span>
-<span id="cb37-41"><a href="#cb37-41" tabindex="-1"></a><span class="co">#qoffset_z       : -553.5</span></span>
-<span id="cb37-42"><a href="#cb37-42" tabindex="-1"></a><span class="co">#srow_x          : [ -0.9765625  -0.          0.        249.51172  ]</span></span>
-<span id="cb37-43"><a href="#cb37-43" tabindex="-1"></a><span class="co">#srow_y          : [ -0.         -0.9765625   0.        466.01172  ]</span></span>
-<span id="cb37-44"><a href="#cb37-44" tabindex="-1"></a><span class="co">#srow_z          : [   0.     0.     2.  -553.5]</span></span>
-<span id="cb37-45"><a href="#cb37-45" tabindex="-1"></a><span class="co">#intent_name     : b''</span></span>
-<span id="cb37-46"><a href="#cb37-46" tabindex="-1"></a><span class="co">#magic           : b'n+1'</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a>nii3ct_float32_cropped <span class="op">=</span> nib.nifti1.Nifti1Image(image_data_cropped, nii3ct_float32.get_sform(), nii3ct_float32.header)</span>
+<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a>nii3ct_float32_cropped.shape</span>
+<span id="cb37-3"><a href="#cb37-3" tabindex="-1"></a><span class="co">#(278, 180, 175)</span></span></code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb38">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>nib.save(nii3ct_float32_cropped, <span class="st">"data/3_ct_lung__30__b31f_float32_cropped.nii.gz"</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="bu">print</span>(nii3ct_float32_cropped.header)</span>
+<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a><span class="co">#&lt;class 'nibabel.nifti1.Nifti1Header'&gt; object, endian='&lt;'</span></span>
+<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a><span class="co">#sizeof_hdr      : 348</span></span>
+<span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a><span class="co">#data_type       : b''</span></span>
+<span id="cb38-5"><a href="#cb38-5" tabindex="-1"></a><span class="co">#db_name         : b''</span></span>
+<span id="cb38-6"><a href="#cb38-6" tabindex="-1"></a><span class="co">#extents         : 0</span></span>
+<span id="cb38-7"><a href="#cb38-7" tabindex="-1"></a><span class="co">#session_error   : 0</span></span>
+<span id="cb38-8"><a href="#cb38-8" tabindex="-1"></a><span class="co">#regular         : b''</span></span>
+<span id="cb38-9"><a href="#cb38-9" tabindex="-1"></a><span class="co">#dim_info        : 0</span></span>
+<span id="cb38-10"><a href="#cb38-10" tabindex="-1"></a><span class="co">#dim             : [  3 278 180 175   1   1   1   1]</span></span>
+<span id="cb38-11"><a href="#cb38-11" tabindex="-1"></a><span class="co">#intent_p1       : 0.0</span></span>
+<span id="cb38-12"><a href="#cb38-12" tabindex="-1"></a><span class="co">#intent_p2       : 0.0</span></span>
+<span id="cb38-13"><a href="#cb38-13" tabindex="-1"></a><span class="co">#intent_p3       : 0.0</span></span>
+<span id="cb38-14"><a href="#cb38-14" tabindex="-1"></a><span class="co">#intent_code     : none</span></span>
+<span id="cb38-15"><a href="#cb38-15" tabindex="-1"></a><span class="co">#datatype        : float32</span></span>
+<span id="cb38-16"><a href="#cb38-16" tabindex="-1"></a><span class="co">#bitpix          : 32</span></span>
+<span id="cb38-17"><a href="#cb38-17" tabindex="-1"></a><span class="co">#slice_start     : 0</span></span>
+<span id="cb38-18"><a href="#cb38-18" tabindex="-1"></a><span class="co">#pixdim          : [1.        0.9765625 0.9765625 2.        1.        1.        1.</span></span>
+<span id="cb38-19"><a href="#cb38-19" tabindex="-1"></a><span class="co"># 1.       ]</span></span>
+<span id="cb38-20"><a href="#cb38-20" tabindex="-1"></a><span class="co">#vox_offset      : 0.0</span></span>
+<span id="cb38-21"><a href="#cb38-21" tabindex="-1"></a><span class="co">#scl_slope       : nan</span></span>
+<span id="cb38-22"><a href="#cb38-22" tabindex="-1"></a><span class="co">#scl_inter       : nan</span></span>
+<span id="cb38-23"><a href="#cb38-23" tabindex="-1"></a><span class="co">#slice_end       : 0</span></span>
+<span id="cb38-24"><a href="#cb38-24" tabindex="-1"></a><span class="co">#slice_code      : unknown</span></span>
+<span id="cb38-25"><a href="#cb38-25" tabindex="-1"></a><span class="co">#xyzt_units      : 2</span></span>
+<span id="cb38-26"><a href="#cb38-26" tabindex="-1"></a><span class="co">#cal_max         : 0.0</span></span>
+<span id="cb38-27"><a href="#cb38-27" tabindex="-1"></a><span class="co">#cal_min         : 0.0</span></span>
+<span id="cb38-28"><a href="#cb38-28" tabindex="-1"></a><span class="co">#slice_duration  : 0.0</span></span>
+<span id="cb38-29"><a href="#cb38-29" tabindex="-1"></a><span class="co">#toffset         : 0.0</span></span>
+<span id="cb38-30"><a href="#cb38-30" tabindex="-1"></a><span class="co">#glmax           : 0</span></span>
+<span id="cb38-31"><a href="#cb38-31" tabindex="-1"></a><span class="co">#glmin           : 0</span></span>
+<span id="cb38-32"><a href="#cb38-32" tabindex="-1"></a><span class="co">#descrip         : b''</span></span>
+<span id="cb38-33"><a href="#cb38-33" tabindex="-1"></a><span class="co">#aux_file        : b''</span></span>
+<span id="cb38-34"><a href="#cb38-34" tabindex="-1"></a><span class="co">#qform_code      : unknown</span></span>
+<span id="cb38-35"><a href="#cb38-35" tabindex="-1"></a><span class="co">#sform_code      : aligned</span></span>
+<span id="cb38-36"><a href="#cb38-36" tabindex="-1"></a><span class="co">#quatern_b       : 0.0</span></span>
+<span id="cb38-37"><a href="#cb38-37" tabindex="-1"></a><span class="co">#quatern_c       : 0.0</span></span>
+<span id="cb38-38"><a href="#cb38-38" tabindex="-1"></a><span class="co">#quatern_d       : 1.0</span></span>
+<span id="cb38-39"><a href="#cb38-39" tabindex="-1"></a><span class="co">#qoffset_x       : 249.51172</span></span>
+<span id="cb38-40"><a href="#cb38-40" tabindex="-1"></a><span class="co">#qoffset_y       : 466.01172</span></span>
+<span id="cb38-41"><a href="#cb38-41" tabindex="-1"></a><span class="co">#qoffset_z       : -553.5</span></span>
+<span id="cb38-42"><a href="#cb38-42" tabindex="-1"></a><span class="co">#srow_x          : [ -0.9765625  -0.          0.        249.51172  ]</span></span>
+<span id="cb38-43"><a href="#cb38-43" tabindex="-1"></a><span class="co">#srow_y          : [ -0.         -0.9765625   0.        466.01172  ]</span></span>
+<span id="cb38-44"><a href="#cb38-44" tabindex="-1"></a><span class="co">#srow_z          : [   0.     0.     2.  -553.5]</span></span>
+<span id="cb38-45"><a href="#cb38-45" tabindex="-1"></a><span class="co">#intent_name     : b''</span></span>
+<span id="cb38-46"><a href="#cb38-46" tabindex="-1"></a><span class="co">#magic           : b'n+1'</span></span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb39">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a>nib.save(nii3ct_float32_cropped, <span class="st">"data/3_ct_lung__30__b31f_float32_cropped.nii.gz"</span>)</span></code></pre>
 </div>
 <ul><li>Setting world coordinates of voxel (103, 160, 0) in the uncropped
 image.</li>
-</ul><div class="codewrapper sourceCode" id="cb39">
+</ul><div class="codewrapper sourceCode" id="cb40">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a>cropped_origin <span class="op">=</span> nii3ct_float32.affine<span class="op">@</span>np.array([<span class="dv">103</span>,<span class="dv">160</span>,<span class="dv">0</span>,<span class="dv">1</span>])</span>
-<span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a>cropped_origin</span>
-<span id="cb39-3"><a href="#cb39-3" tabindex="-1"></a><span class="co">#array([ 148.92578125,  309.76171875, -553.5       ,    1.        ])</span></span></code></pre>
-</div>
-<div class="codewrapper sourceCode" id="cb40">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a>aff_mat_cropped <span class="op">=</span> nii3ct_float32_cropped.get_sform()</span>
-<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a><span class="bu">print</span>(aff_mat_cropped)</span>
-<span id="cb40-3"><a href="#cb40-3" tabindex="-1"></a><span class="co">#array([[  -0.9765625 ,   -0.        ,    0.        ,  249.51171875],</span></span>
-<span id="cb40-4"><a href="#cb40-4" tabindex="-1"></a><span class="co">#       [  -0.        ,   -0.9765625 ,    0.        ,  466.01171875],</span></span>
-<span id="cb40-5"><a href="#cb40-5" tabindex="-1"></a><span class="co">#       [   0.        ,    0.        ,    2.        , -553.5       ],</span></span>
-<span id="cb40-6"><a href="#cb40-6" tabindex="-1"></a><span class="co">#       [   0.        ,    0.        ,    0.        ,    1.        ]])</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a>cropped_origin <span class="op">=</span> nii3ct_float32.affine<span class="op">@</span>np.array([<span class="dv">103</span>,<span class="dv">160</span>,<span class="dv">0</span>,<span class="dv">1</span>])</span>
+<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a>cropped_origin</span>
+<span id="cb40-3"><a href="#cb40-3" tabindex="-1"></a><span class="co">#array([ 148.92578125,  309.76171875, -553.5       ,    1.        ])</span></span></code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb41">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a>aff_mat_cropped[:, <span class="dv">3</span>] <span class="op">=</span> cropped_origin</span>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a>aff_mat_cropped <span class="op">=</span> nii3ct_float32_cropped.get_sform()</span>
 <span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a><span class="bu">print</span>(aff_mat_cropped)</span>
-<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a><span class="co">#[[  -0.9765625    -0.            0.          148.92578125]</span></span>
-<span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a><span class="co"># [  -0.           -0.9765625     0.          309.76171875]</span></span>
-<span id="cb41-5"><a href="#cb41-5" tabindex="-1"></a><span class="co"># [   0.            0.            2.         -553.5       ]</span></span>
-<span id="cb41-6"><a href="#cb41-6" tabindex="-1"></a><span class="co"># [   0.            0.            0.            1.        ]]</span></span></code></pre>
+<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a><span class="co">#array([[  -0.9765625 ,   -0.        ,    0.        ,  249.51171875],</span></span>
+<span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a><span class="co">#       [  -0.        ,   -0.9765625 ,    0.        ,  466.01171875],</span></span>
+<span id="cb41-5"><a href="#cb41-5" tabindex="-1"></a><span class="co">#       [   0.        ,    0.        ,    2.        , -553.5       ],</span></span>
+<span id="cb41-6"><a href="#cb41-6" tabindex="-1"></a><span class="co">#       [   0.        ,    0.        ,    0.        ,    1.        ]])</span></span></code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb42">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a>nii3ct_float32_cropped.set_sform(aff_mat_cropped)</span>
-<span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a>nii3ct_float32_cropped.affine</span>
-<span id="cb42-3"><a href="#cb42-3" tabindex="-1"></a><span class="co">#array([[  -0.9765625 ,   -0.        ,    0.        ,  148.92578125],</span></span>
-<span id="cb42-4"><a href="#cb42-4" tabindex="-1"></a><span class="co">#       [  -0.        ,   -0.9765625 ,    0.        ,  309.76171875],</span></span>
-<span id="cb42-5"><a href="#cb42-5" tabindex="-1"></a><span class="co">#       [   0.        ,    0.        ,    2.        , -553.5       ],</span></span>
-<span id="cb42-6"><a href="#cb42-6" tabindex="-1"></a><span class="co">#       [   0.        ,    0.        ,    0.        ,    1.        ]])</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a>aff_mat_cropped[:, <span class="dv">3</span>] <span class="op">=</span> cropped_origin</span>
+<span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a><span class="bu">print</span>(aff_mat_cropped)</span>
+<span id="cb42-3"><a href="#cb42-3" tabindex="-1"></a><span class="co">#[[  -0.9765625    -0.            0.          148.92578125]</span></span>
+<span id="cb42-4"><a href="#cb42-4" tabindex="-1"></a><span class="co"># [  -0.           -0.9765625     0.          309.76171875]</span></span>
+<span id="cb42-5"><a href="#cb42-5" tabindex="-1"></a><span class="co"># [   0.            0.            2.         -553.5       ]</span></span>
+<span id="cb42-6"><a href="#cb42-6" tabindex="-1"></a><span class="co"># [   0.            0.            0.            1.        ]]</span></span></code></pre>
 </div>
 <div class="codewrapper sourceCode" id="cb43">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a>nib.save(nii3ct_float32_cropped, <span class="st">"data/3_ct_lung__30__b31f_float32_cropped_affine.nii.gz"</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a>nii3ct_float32_cropped.set_sform(aff_mat_cropped)</span>
+<span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a>nii3ct_float32_cropped.affine</span>
+<span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a><span class="co">#array([[  -0.9765625 ,   -0.        ,    0.        ,  148.92578125],</span></span>
+<span id="cb43-4"><a href="#cb43-4" tabindex="-1"></a><span class="co">#       [  -0.        ,   -0.9765625 ,    0.        ,  309.76171875],</span></span>
+<span id="cb43-5"><a href="#cb43-5" tabindex="-1"></a><span class="co">#       [   0.        ,    0.        ,    2.        , -553.5       ],</span></span>
+<span id="cb43-6"><a href="#cb43-6" tabindex="-1"></a><span class="co">#       [   0.        ,    0.        ,    0.        ,    1.        ]])</span></span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb44">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a>nib.save(nii3ct_float32_cropped, <span class="st">"data/3_ct_lung__30__b31f_float32_cropped_affine.nii.gz"</span>)</span></code></pre>
 </div>
 <ul><li>updating the affine transforms with <code>nibabel.slicer</code>
 </li>
-</ul><div class="codewrapper sourceCode" id="cb44">
+</ul><div class="codewrapper sourceCode" id="cb45">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a>nii3ct_float32_cropped_with_nibabel_slicer <span class="op">=</span> nii3ct_float32.slicer[<span class="dv">103</span>:<span class="dv">381</span>,<span class="dv">160</span>:<span class="dv">340</span>,:]</span>
-<span id="cb44-2"><a href="#cb44-2" tabindex="-1"></a>nii3ct_float32_cropped_with_nibabel_slicer.affine</span>
-<span id="cb44-3"><a href="#cb44-3" tabindex="-1"></a><span class="co">#array([[  -0.9765625 ,    0.        ,    0.        ,  148.92578125],</span></span>
-<span id="cb44-4"><a href="#cb44-4" tabindex="-1"></a><span class="co">#       [   0.        ,   -0.9765625 ,    0.        ,  309.76171875],</span></span>
-<span id="cb44-5"><a href="#cb44-5" tabindex="-1"></a><span class="co">#       [   0.        ,    0.        ,    2.        , -553.5       ],</span></span>
-<span id="cb44-6"><a href="#cb44-6" tabindex="-1"></a><span class="co">#       [   0.        ,    0.        ,    0.        ,    1.        ]])</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a>nii3ct_float32_cropped_with_nibabel_slicer <span class="op">=</span> nii3ct_float32.slicer[<span class="dv">103</span>:<span class="dv">381</span>,<span class="dv">160</span>:<span class="dv">340</span>,:]</span>
+<span id="cb45-2"><a href="#cb45-2" tabindex="-1"></a>nii3ct_float32_cropped_with_nibabel_slicer.affine</span>
+<span id="cb45-3"><a href="#cb45-3" tabindex="-1"></a><span class="co">#array([[  -0.9765625 ,    0.        ,    0.        ,  148.92578125],</span></span>
+<span id="cb45-4"><a href="#cb45-4" tabindex="-1"></a><span class="co">#       [   0.        ,   -0.9765625 ,    0.        ,  309.76171875],</span></span>
+<span id="cb45-5"><a href="#cb45-5" tabindex="-1"></a><span class="co">#       [   0.        ,    0.        ,    2.        , -553.5       ],</span></span>
+<span id="cb45-6"><a href="#cb45-6" tabindex="-1"></a><span class="co">#       [   0.        ,    0.        ,    0.        ,    1.        ]])</span></span></code></pre>
 </div>
 </div>
 <div class="section level3">
@@ -1189,7 +1191,7 @@ any links that you are not going to use.
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
         
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/HealthBioscienceIDEAS/sandpaper/tree/IDEAS" class="external-link">sandpaper (0.16.5)</a>, <a href="https://github.com/carpentries/pegboard/tree/a32a7836d4455f407c3cafe8ab95edc636e5e919" class="external-link">pegboard (0.7.5)</a>, and <a href="https://github.com/HealthBioscienceIDEAS/varnish/tree/IDEAS" class="external-link">varnish (1.0.3.9000)</a></p>
+        <p>Built with <a href="https://github.com/HealthBioscienceIDEAS/sandpaper/tree/IDEAS" class="external-link">sandpaper (0.16.5)</a>, <a href="https://github.com/carpentries/pegboard/tree/ad2542f7f7b9c3f90cc871b355ff81ec14a09ca9" class="external-link">pegboard (0.7.6)</a>, and <a href="https://github.com/HealthBioscienceIDEAS/varnish/tree/IDEAS" class="external-link">varnish (1.0.3.9000)</a></p>
 			</div>
 		</footer></div> <!-- / div.container -->
 	<div id="to-top">

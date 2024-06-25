@@ -154,7 +154,8 @@
         
     <div id="flush-collapsecurrent" class="accordion-collapse collapse show" aria-labelledby="flush-headingcurrent" data-bs-parent="#accordionFlushcurrent">
       <div class="accordion-body">
-        <ul><li><a href="#data-sets">Data Sets</a></li>
+        <ul><li><a href="#github-setup">Github setup</a></li>
+<li><a href="#dataset">Dataset</a></li>
 <li><a href="#software-setup">Software Setup</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
@@ -239,9 +240,17 @@ any links that you are not going to use.
  -->
 
 
-      <section id="setup"><p>FIXME: Setup instructions live in this document. Please specify the
-tools and the data sets the Learner needs to have installed.</p>
-<section id="data-sets"><h2 class="section-heading">Data Sets<a class="anchor" aria-label="anchor" href="#data-sets"></a>
+      <section id="setup"><section id="github-setup"><h2 class="section-heading">Github setup<a class="anchor" aria-label="anchor" href="#github-setup"></a>
+</h2>
+<hr class="half-width"><ol style="list-style-type: decimal"><li>You might have already a <a href="https://github.com" class="external-link">GitHub</a>,
+otherwise please <a href="https://github.com/join" class="external-link">create one</a>
+</li>
+<li>Generate your SSH keys as suggested <a href="https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent" class="external-link">here</a>
+</li>
+<li>Clone the repository by typing (or copying) the following lines in a
+terminal</li>
+</ol><pre><code>git clone git@github.com:HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course.git</code></pre>
+</section><section id="dataset"><h2 class="section-heading">Dataset<a class="anchor" aria-label="anchor" href="#dataset"></a>
 </h2>
 <hr class="half-width"><!--
 FIXME: place any data you want learners to use in `episodes/data` and then use
@@ -330,42 +339,15 @@ should suffice for users with large images.” <a href="http://www.itksnap.org/p
 <li>Windows (64 bit),</li>
 <li>and MacOS Leopard (64 bit).</li>
 </ul></li>
-</ul></div>
-<div class="section level4">
-<h4 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a></h4>
-<div class="section level5">
-<h5 id="windows-11">Windows 11<a class="anchor" aria-label="anchor" href="#windows-11"></a></h5>
-<ul><li>Open the following link: <a href="https://sourceforge.net/projects/itk-snap/files/itk-snap/4.2.0/" class="external-link uri">https://sourceforge.net/projects/itk-snap/files/itk-snap/4.2.0/</a>
-</li>
-<li>Download <code>itksnap-4.2.0-20240422-win64-AMD64.exe</code>
-</li>
-<li>Install it by following default settings.</li>
-</ul></div>
-<div class="section level5">
-<h5 id="ubuntu-22-04-x64-gnulinux">Ubuntu 22.04 x64 GNU/Linux<a class="anchor" aria-label="anchor" href="#ubuntu-22-04-x64-gnulinux"></a></h5>
-<pre><code>FILENAME=itksnap-nightly-rel_4.0-Linux-gcc64.tar.gz  #Length: 200943059 (192M) [application/x-gzip]
-cd ~/Downloads/
-mkdir -p itksnap &amp;&amp; cd itksnap
-wget https://sourceforge.net/projects/itk-snap/files/itk-snap/Nightly/$FILENAME/download -O $FILENAME
-tar -xvzf $FILENAME</code></pre>
-</div>
-</div>
-<div class="section level4">
-<h4 id="mac">Mac<a class="anchor" aria-label="anchor" href="#mac"></a></h4>
-<pre><code><span><span class="va">TOADD</span></span></code></pre>
-<div id="details" class="callout discussion">
+</ul><div id="installation" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
 </div>
-<div id="details" class="callout-inner">
-<h3 class="callout-title">Details<a class="anchor" aria-label="anchor" href="#details"></a>
+<div id="installation" class="callout-inner">
+<h3 class="callout-title">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h3>
 <div class="callout-content">
-<p>Setup for different systems can be presented in dropdown menus via a
-<code>solution</code> tag. They will join to this discussion block, so
-you can give a general overview of the software used in this lesson here
-and fill out the individual operating systems (and potentially add more,
-e.g. online setup) in the solutions blocks.</p>
+<p>Installing ITK-SNAP in differen operating systems</p>
 </div>
 </div>
 </div>
@@ -376,10 +358,14 @@ e.g. online setup) in the solutions blocks.</p>
   Windows
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
-<p>Use PuTTY</p>
-</div>
+<ul><li>Open the following link: <a href="https://sourceforge.net/projects/itk-snap/files/itk-snap/4.2.0/" class="external-link uri">https://sourceforge.net/projects/itk-snap/files/itk-snap/4.2.0/</a>
+</li>
+<li>Download <code>itksnap-4.2.0-20240422-win64-AMD64.exe</code>
+</li>
+<li>Install it by following default settings.</li>
+</ul></div>
 </div>
 </div>
 </div>
@@ -387,12 +373,18 @@ e.g. online setup) in the solutions blocks.</p>
 <div class="accordion-item">
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2">
-  MacOS
+  Linux (tested on Ubuntu 22.04 x64 GNU/Linux)
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
-<p>Use Terminal.app</p>
+<ul><li>Open your Terminal to install it</li>
+</ul><pre><code>sudo apt-get install tree # to visualise files and paths
+FILENAME=itksnap-nightly-rel_4.0-Linux-gcc64.tar.gz  #Length: 200943059 (192M) [application/x-gzip]
+cd ~/Downloads/
+mkdir -p itksnap &amp;&amp; cd itksnap
+wget https://sourceforge.net/projects/itk-snap/files/itk-snap/Nightly/$FILENAME/download -O $FILENAME
+tar -xvzf $FILENAME</code></pre>
 </div>
 </div>
 </div>
@@ -401,14 +393,22 @@ e.g. online setup) in the solutions blocks.</p>
 <div class="accordion-item">
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3">
-  Linux
+  MacOS
   </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
-<p>Use Terminal to install</p>
-<pre><code>sudo apt-get install tree # to visualise files and paths</code></pre>
-</div>
+<ul><li>Open the following link: <a href="https://sourceforge.net/projects/itk-snap/files/itk-snap/4.2.0/" class="external-link uri">https://sourceforge.net/projects/itk-snap/files/itk-snap/4.2.0/</a>
+and download <code>itksnap-4.2.0-20240422-Darwin-x86_64.dmg</code>
+</li>
+<li>Double click the icon for the file you downloaded (e.g.,
+itksnap-3.2.0-rc2-20140919-MacOS-x86_64.dmg).</li>
+<li>Drag the icon ITK-SNAP.app to the Applications folder.</li>
+<li>Drag the icon itksnap on top of the icon <code>usr_local_bin</code>
+in that folder.</li>
+<li>To add the ITK-SNAP launcher to your Dock, open the Applications
+folder and drag the ITK-SNAP.app icon onto the dock.</li>
+</ul></div>
 </div>
 </div>
 </div>
@@ -445,7 +445,7 @@ any links that you are not going to use.
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
         
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/HealthBioscienceIDEAS/sandpaper/tree/IDEAS" class="external-link">sandpaper (0.16.5)</a>, <a href="https://github.com/carpentries/pegboard/tree/a32a7836d4455f407c3cafe8ab95edc636e5e919" class="external-link">pegboard (0.7.5)</a>, and <a href="https://github.com/HealthBioscienceIDEAS/varnish/tree/IDEAS" class="external-link">varnish (1.0.3.9000)</a></p>
+        <p>Built with <a href="https://github.com/HealthBioscienceIDEAS/sandpaper/tree/IDEAS" class="external-link">sandpaper (0.16.5)</a>, <a href="https://github.com/carpentries/pegboard/tree/ad2542f7f7b9c3f90cc871b355ff81ec14a09ca9" class="external-link">pegboard (0.7.6)</a>, and <a href="https://github.com/HealthBioscienceIDEAS/varnish/tree/IDEAS" class="external-link">varnish (1.0.3.9000)</a></p>
 			</div>
 		</footer></div> <!-- / div.container -->
 	<div id="to-top">
