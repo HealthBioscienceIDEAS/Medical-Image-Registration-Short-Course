@@ -385,7 +385,6 @@ In this step, we perform the main iterative loop where the actual image registra
 ```
 
 
-
 ### 9.1. Results after Level 1 iterations:
 ![Level 1 Results](fig/level1-iteration15.png)
 
@@ -402,6 +401,7 @@ In this step, we perform the main iterative loop where the actual image registra
 
 In this step, we visualise the final results of the image registration process. This includes displaying the warped image, the deformation field, and the updated deformation field using subplots.
 
+This code snippet sets up a visualization interface using Matplotlib to display and interact with images and plots related to image processing tasks. Global variables are initialized to track the current indices for both images and display modes. Three images are defined: source, target, and warped_image, along with corresponding titles stored in image_titles. Two display modes, 'Deformation Field' and 'Jacobian', are defined in the modes list. The code defines an event handler function, on_key, which responds to key presses ('left', 'right', 'up', 'down') to navigate between images and switch display modes. The update_display function clears and updates three subplots within a single figure based on the current indices and modes, ensuring the visualizations are refreshed dynamically. Finally, a Matplotlib figure with subplots is created, initial images and plots are displayed, and instructions for navigation are added at the bottom. The figure is connected to the event handler to enable interactive navigation and mode switching.
 
 ```python
 # display the final results
