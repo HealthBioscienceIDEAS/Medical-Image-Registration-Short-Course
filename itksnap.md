@@ -265,6 +265,11 @@ We will now work on converting DICOM images to a NIfTI image volume.
 #### Using ITK-SNAP
 In the ITK-SNAP application, save the file by clicking 'File' --> 'Save image' --> rename image and choose format as 'NiFTI'.
 
+Notes.
+```callout
+For Linux users. You might get this error `Error: exception occurred during image IO. Exception: std::expedition` to which he suggest using dicom2nifti library.
+```
+
 #### Using [dicom2nifti](https://github.com/icometrix/dicom2nifti)
 ```python
 from pathlib import Path 
