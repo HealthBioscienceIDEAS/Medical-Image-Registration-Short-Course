@@ -388,26 +388,3 @@ def demonsReg(source, target, sigma_elastic=1, sigma_fluid=1, num_lev=3, use_com
 
   # return the transformed image and the deformation field
   return warped_image, def_field
-
-
-
-
-import skimage.io
-
-cine_MR_img_1 = skimage.io.imread('C:/Users/zakar/Downloads/python/python/cine_MR_1.png') 
-cine_MR_img_2 = skimage.io.imread('C:/Users/zakar/Downloads/python/python/cine_MR_2.png')
-cine_MR_img_3 = skimage.io.imread('C:/Users/zakar/Downloads/python/python/cine_MR_3.png')
-
-cine_MR_img_1 = np.double(cine_MR_img_1)
-cine_MR_img_2 = np.double(cine_MR_img_2)
-cine_MR_img_3 = np.double(cine_MR_img_3)
-
-cine_MR_img_1 = np.flip(cine_MR_img_1.T, 1)
-cine_MR_img_2 = np.flip(cine_MR_img_2.T, 1)
-cine_MR_img_3 = np.flip(cine_MR_img_3.T, 1)
-
-[warped_image_def, def_field_def] = demonsReg(cine_MR_img_1, cine_MR_img_2)
-
-
-
-
