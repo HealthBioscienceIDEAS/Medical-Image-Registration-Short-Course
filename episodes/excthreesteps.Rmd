@@ -473,6 +473,8 @@ In this step, we visualise the final results of the image registration process. 
     plt.show()
 ```
 
+### 11.1 Final Results Video (Navigation between images and modes)
+
 <video width="800" height="450" controls>
     <source src="fig/final_results_vid.mp4" type="video/mp4">
     Your browser does not support the video tag.
