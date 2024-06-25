@@ -385,14 +385,14 @@ In this step, we perform the main iterative loop where the actual image registra
 ```
 
 
-### 9.1. Results after Level 1 iterations:
-![Level 1 Results](fig/level1-iteration15.png)
+### 10.1. Results after Level 1 iterations:
+![Level 1 Results](fig/level1.png)
 
-### 9.2. Results after Level 2 iterations:
-![Level 2 Results](fig/level2-iteration20.png)
+### 10.2. Results after Level 2 iterations:
+![Level 2 Results](fig/level2.png)
 
-### 9.3. Results after Level 3 iterations:
-![Level 3 Results](fig/level3_iteration70.png)
+### 10.3. Results after Level 3 iterations:
+![Level 3 Results](fig/level3.png)
 
 
 
@@ -484,9 +484,9 @@ Follow `exampleSolution3.py` available in `src/mirc/Example` for running the fun
 
 ```python
 import skimage.io
-cine_MR_img_1 = skimage.io.imread('cine_MR_1.png') 
-cine_MR_img_2 = skimage.io.imread('cine_MR_2.png')
-cine_MR_img_3 = skimage.io.imread('cine_MR_3.png')
+cine_MR_img_1 = skimage.io.imread('path/to/your/image/../cine_MR_1.png') 
+cine_MR_img_2 = skimage.io.imread('path/to/your/image/../cine_MR_2.png')
+cine_MR_img_3 = skimage.io.imread('path/to/your/image/../cine_MR_3.png')
 ```
 
 Converting all images into double data for standard orientation.
