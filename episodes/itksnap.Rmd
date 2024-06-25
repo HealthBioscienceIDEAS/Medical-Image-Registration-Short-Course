@@ -31,7 +31,7 @@ We are using CT Ventilation as a Functional Imaging Modality for Lung Cancer Rad
 The CT-vs-PET-Ventilation-Imaging collection is distributed under the Creative Commons Attribution 4.0 International License (https://creativecommons.org/licenses/by/4.0/). 
 The `CT-vs-PET-Ventilation-Imaging` dataset contains 20 lung cancer patients underwent exhale/inhale breath hold CT (BHCT), free-breathing four-dimensional CT (4DCT) and Galligas PET ventilation scans in a single session on a combined 4DPET/CT scanner.    
 
-We recomend using the BHCT scans for participants `CT-PET-VI-02` and `CT-PET-VI-03` showing very little motion between inhale and exhale (for PET scan and accompanying CT scan), and BHCT scans for participants `CT-PET-VI-05` and `CT-PET-VI-07` (the inhale and exhale CT scans), where 05 has a different number of slices between the inhale and exhale:
+We recommend using the BHCT scans for participants `CT-PET-VI-02` and `CT-PET-VI-03` showing very little motion between inhale and exhale (for PET scan and accompanying CT scan), and BHCT scans for participants `CT-PET-VI-05` and `CT-PET-VI-07` (the inhale and exhale CT scans), where 05 has a different number of slices between the inhale and exhale:
 
 * CT-PET-VI-02
 ```bash
@@ -160,7 +160,7 @@ Here, we provide instructions for handling multiple DICOM images, applying overl
 ![Figure. ITK-SNAP cursor inspector](fig/itk-snap-cursor-inspector.png)
 
 * **Load additional image using exhale scan by drag and drop**
-	- Images can also be opened by simply dragging them on to the itksnap window. 
+	- Images can also be opened by simply dragging them on to the ITK-SNAP window. 
 	In a file explorer (Finder in Mac) go to the exhale_BH_CT folder and drag any of the dicom files on to the itksnap window. 
 	A small window will pop up asking What should itksnap do with this image? 
 	If you select Load as Main Image it will replace the current image. 
@@ -191,8 +191,8 @@ Here, we provide instructions for handling multiple DICOM images, applying overl
 * To load the image as a colour overlay you need to use File->Add Another Image... (e.g., `5.000000-Thorax Insp  2.0  B70f-29873`).
 * Click on Browse and select any one of the files in the PET folder (e.g., `7.000000-Thorax Exp  2.0  B70f-73355`).
 * Make sure File Format is DICOM Image Series (it should be). Click Next and then Next again. 
-* When the image has loaded select As a semi-transparent overlay. you can also set the overlay color map here - select Hot from the dropdown menu and click Next. 
-* The image summary will then be displayed, along with a warning about possible loss of precision (which can be ignored). click Finish
+* When the image has loaded select As a semi-transparent overlay. You can also set the overlay color map here - select Hot from the drop-down menu and click Next. 
+* The image summary will then be displayed, along with a warning about possible loss of precision (which can be ignored). Click Finish
 
 ![Figure. ITK-SNAP semi-transparent overlays](fig/itk-snap-semi-transparent-overlay.svg)
 
@@ -221,7 +221,7 @@ Here, we provide instructions for handling multiple DICOM images, applying overl
 
 ![Figure. ITK-SNAP: Layer inspector with general tab](fig/itk-snap-layer-inspector-general-tab.png)
 
-* **The Contrast tab** enables you to adjust how the image intensities are displayed for the different images. e.g. select the lung image and set the maximum value to 1000 (push enter after typing the number) and this will make the structures in the lung easier to see.
+* **The Contrast tab** enables you to adjust how the image intensities are displayed for the different images. e.g. Select the lung image and set the maximum value to 1000 (push enter after typing the number) and this will make the structures in the lung easier to see.
 
 ![Figure. ITK-SNAP: Layer inspector with contrast tab](fig/itk-snap-layer-inspector-contrast-tab.png)
 
@@ -277,11 +277,17 @@ import dicom2nifti
 dicoms = Path("~/3_000000-CT_Lung_30_B31f-61322")
 dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=True)
 ```
+#### Using others packages
+You might also be interested to look other packages: 
+* https://github.com/rordenlab/dcm2niix
+* https://nipy.org/nibabel/dicom/dicom.html#dicom
+* https://neuroimaging-cookbook.github.io/recipes/dcm2nii_recipe/
 
 ## Viewing and understanding the NifTi header with NiBabel
-We are going to use the python package [NiBabel](https://nipy.org/nibabel/) to work with `NifTI` images. 
-We recommend to check [documentation](https://nipy.org/nibabel/#documentation) for further deatils on using nibabel library.
-Please see [instructions](../_dependencies) to install such dependecies.
+We are going to use the python package [NiBabel](https://nipy.org/nibabel/) to upload `NifTI` images and learn some basic properties of the image using Nibabel.
+[`nibabel` api](https://nipy.org/nibabel/api.html#api) provides various image utilities, conversions methods, helpers.
+We recommend to checking [documentation](https://nipy.org/nibabel/#documentation) for further deatils on using nibabel library.
+Please see [instructions](https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course/tree/main/_dependencies) to install `NiBabel` package and other dependecies.
 
 ### Loading images
 1. Open terminal, activate `mirVE` environment and run python
@@ -290,7 +296,9 @@ conda activate mirVE
 python
 ```
 
-2. Run python commands under `*/episodes` path:
+2. Importing python packages under `*/episodes` path
+
+A NifTi image with extension `*.nii.gz` can be read using `nibabel`’s `load` function. 
 ```python
 import numpy as np
 import nibabel as nib
@@ -298,7 +306,15 @@ import matplotlib.pyplot as plt
 nii3ct = nib.load("data/3_ct_lung__30__b31f.nii.gz")
 ```
 
-2. `NifTI` file properties:
+```callout
+`NiBabel`'s `load` function does not actually read the image data itself from disk, but
+does read and interpret the header, and provides functions for accessing the image data.
+Calling these functions reads the data from disk (unless it has already been read, in which
+case it may be cached in memory already.
+```
+
+2. `NifTI` object type, shape/size 
+The Nifti1Image object allows us to see the size/shape of the image and its data type.
 ```python
 print(type(nii3ct))
 # <class 'nibabel.nifti1.Nifti1Image'>
@@ -312,6 +328,21 @@ print(nii3ct.get_data_dtype())
 ```python
 nii3ct.shape
 # (512, 512, 175)
+```
+
+3. Affine transform, mapping from voxel space to world space
+```callout
+There are two common ways of specifying the affine transformation mapping from voxel coordinates
+to world coordinates in the nifti header, called the `sform` and the `qform'.
+Another transformation is that neither the sform or qform is used the mapping is performed based just on the voxel dimensions.
+The **sform** directly stores the affine transformation in the header
+whereas the **qform** stores the affine transformation using [quaternions](https://en.wikipedia.org/wiki/Quaternion). 
+```
+
+```callout
+We strongly advise always using the `sform` over the `qform`, as:
+* It is easier to understand (at least for instructors).
+* It can contain shears which cannot be represented using the `qform`.
 ```
 
 ```python
@@ -329,6 +360,7 @@ nii3ct.affine
 ```
 
 ### Header features 
+1. Printing `nii3ct.header` outputs
 ```python
 print(nii3ct.header)
 
@@ -378,8 +410,32 @@ print(nii3ct.header)
 #intent_name     : b''
 #magic           : b'n+1'
 ```
+* `sform` transformation matrix
+You can see that the `sform` is stored in the `srow_x`, `srow_y`, and `srow_z` fields of the header. 
+These specify the top three rows of a 4x4 matrix representing an affine transformation using homogenous coordinates. 
+The fourth row is not stored as it is always `[0 0 0 1]`. 
+You will notice that the sform matrix matches the affine transform in the `Nifti1Image` object.
 
-### qform   
+* `sform_code` and `qform_code`
+It can also be seen from the `sform_code` and `qform_code` that both the sform and qform are set for this image. 
+There are 5 different sform/qform codes defined:
+
+| Code | Label | Meaning |
+| --- | --- | --- |
+| 0  | unknown | sform not definted | 
+| 1  | scanner | RAS+ is scanner coordinates | 
+| 2  | aligned | RAS+ aligned to some other scan | 
+| 3  | talairach | RAS+ in Talairach atlas space | 
+| 4  | mni | RAS+ in MNI atlas space | 
+
+```callout
+But for most purposes all that matters is whether the code is unknown (numerical value 0) or one of the other valid values. 
+If the code is unknown then the sform/qform is not specified (and any values provided in the sform/qform fields of the header will be ignored).
+For any other valid values the sform/qform is specified and the affine transform will be determined from the corresponding header values.
+```
+
+### `qform` transform 
+You can also see `qform` transform using the `get_qform` function, which returns the affine matrix represented by the qform:
 ```python
 print(nii3ct.get_qform())
 ## dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=True) # nii.gz
@@ -392,53 +448,58 @@ print(nii3ct.get_qform())
 # [   0.           -0.9765625     0.          466.01171875]
 # [   0.            0.            2.         -553.5       ]
 # [   0.            0.            0.            1.        ]]
-
 ```
 
-### coordinate system  
+```callout
+However, the nifti format does not require that the sform and qform specify the same
+matrix, and it is not well defined what should be done when they are both provided and are
+different from each other. 
+Often the `qform` is simply ignored and the `sform` is used, so the general advice is to only use the `sform` and set the `qform` to unknown to avoid any confusion.
+```
+
+### Coordinate system  
+#### LPS   
 The original DICOM images assume the world coordinate system is LPS (i.e. values increase when moving to the left, posterior, and superior).
 See this helpful information on [DICOM orientations](https://nipy.org/nibabel/dicom/dicom_orientation.html), and determine if you obtained a similar affine transform from the DICOM headers.
 The values in the first two rows corresponding to the x and y dimensions would be the negative of those in the NifTi header.
 
+#### RAS   
+You will notice that the diagonal elements of the affine matrix match the voxel dimensions
+(as the affine matrix does not contain any rotations), but the values for the x and y
+dimensions are negative. This is because the voxel indices increase as you move to the left
+and posterior of the image/patient, but the nifti format assumes a RAS world coordinate
+system (i.e. the values increase as you move to the right and anterior of the patient).
+Therefore, the world coordinates decrease as the voxel indices increase.
+
+#### ITK-SNAP visualistaion coordinate system
+TOADD 
+
+## Modifying `NifTi` images and headers with Nibabel
+
 ### Obtaining image pixel data
+The image data for a Nifti1Image object can be accessed using the `get_fdata` function.
+This will load the data from disk and cast it to float64 type before returning the data as a `numpy` array.
 ```python
-pixel_data=nii3ct.get_fdata()
+image_data=nii3ct.get_fdata()
+print(type(image_data))
+#<class 'numpy.ndarray'>
+
 print(pixel_data.dtype, pixel_data.shape)
 #float64 (512, 512, 175)
 ```
 
+You can also plot a particular slide, (e.g. 140) for such data.
 ```python
 plt.imshow(pixel_data[:,:,140], cmap="gray"); plt.show()
 #launch plot window
 ```
 
-## Modifying `NifTi` images and headers with Nibabel
-
 ### Using float64 data type
-* The image data for a Nifti1Image object can be accessed using the `get_fdata` function.
-Loading the data from disk and cast it to float64 type before returning the data as a numpy array.
-```python
-image_data=nii3ct.get_fdata()
-print(type(image_data))
-#<class 'numpy.ndarray'>
-```
-
-```python
-print(image_data.dtype)
-#float64
-```
-
-```python
-print(image_data.shape)
-#(512, 512, 175)
-```
-
-* Use the `set_data_dtype` function to set the data type to float32. 
-
-Casting it to float64 prevents any integer-related errors and problems in downstream processing when using the data read by Nibabel. 
+Casting image data to float64 prevents any integer-related errors and problems in downstream processing when using the data read by NiBabel. 
 However, this does not change the type of the image stored on disk, which as we have seen is int16 for this image, and this could still lead to downstream errors or unexpected behaviour for any processing that works directly on the images stored on disk. 
-Therefore, we are going to convert the image saved on disk to a floating point image. 
-We are going to use 32 bit rather than 64 bit floating point, as this is usually sufficiently accurate. 
+We are going to convert the image saved on disk to a floating point image, using the `set_data_dtype` function to set the data type to float32. 
+Esentially, we are going to use 32 bit rather than 64 bit floating point, as this is usually sufficiently accurate. 
+
 ```python
 print(nii3ct.get_data_dtype())
 #int16
@@ -450,10 +511,9 @@ print(nii3ct.get_data_dtype())
 #float32
 ```
 
-We are also going to set the qform to unknown as suggested above.
-This also updates the corresponding fields in the header. 
-Use the `set_qform` function to set the `qform` code. 
-To just set the code and not modify the other `qform` values in the header, the first input should be None. 
+We are also going to set the `qform` to `unknown`, updating the corresponding fields in the header. 
+We use the `set_qform` function to set the `qform` code. 
+To just set the code and not modify the other `qform` values in the header, the first input should be `None`. 
 It is not necessary to modify the other `qform` values as they should be ignored when the code is set to unknown.
 
 ```python
@@ -542,8 +602,12 @@ print(nii3ct_float32.header)
 #...
 ```
 
+
+#### ITK-SNAP visualistaion of 16-bit integers vs 32 bit floats
+TOADD
+
 ### Cropping data
-Cropping data might offen contain background voxels which can be useful in some instances but might take up valuable RAM memory, especially for large images.
+Cropping data might often contain background voxels which can be useful in some instances but might take up valuable RAM memory, especially for large images.
 
 * Read the image data from disk using `get_fdata`  and then create a new array containing a copy of the desired slices:
 ```python
@@ -680,7 +744,7 @@ nii3ct_float32_cropped_with_nibabel_slicer.affine
 ### Cropped and aligned image
 Automated image registrations can be prone to be failure if there are very large initial differences between the images. A manual alignment is subjective, but can provide a good enough starting guess that keeps the objective, automated registration more reliable.  
 * Manually aligning images
-For manaual image registration in ITK-SNAP go to Tools > image registration
+For manual image registration in ITK-SNAP go to Tools > image registration
 
 ![Figure. ITK-SNAP main window](fig/itk-snap-image-manual-registration.png)
 
