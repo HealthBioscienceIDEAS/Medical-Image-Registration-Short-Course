@@ -11,7 +11,7 @@ sandpaper::build_lesson()
 ```
 
 ## 🤝 Contributing
-Medical-Image-Registration-Short-Course follows the [Contributor Covenant Code of Conduct](.github/CODE_OF_CONDUCT.md).
+Medical-Image-Registration-Short-Course follows the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md).
 Contributions, issues and feature requests are welcome, so feel free to open new [issues](https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course/issues/new/choose).
 We also suggest to checking [the contributing guide](CONTRIBUTING.md).
 
