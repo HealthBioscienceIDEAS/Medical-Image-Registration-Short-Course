@@ -31,24 +31,29 @@ We are using CT Ventilation as a Functional Imaging Modality for Lung Cancer Rad
 The CT-vs-PET-Ventilation-Imaging collection is distributed under the Creative Commons Attribution 4.0 International License (https://creativecommons.org/licenses/by/4.0/). 
 The `CT-vs-PET-Ventilation-Imaging` dataset contains 20 lung cancer patients underwent exhale/inhale breath hold CT (BHCT), free-breathing four-dimensional CT (4DCT) and Galligas PET ventilation scans in a single session on a combined 4DPET/CT scanner.    
 
-We recommend using the BHCT scans for participants `CT-PET-VI-02` and `CT-PET-VI-03` showing very little motion between inhale and exhale (for PET scan and accompanying CT scan), and BHCT scans for participants `CT-PET-VI-05` and `CT-PET-VI-07` (the inhale and exhale CT scans), where 05 has a different number of slices between the inhale and exhale:
+We recommend using the BHCT scans for participants `CT-PET-VI-02` and `CT-PET-VI-03` showing very little motion between inhale and exhale (for PET scan and accompanying CT scan), and BHCT scans for participants `CT-PET-VI-05` and `CT-PET-VI-07` (the inhale and exhale CT scans), where 05 has a different number of slices between the inhale and exhale.
+
+Data paths contain:
+* `inhale_BH_CT` and `exhale_BH_CT` contain CT scans acquired during an inhalation breath hold and exhalation breath hold respectively.
+* `PET` contains a PET scan that measures the local lung function, 
+* `CT_for_PET` contains a CT scan acquired at the same time as the PET scan for attenuation correction of the PET scan and to provide anatomical reference for the PET data.
+
 
 * CT-PET-VI-02
 ```bash
-CT-PET-VI-02$ tree -d
-.
-└── 05-28-1996-RTRTRespLowBreathRateRNS Adult-05441
-    ├── 3.000000-CT Lung  3.0  B31f-61322
-    ├── 4.000000-Galligas Lung-03537
+├── CT-PET-VI-02
+│   ├── CT_for_PET
+│   ├── exhale_BH_CT
+│   ├── inhale_BH_CT
+│   └── PET
 ```
 
 * CT-PET-VI-03
 ```bash
 /CT-PET-VI-03$ tree -d
-.
-├── 06-25-1996-RTRTRespLowBreathRateRNS Adult-43080
-│   ├── 3.000000-CT Lung  3.0  B31f-08354
-│   └── 4.000000-Galligas Lung-15379
+├── CT-PET-VI-03
+│   ├── CT_for_PET
+│   └── PET
 ```
 
 * CT-PET-VI-05
@@ -56,23 +61,26 @@ CT-PET-VI-02$ tree -d
 ```bash
 CT-PET-VI-05$ tree -d
 .
-└── 12-10-1996-RTRTRespLowBreathRateRNS Adult-37585
-    ├── 5.000000-Thorax Insp  2.0  B70f-45546
-    ├── 7.000000-Thorax Exp  2.0  B70f-31579
+├── CT-PET-VI-05
+│   ├── CT_for_PET
+│   ├── exhale_BH_CT
+│   ├── inhale_BH_CT
+│   └── PET
 ```
 
 * CT-PET-VI-07
 ```bash
 /CT-PET-VI-07$ tree -d
 .
-└── 02-14-1997-RTRTRespLowBreathRateRNS Adult-80512
-    ├── 5.000000-Thorax Insp  2.0  B70f-20440
-    ├── 7.000000-Thorax Exp  2.0  B70f-03567
+└── CT-PET-VI-07
+    ├── exhale_BH_CT
+    ├── inhale_BH_CT
+    └── PET
 ```
 
-Refer to `Summary and Setup` section for further details on CT-vs-PET-Ventilation-Imaging dataset.
+Refer to [`Summary and Setup`](https://healthbioscienceideas.github.io/Medical-Image-Registration-Short-Course/#data-sets) section for further details on CT-vs-PET-Ventilation-Imaging dataset.
 
-For examples in this episode, we are going to use DICOM data "CT-PET-VI-02/3.000000-CT Lung 3.0 B31f-61322" but others can be used!
+For examples in this episode, we are going to use DICOM data `CT-PET-VI-02/CT_forPET` but others can be used.
 
 ![Figure. CT-PET-VI-02 dataset](fig/CT-PET-VI-02.png)
 
