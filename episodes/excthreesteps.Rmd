@@ -45,7 +45,7 @@ from utils3 import dispImage, resampImageWithDefField, calcMSD, dispDefField  # 
 
 ## 2. Function Definition
 
-The `demonsReg` function is designed for registering two 2D images using the Demons algorithm, transforming the source image to match the target. It offers flexibility through various optional parameters to customize the registration process:
+The `demonsReg` function is designed for registering two 2D images using the Demons algorithm, transforming the source image to match the target. It offers flexibility through various optional parameters to customise the registration process:
 
 ```python
 def demonsReg(source, target, sigma_elastic=1, sigma_fluid=1, num_lev=3, use_composition=False,
@@ -397,41 +397,79 @@ In this step, we perform the main iterative loop where the actual image registra
 
 
 
-## 10. Displaying Final Results
+## 11. Displaying Final Results
 
-In this step, we visualise the final results of the image registration process. This includes displaying the warped image, the deformation field, and the updated deformation field using subplots.
-
-This code snippet sets up a visualization interface using Matplotlib to display and interact with images and plots related to image processing tasks. Global variables are initialized to track the current indices for both images and display modes. Three images are defined: source, target, and warped_image, along with corresponding titles stored in image_titles. Two display modes, 'Deformation Field' and 'Jacobian', are defined in the modes list. The code defines an event handler function, on_key, which responds to key presses ('left', 'right', 'up', 'down') to navigate between images and switch display modes. The update_display function clears and updates three subplots within a single figure based on the current indices and modes, ensuring the visualizations are refreshed dynamically. Finally, a Matplotlib figure with subplots is created, initial images and plots are displayed, and instructions for navigation are added at the bottom. The figure is connected to the event handler to enable interactive navigation and mode switching.
+In this step, we visualise the final results of the image registration process. This code snippet sets up a visualisation interface using Matplotlib to display and interact with images and plots related to image processing tasks. Global variables are initialised to track the current indices for both images and display modes. Three images are defined: source, target, and warped_image, along with corresponding titles stored in image_titles. Two display modes, 'Deformation Field' and 'Jacobian', are defined in the modes list. The code defines an event handler function, on_key, which responds to key presses ('left', 'right', 'up', 'down') to navigate between images and switch display modes. The update_display function clears and updates three subplots within a single figure based on the current indices and modes, ensuring the visualisations are refreshed dynamically. Finally, a Matplotlib figure with subplots is created, initial images and plots are displayed, and instructions for navigation are added at the bottom. The figure is connected to the event handler to enable interactive navigation and mode switching.
 
 ```python
-# display the final results
-    # Create a single figure with 3 subplots in one row
-    fig, axs = plt.subplots(1, 3, figsize=(12, 5))
+# Initialise global variables for current index tracking
+    current_image_index = [0]
+    current_mode_index = [0]
+    
+    # Define the images and titles
+    images = [source, target, warped_image]
+    image_titles = ['Source Image', 'Target Image', 'Warped Image']
+    modes = ['Deformation Field', 'Jacobian']
+    
+    
+    def on_key(event):
+        if event.key == 'right':
+            current_image_index[0] = (current_image_index[0] + 1) % len(images)
+        elif event.key == 'left':
+            current_image_index[0] = (current_image_index[0] - 1) % len(images)
+        elif event.key == 'up' or event.key == 'down':
+            current_mode_index[0] = (current_mode_index[0] + 1) % len(modes)
+        update_display()
+    
 
-    # Plotting the warped image in the first subplot
-    plt.sca(axs[0])
-    dispImage(warped_image, title='Warped Image')
 
-    # Plotting the deformation field in the second subplot
-    plt.sca(axs[1])
+    def update_display():
+        axs_combined[0].clear()
+        plt.sca(axs_combined[0])
+        dispImage(images[current_image_index[0]], title=image_titles[current_image_index[0]])
+
+        axs_combined[1].clear()
+        plt.sca(axs_combined[1])
+        if modes[current_mode_index[0]] == 'Deformation Field': 
+            dispDefField(def_field, spacing=disp_spacing, plot_type=disp_method_df)
+            axs_combined[1].set_title('Deformation Field')
+
+        else:
+            [jacobian, _] = calcJacobian(def_field)
+            dispImage(jacobian, title='Jacobian')
+            plt.set_cmap('jet')
+            #plt.colorbar()
+
+        axs_combined[2].clear()
+        plt.sca(axs_combined[2])
+        diff_image = images[current_image_index[0]] - target
+        dispImage(diff_image, title='Difference Image')
+
+        fig_combined.canvas.draw()
+
+
+    # Create a single figure with 3 subplots
+    fig_combined, axs_combined = plt.subplots(1, 3, figsize=(12, 6))
+
+    # Display initial images
+    plt.sca(axs_combined[0])
+    dispImage(images[current_image_index[0]], title=image_titles[current_image_index[0]])
+
+    plt.sca(axs_combined[1])
     dispDefField(def_field, spacing=disp_spacing, plot_type=disp_method_df)
-    plt.xlim(x_lims)
-    plt.ylim(y_lims)
-    plt.title('Deformation Field')
+    axs_combined[1].set_title('Deformation Field')
 
-    # Plotting the updated deformation field in the third subplot
-    plt.sca(axs[2])
-    up_field_to_display = scale_update_for_display * np.dstack((update_x, update_y))
-    up_field_to_display += np.dstack((X, Y))
-    dispDefField(up_field_to_display, spacing=disp_spacing, plot_type=disp_method_up)
-    plt.xlim(x_lims)
-    plt.ylim(y_lims)
-    plt.title('Updated Deformation Field')
+    plt.sca(axs_combined[2])
+    diff_image = images[current_image_index[0]] - target
+    dispImage(diff_image, title='Difference Image')
 
-    # Adjust layout for better spacing
+    # Add instructions for navigating images
+    fig_combined.text(0.5, 0.02, 'Press <- or -> to navigate between source, target and warped images, Press Up or Down to switch between deformation field and Jacobian', ha='center', va='top', fontsize=12, color='black')
+
+    # Connect the key event handler to the figure
+    fig_combined.canvas.mpl_connect('key_press_event', on_key)
+
     plt.tight_layout()
-
-    # Display the figure
     plt.show()
 ```
 
