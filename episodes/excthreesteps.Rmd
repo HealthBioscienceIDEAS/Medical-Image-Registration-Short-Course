@@ -473,13 +473,6 @@ In this step, we visualise the final results of the image registration process. 
     plt.show()
 ```
 
-### 11.1 Final Results Video (Navigation between images and modes)
-
-<video width="800" height="450" controls>
-    <source src="fig/final_results_vid.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
-
 
 ## 12. Preparing Images for calling the demonsReg function
 
@@ -515,3 +508,10 @@ cine_MR_img_3 = np.flip(cine_MR_img_3.T, 1)
 ```python
 demonsReg(cine_MR_img_1, cine_MR_img_2)
 ```
+
+### Final Results Video (Navigation between images and modes)
+
+<video width="800" height="450" controls>
+    <source src="fig/final_results_vid.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
