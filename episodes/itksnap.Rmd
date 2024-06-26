@@ -280,16 +280,33 @@ In the ITK-SNAP application, save the file by clicking 'File' --> 'Save image' -
 
 Notes.
 ```callout
-For Linux users. You might get this error `Error: exception occurred during image IO. Exception: std::expedition` to which he suggest using dicom2nifti library.
+For Linux users. You might get this error 
+`Error: exception occurred during image IO. 
+Exception: std::expedition` 
+to which he suggest using dicom2nifti library.
 ```
 
 #### Using [dicom2nifti](https://github.com/icometrix/dicom2nifti)
+1. Open terminal, activate `mirVE` environment and run python
+```bash
+conda activate mirVE
+python
+```
+2. Run the following commands to convert your DICOM scans to nifti format.
 ```python
 from pathlib import Path 
 import dicom2nifti 
-dicoms = Path("~/3_000000-CT_Lung_30_B31f-61322")
-dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=True)
+dicom_path = Path("CT_for_PET")
+dicom2nifti.convert_directory(dicom_path, ".", compression=True, reorient=True)
+pet_dicom_path = Path("PET")
+dicom2nifti.convert_directory(pet_dicom_path, ".", compression=True, reorient=True)
 ```
+Creating the following files:
+```
+`3_ct_lung__30__b31f.nii.gz` [47M] and renamed as `ct_for_pet.nii.gz`
+`4_galligas_lung.nii.gz` [12M] and renamed as `pet.nii.gz`
+```
+
 #### Using others packages
 You might also be interested to look other packages: 
 * https://github.com/rordenlab/dcm2niix
@@ -316,7 +333,7 @@ A NifTi image with extension `*.nii.gz` can be read using `nibabel`’s `load` f
 import numpy as np
 import nibabel as nib
 import matplotlib.pyplot as plt
-nii3ct = nib.load("data/3_ct_lung__30__b31f.nii.gz")
+nii3ct = nib.load("data/ct_for_pet.nii.gz")
 ```
 
 ```callout
@@ -360,12 +377,6 @@ We strongly advise always using the `sform` over the `qform`, as:
 
 ```python
 nii3ct.affine
-## dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=True) # nii.gz
-#array([[  -0.9765625 ,   -0.        ,    0.        ,  249.51171875],
-#       [  -0.        ,   -0.9765625 ,    0.        ,  466.01171875],
-#       [   0.        ,    0.        ,    2.        , -553.5       ],
-#       [   0.        ,    0.        ,    0.        ,    1.        ]])
-## dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=False) # nii.gz
 #array([[  -0.9765625 ,    0.        ,    0.        ,  249.51171875],
 #       [  -0.        ,    0.9765625 ,    0.        ,  -33.01171875],
 #       [   0.        ,   -0.        ,    2.        , -553.5       ],
@@ -451,14 +462,8 @@ For any other valid values the sform/qform is specified and the affine transform
 You can also see `qform` transform using the `get_qform` function, which returns the affine matrix represented by the qform:
 ```python
 print(nii3ct.get_qform())
-## dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=True) # nii.gz
 #[[  -0.9765625     0.            0.          249.51171875]
 # [   0.            0.9765625     0.          -33.01171875]
-# [   0.            0.            2.         -553.5       ]
-# [   0.            0.            0.            1.        ]]
-## dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=False) # nii.gz
-#[[  -0.9765625     0.            0.          249.51171875]
-# [   0.           -0.9765625     0.          466.01171875]
 # [   0.            0.            2.         -553.5       ]
 # [   0.            0.            0.            1.        ]]
 ```
@@ -497,13 +502,13 @@ image_data=nii3ct.get_fdata()
 print(type(image_data))
 #<class 'numpy.ndarray'>
 
-print(pixel_data.dtype, pixel_data.shape)
+print(image_data.dtype, image_data.shape)
 #float64 (512, 512, 175)
 ```
 
 You can also plot a particular slide, (e.g. 140) for such data.
 ```python
-plt.imshow(pixel_data[:,:,140], cmap="gray"); plt.show()
+plt.imshow(image_data[:,:,140], cmap="gray"); plt.show()
 #launch plot window
 ```
 
@@ -546,17 +551,17 @@ We do not need to manually modify the type of the image data – setting the dat
 ```
 
 ```python
-nib.save(nii3ct, 'data/3_ct_lung__30__b31f_float32.nii.gz')
+nib.save(nii3ct, 'data/ct_for_pet_float32.nii.gz')
 ```
 
 ### 16-bit integers vs 32 bit floats
 
-The file size of `3_ct_lung__30__b31f_float32.nii.gz` is larger than  `3_ct_lung__30__b31f.nii.gz` (60 MB, 46 MB, respectively) because of the conversion from 16 bit integers to 32 bit floats. 
+The file size of `ct_for_pet_float32.nii.gz` is larger than  `ct_for_pet.nii.gz` (61 MB, 47 MB, respectively) because of the conversion from 16 bit integers to 32 bit floats. 
 Both images are compressed, but the compression is more efficient for the floating point image: while a 32-bit floating point variable is twice the size of a 16-bit integer, the floating image is less than double the size of the original integer image.
 
 * int16
 ```python
-nii3ct_int16 = nib.load("data/3_ct_lung__30__b31f.nii.gz")
+nii3ct_int16 = nib.load("data/ct_for_pet.nii.gz")
 ```
 
 ```python
@@ -581,12 +586,41 @@ print(nii3ct_int16.header)
 #intent_code     : none
 #datatype        : int16
 #bitpix          : 16
-#...
+#slice_start     : 0
+#pixdim          : [-1.         0.9765625  0.9765625  2.         1.         1.
+#  1.         1.       ]
+#vox_offset      : 0.0
+#scl_slope       : nan
+#scl_inter       : nan
+#slice_end       : 0
+#slice_code      : unknown
+#xyzt_units      : 2
+#cal_max         : 0.0
+#cal_min         : 0.0
+#slice_duration  : 0.0
+#toffset         : 0.0
+#glmax           : 0
+#glmin           : 0
+#descrip         : b''
+#aux_file        : b''
+#qform_code      : unknown
+#sform_code      : aligned
+#quatern_b       : 0.0
+#quatern_c       : 1.0
+#quatern_d       : 0.0
+#qoffset_x       : 249.51172
+#qoffset_y       : -33.01172
+#qoffset_z       : -553.5
+#srow_x          : [ -0.9765625   0.          0.        249.51172  ]
+#srow_y          : [ -0.          0.9765625   0.        -33.01172  ]
+#srow_z          : [   0.    -0.     2.  -553.5]
+#intent_name     : b''
+#magic           : b'n+1'
 ```
 
 * float32
 ```python
-nii3ct_float32 = nib.load("data/3_ct_lung__30__b31f_float32.nii.gz")
+nii3ct_float32 = nib.load("data/ct_for_pet_float32.nii.gz")
 ```
 
 ```python
@@ -612,19 +646,49 @@ print(nii3ct_float32.header)
 #datatype        : float32
 #bitpix          : 32
 #slice_start     : 0
-#...
+#pixdim          : [-1.         0.9765625  0.9765625  2.         1.         1.
+#  1.         1.       ]
+#vox_offset      : 0.0
+#scl_slope       : nan
+#scl_inter       : nan
+#slice_end       : 0
+#slice_code      : unknown
+#xyzt_units      : 2
+#cal_max         : 0.0
+#cal_min         : 0.0
+#slice_duration  : 0.0
+#toffset         : 0.0
+#glmax           : 0
+#glmin           : 0
+#descrip         : b''
+#aux_file        : b''
+#qform_code      : unknown
+#sform_code      : aligned
+#quatern_b       : 0.0
+#quatern_c       : 1.0
+#quatern_d       : 0.0
+#qoffset_x       : 249.51172
+#qoffset_y       : -33.01172
+#qoffset_z       : -553.5
+#srow_x          : [ -0.9765625   0.          0.        249.51172  ]
+#srow_y          : [ -0.          0.9765625   0.        -33.01172  ]
+#srow_z          : [   0.    -0.     2.  -553.5]
+#intent_name     : b''
+#magic           : b'n+1'
 ```
 
 
 #### ITK-SNAP visualistaion of 16-bit integers vs 32 bit floats
-TOADD
+
+![Figure. ITK-SNAP: Metadata for 16-bit integers vs 32-bit floats](fig/itk-snap-16-32-bits.svg)
+
 
 ### Cropping data
 Cropping data might often contain background voxels which can be useful in some instances but might take up valuable RAM memory, especially for large images.
 
 * Read the image data from disk using `get_fdata`  and then create a new array containing a copy of the desired slices:
 ```python
-nii3ct_float32 = nib.load("data/3_ct_lung__30__b31f_float32.nii.gz")
+nii3ct_float32 = nib.load("data/ct_for_pet_float32.nii.gz")
 nii3ct_float32.set_data_dtype(np.float32)
 print(nii3ct_float32.get_data_dtype())
 #float32
@@ -670,8 +734,8 @@ print(nii3ct_float32_cropped.header)
 #datatype        : float32
 #bitpix          : 32
 #slice_start     : 0
-#pixdim          : [1.        0.9765625 0.9765625 2.        1.        1.        1.
-# 1.       ]
+#pixdim          : [-1.         0.9765625  0.9765625  2.         1.         1.
+#  1.         1.       ]
 #vox_offset      : 0.0
 #scl_slope       : nan
 #scl_inter       : nan
@@ -689,44 +753,44 @@ print(nii3ct_float32_cropped.header)
 #qform_code      : unknown
 #sform_code      : aligned
 #quatern_b       : 0.0
-#quatern_c       : 0.0
-#quatern_d       : 1.0
+#quatern_c       : 1.0
+#quatern_d       : 0.0
 #qoffset_x       : 249.51172
-#qoffset_y       : 466.01172
+#qoffset_y       : -33.01172
 #qoffset_z       : -553.5
-#srow_x          : [ -0.9765625  -0.          0.        249.51172  ]
-#srow_y          : [ -0.         -0.9765625   0.        466.01172  ]
-#srow_z          : [   0.     0.     2.  -553.5]
+#srow_x          : [ -0.9765625   0.          0.        249.51172  ]
+#srow_y          : [ -0.          0.9765625   0.        -33.01172  ]
+#srow_z          : [   0.    -0.     2.  -553.5]
 #intent_name     : b''
 #magic           : b'n+1'
 ```
 
 ```python
-nib.save(nii3ct_float32_cropped, "data/3_ct_lung__30__b31f_float32_cropped.nii.gz")
+nib.save(nii3ct_float32_cropped, "data/ct_for_pet_cropped.nii.gz")
 ```
 
 * Setting world coordinates of voxel (103, 160, 0) in the uncropped image.
 ```python
 cropped_origin = nii3ct_float32.affine@np.array([103,160,0,1])
 cropped_origin
-#array([ 148.92578125,  309.76171875, -553.5       ,    1.        ])
+#array([ 148.92578125,  123.23828125, -553.5       ,    1.        ])
 ```
 
 ```python
 aff_mat_cropped = nii3ct_float32_cropped.get_sform()
 print(aff_mat_cropped)
-#array([[  -0.9765625 ,   -0.        ,    0.        ,  249.51171875],
-#       [  -0.        ,   -0.9765625 ,    0.        ,  466.01171875],
-#       [   0.        ,    0.        ,    2.        , -553.5       ],
-#       [   0.        ,    0.        ,    0.        ,    1.        ]])
+#[[  -0.9765625     0.            0.          249.51171875]
+# [  -0.            0.9765625     0.          -33.01171875]
+# [   0.           -0.            2.         -553.5       ]
+# [   0.            0.            0.            1.        ]]
 ```
 
 ```python
 aff_mat_cropped[:, 3] = cropped_origin
 print(aff_mat_cropped)
-#[[  -0.9765625    -0.            0.          148.92578125]
-# [  -0.           -0.9765625     0.          309.76171875]
-# [   0.            0.            2.         -553.5       ]
+#[[  -0.9765625     0.            0.          148.92578125]
+# [  -0.            0.9765625     0.          123.23828125]
+# [   0.           -0.            2.         -553.5       ]
 # [   0.            0.            0.            1.        ]]
 ```
 
@@ -734,14 +798,14 @@ print(aff_mat_cropped)
 ```python
 nii3ct_float32_cropped.set_sform(aff_mat_cropped)
 nii3ct_float32_cropped.affine
-#array([[  -0.9765625 ,   -0.        ,    0.        ,  148.92578125],
-#       [  -0.        ,   -0.9765625 ,    0.        ,  309.76171875],
-#       [   0.        ,    0.        ,    2.        , -553.5       ],
+#array([[  -0.9765625 ,    0.        ,    0.        ,  148.92578125],
+#       [  -0.        ,    0.9765625 ,    0.        ,  123.23828125],
+#       [   0.        ,   -0.        ,    2.        , -553.5       ],
 #       [   0.        ,    0.        ,    0.        ,    1.        ]])
 ```
 
 ```python
-nib.save(nii3ct_float32_cropped, "data/3_ct_lung__30__b31f_float32_cropped_affine.nii.gz")
+nib.save(nii3ct_float32_cropped, "data/ct_for_pet_float32_cropped_affine.nii.gz")
 ```
 
 * updating the affine transforms with `nibabel.slicer`
@@ -749,7 +813,7 @@ nib.save(nii3ct_float32_cropped, "data/3_ct_lung__30__b31f_float32_cropped_affin
 nii3ct_float32_cropped_with_nibabel_slicer = nii3ct_float32.slicer[103:381,160:340,:]
 nii3ct_float32_cropped_with_nibabel_slicer.affine
 #array([[  -0.9765625 ,    0.        ,    0.        ,  148.92578125],
-#       [   0.        ,   -0.9765625 ,    0.        ,  309.76171875],
+#       [   0.        ,    0.9765625 ,    0.        ,  123.23828125],
 #       [   0.        ,    0.        ,    2.        , -553.5       ],
 #       [   0.        ,    0.        ,    0.        ,    1.        ]])
 ```
