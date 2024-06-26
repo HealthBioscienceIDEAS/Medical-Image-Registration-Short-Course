@@ -23,20 +23,18 @@ exercises: 2
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Medical Imaging Data 
-In these exercises we will be working with real-world medical imaging data from the Cancer Imaging Archive (TCIA).
 
 ### The Cancer Imaging Archive (TCIA)
-The Cancer Imaging Archive (TCIA) is a resource of public datasets hosts a large archive of medical images of cancer accessible for public download.   
-We are using CT Ventilation as a Functional Imaging Modality for Lung Cancer Radiotherapy (also known as `CT-vs-PET-Ventilation-Imaging dataset`) from [TCIA](https://www.cancerimagingarchive.net/collection/ct-vs-pet-ventilation-imaging/).
+In these exercises we will be working with real-world medical imaging data from the Cancer Imaging Archive [(TCIA)](https://www.cancerimagingarchive.net/collection/ct-vs-pet-ventilation-imaging/).
+TCIA is a resource of public datasets hosts a large archive of medical images of cancer accessible for public download.   
+We are using CT Ventilation as a Functional Imaging Modality for Lung Cancer Radiotherapy (also known as `CT-vs-PET-Ventilation-Imaging dataset`) from TCIA.
 The CT-vs-PET-Ventilation-Imaging collection is distributed under the Creative Commons Attribution 4.0 International License (https://creativecommons.org/licenses/by/4.0/). 
 The `CT-vs-PET-Ventilation-Imaging` dataset contains 20 lung cancer patients underwent exhale/inhale breath hold CT (BHCT), free-breathing four-dimensional CT (4DCT) and Galligas PET ventilation scans in a single session on a combined 4DPET/CT scanner.    
 
 We recommend using the BHCT scans for participants `CT-PET-VI-02` and `CT-PET-VI-03` showing very little motion between inhale and exhale (for PET scan and accompanying CT scan), and BHCT scans for participants `CT-PET-VI-05` and `CT-PET-VI-07` (the inhale and exhale CT scans), where 05 has a different number of slices between the inhale and exhale.
 
-Data paths contain:
-* `inhale_BH_CT` and `exhale_BH_CT` contain CT scans acquired during an inhalation breath hold and exhalation breath hold respectively.
-* `PET` contains a PET scan that measures the local lung function, 
-* `CT_for_PET` contains a CT scan acquired at the same time as the PET scan for attenuation correction of the PET scan and to provide anatomical reference for the PET data.
+Data paths contain:  (A) `inhale_BH_CT` and `exhale_BH_CT` contain CT scans acquired during an inhalation breath hold and exhalation breath hold respectively,
+(B) `PET` contains a PET scan that measures the local lung function,  and (C) `CT_for_PET` contains a CT scan acquired at the same time as the PET scan for attenuation correction of the PET scan and to provide anatomical reference for the PET data.  
 
 
 * CT-PET-VI-02
@@ -78,27 +76,37 @@ CT-PET-VI-05$ tree -d
     └── PET
 ```
 
+For example, datasets in ITK-SNAP are illustrated in the following figures.
+![Figure. CT-PET-VI-02 dataset](fig/CT-PET-VI-02.svg)
+
 Refer to [`Summary and Setup`](https://healthbioscienceideas.github.io/Medical-Image-Registration-Short-Course/#data-sets) section for further details on CT-vs-PET-Ventilation-Imaging dataset.
-
-For examples in this episode, we are going to use DICOM data `CT-PET-VI-02/CT_forPET` but others can be used.
-
-![Figure. CT-PET-VI-02 dataset](fig/CT-PET-VI-02.png)
 
 
 Notes 
 ```callout
-1. Data may require extensive cleaning and pre-processing before it is suitable to be used.
-2. When using open datasets that contain images of humans, such as those from TCIA, for your own research, you will still need to get ethical approval (as you do for any non-open datasets you use).
-   This can usually be obtained from the local ethics committee (both Medical Physics and Computer Science have their own local ethics committee) or from UCL central ethics if your department does not have one.
-3. Although there are many formats that medical imaging data can come in, we are going to focus on DICOM and NifTi as they are two of the most common formats.
-Most data that comes from a hospital will be in DICOM format, whereas NifTi is a very popular format in the medical image analysis community.
+1. Data may require extensive cleaning and pre-processing 
+   before it is suitable to be used.
+2. When using open datasets that contain images of humans, 
+   such as those from TCIA, for your own research, 
+   you will still need to get ethical approval 
+   as you do for any non-open datasets you use).
+   This can usually be obtained from the local ethics 
+   committee (both Medical Physics and Computer Science have 
+   their own local ethics committee) or from 
+   UCL central ethics if your department does not have one.
+3. Although there are many formats that medical imaging 
+   data can come in, we are going to focus on DICOM and NifTi 
+   as they are two of the most common formats.
+   Most data that comes from a hospital will be in 
+   DICOM format, whereas NifTi is a very popular format 
+   in the medical image analysis community.
 ```
 
 ### DICOM format
 Digital Imaging and Communications in Medicine (DICOM) is a technical standard for the digital storage and transmission of medical images and related information.
 While DICOM images typically have a separate file for every slice, more modern DICOM images can come with all slices in a single file.
 
-If you look at the data `3.000000-CT Lung  3.0  B31f-61322` you will see there are 175 individual files corresponding to 175 slices in the volume. 
+If you look at the data `CT-PET-VI-02/CT_for_PET` you will see there are 175 individual files corresponding to 175 slices in the volume. 
 In addition to the image data for each slice, each file contains a header which can contain an extensive amount of extra information relating to the scan and subject. 
 
 In a clinical setting this will include patient identifiable information such as their name, address, and other relevant details. 
@@ -112,8 +120,12 @@ Generally, most conversions go from DICOM to NIfTI. There are scenarios when you
 
 Notes
 ```callout
-Converting images back to DICOM such that they are correctly interpreted by a clinical system can be very tricky and requires a good understanding of the DICOM standard. 
-More information on the DICOM standard can be found here: https://www.dicomstandard.org
+Converting images back to DICOM such that 
+they are correctly interpreted by a clinical system 
+can be very tricky and requires a good understanding 
+of the DICOM standard. 
+More information on the DICOM standard 
+can be found here: https://www.dicomstandard.org
 ```
 
 ### NifTi format
@@ -136,11 +148,11 @@ See `Summary and Setup` section for requirements and installation of ITK-SNAP
 ### ITK-SNAP application
 ITK-SNAP application shows three orthogonal slices and a fourth window for three-dimensional view segmentation. 
 
-![Figure. ITK-SNAP main window](fig/itk-snap-main-window.svg)
+![Figure. Description of ITK-SNAP tools in the main window using [MRI-crop example datasets](http://www.nitrc.org/frs/download.php/750/MRI-crop.zip) for plane and 3D views.](fig/itk-snap-main-window.svg)
 
 
 ## Viewing and understanding DICOM data
-We are using CT Lung DICOM dataset from `CT-PET-VI-02`: "3.000000-CT Lung  3.0  B31f-61322  [175 items, totalling 92.4 MB]".
+We are using CT Lung DICOM dataset from `CT-PET-VI-02/CT_for_PET`, containing 175 dicom items and totalling 92.4 MB.
 
 ### Opening and Viewing DICOM images
 * **Open ITK-SNAP application**
@@ -148,7 +160,7 @@ We are using CT Lung DICOM dataset from `CT-PET-VI-02`: "3.000000-CT Lung  3.0  
 	- Open the itk-snap application. If you have used it before it will display recent images when you open it, and you can select one of these to open it. 
 
 	If the image you want to open is not listed under recent images, you can open it either by clicking the 'Open Image...' button at the bottom right of the window, or File->Open Main Image. 
-	When you do this a small window opens where you can enter the path of the file you want to open, or click Browse in your file explorer (exFinder in Mac and nautilus in Ubuntu) to open a file browser (for instance, "3.000000-CT Lung  3.0  B31f-61322").
+	When you do this a small window opens where you can enter the path of the file you want to open, or click Browse in your file explorer (exFinder in Mac and nautilus in Ubuntu) to open a file browser (for instance, "CT-PET-VI-02/CT_for_PET").
 	Do this and select the first slice from the Inhale_BH_CT folder, which is called 1-001.dcm. The set the File Format to DICOM Image Series and then click `Next`.
 	You will then be asked to Select DICOM series to open, but as this folder only includes one series you can just click `Next`.
 	Click `Finish`
