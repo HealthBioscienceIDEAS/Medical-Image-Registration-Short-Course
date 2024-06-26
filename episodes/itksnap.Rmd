@@ -181,7 +181,7 @@ We are using CT Lung DICOM dataset from `CT-PET-VI-02/CT_for_PET`, containing 17
 We provide instructions for handling multiple DICOM images, applying overlays, viewing image information, and using color maps in ITK-SNAP.
 For this exmaple, we are using `CT-PET-VI-02/inhale_BH_CT` and `CT-PET-VI-02/exhale_BH_CT` dicoms.
 
-#### Load additional image using exhale scan by drag and drop
+#### Load additional image using `exhale_BH_CT` scan by drag and drop
 - Images can also be opened by simply dragging them on to the ITK-SNAP window. 
 In a file explorer (Finder in Mac) go to the `exhale_BH_CT` folder and drag any of the dicom files on to the itksnap window. 
 A small window will pop up asking What should itksnap do with this image? 
@@ -199,42 +199,33 @@ Instead select Load as Additional Image - this will enable easy comparison of th
 ![Figure. ITK-SNAP thumbnails, handlding two DICOM images (`inhale_BH_CT` and `exhale_BH_CT` for `CT-PET-VI-02`)](fig/itk-snap-thumbnails.png)
 
 #### Colour overlay
-* In some cases you may want to display an image as a colour overlay on top of another image, e.g. displaying a PET image overlaid on the corresponding CT.
+In some cases you may want to display an image as a colour overlay on top of another image, e.g. displaying a PET image overlaid on the corresponding CT.
+
+##### Colour overlay as a separate image (shown besides other images)
 * **Load Primary Image**:
-   - Open your primary DICOM series of the `CT_for_PET` image either using the drag and drop method or `File->Open Image` as described above.
+   - Open your primary DICOM series of the `CT-PET-VI-02/CT_for_PET` image either using the drag and drop method or `File->Open Image` as described above.
+	- Make sure File Format is DICOM Image Series.
 	- This time select Load as Main Image. This will load in the new image replacing the two that were previously loaded.
-	- In some cases you may want to display an image as a colour overlay on top of another image, e.g. displaying a PET image overlaid on the corresponding CT.
-	Load the CT_for_PET image either using the drag and drop method or File->Open Image as described above
-	This time select Load as Main Image. This will load in the new image replacing the two that were previously loaded.
+* **Load Overlay Image**:
+   - Load the `CT-PET-VI-02/PET` image either using the drag and drop method or `File->Open Image`
 
-![Figure. ITK-SNAP thumbnails](fig/itk-snap-colour-overlay.svg)
+![Figure. ITK-SNAP thumbnails](fig/itk-snap-colour-overlay-as-separate-image.svg)
 
-#### Colour overlay as a semi-transparent overlay
-* To load the image as a colour overlay you need to use File->Add Another Image... (e.g., `5.000000-Thorax Insp  2.0  B70f-29873`).
-* Click on Browse and select any one of the files in the PET folder (e.g., `7.000000-Thorax Exp  2.0  B70f-73355`).
-* Make sure File Format is DICOM Image Series (it should be). Click Next and then Next again. 
-* When the image has loaded select As a semi-transparent overlay. You can also set the overlay color map here - select Hot from the drop-down menu and click Next. 
-* The image summary will then be displayed, along with a warning about possible loss of precision (which can be ignored). Click Finish
+##### Colour overlay as a semi-transparent overlay (shown on the top of other images)
+* **Load Primary Image**:
+   - Open your primary DICOM series of the `CT-PET-VI-02/CT_for_PET` image either using the drag and drop method or `File->Open Image` as described above.
+	- Make sure File Format is DICOM Image Series.
+	- Select Load as Main Image.
+* **Load Overlay Image**:
+   - Load the `CT-PET-VI-02/PET` image either using the drag and drop method or `File->Open Image`
+   - When the image has loaded select As a semi-transparent overlay. You can also set the overlay color map here - select `Hot` from the drop-down menu and click Next. 
+   - The image summary will then be displayed, along with a warning about possible loss of precision (which can be ignored). Click Finish
 
-![Figure. ITK-SNAP semi-transparent overlays](fig/itk-snap-semi-transparent-overlay.svg)
-
-
-### Loading Multiple DICOM Images as Separate Images
-
-1. **Open the First DICOM Series**:
-   - Follow the steps above to load and view the first DICOM series.
-
-2. **Open the Second DICOM image in a New Window**:
-   - Go to `File` > `New itksnap Window`.
-   - Select `Open DICOM Series` and choose the second DICOM series.
-   - This will open the second series in a separate ITK-SNAP window.
-   - This can be repeated for multiple DICOM series.
-
-![Figure. ITK-SNAP new window](fig/new-itk-snap-window.png)
+![Figure. ITK-SNAP semi-transparent overlays](fig/itk-snap-colour-overlay-as-semi-transparent-image.svg)
 
 
 ### Layer inspector tools
-* Load `3.000000-CT Lung  3.0  B31f-61322` and `4.000000-Galligas Lung-03537` from CT-PET-VI-02, using hot semi-transparency (as shown above).
+* Load `CT-PET-VI-02/CT_for_PET` and `CT-PET-VI-02/PET` scan datasets, using hot semi-transparency (as shown above).
 * Go to `Tools->Layer Inspector`. This opens the Image Layer Inspector window. you will see the two images on the left, and five tabs along the top of the window.
 * PET image appears in Cursor Inspector (called Galligas Lung) in italic and CT image as CT Lung in bold. 
 
