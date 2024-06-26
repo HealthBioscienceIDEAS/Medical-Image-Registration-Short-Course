@@ -171,20 +171,22 @@ We are using CT Lung DICOM dataset from `CT-PET-VI-02/CT_for_PET`, containing 17
 
 
 ### Navigating DICOM images
-Here, we provide instructions for handling multiple DICOM images, applying overlays, viewing image information, and using color maps in ITK-SNAP.
-
-#### Navigate around image, see intensity value, and adjust intensity window
+* Navigate around image, see intensity value, and adjust intensity window
 * To navigate around the image, i.e. change the displayed slices, you can left clicking in the displayed slices, using the mouse wheel, or the slider next to the displayed slices.
 * To zoom, you can use the right mouse button (or control + button 1), and pan using the centre mouse button (or alt + button 1).
 
 ![Figure. ITK-SNAP cursor inspector](fig/itk-snap-cursor-inspector.png)
 
-* **Load additional image using exhale scan by drag and drop**
-	- Images can also be opened by simply dragging them on to the ITK-SNAP window. 
-	In a file explorer (Finder in Mac) go to the exhale_BH_CT folder and drag any of the dicom files on to the itksnap window. 
-	A small window will pop up asking What should itksnap do with this image? 
-	If you select Load as Main Image it will replace the current image. 
-	Instead select Load as Additional Image - this will enable easy comparison of the two images.
+### Handling multiple DICOM images
+We provide instructions for handling multiple DICOM images, applying overlays, viewing image information, and using color maps in ITK-SNAP.
+For this exmaple, we are using `CT-PET-VI-02/inhale_BH_CT` and `CT-PET-VI-02/exhale_BH_CT` dicoms.
+
+#### Load additional image using exhale scan by drag and drop
+- Images can also be opened by simply dragging them on to the ITK-SNAP window. 
+In a file explorer (Finder in Mac) go to the `exhale_BH_CT` folder and drag any of the dicom files on to the itksnap window. 
+A small window will pop up asking What should itksnap do with this image? 
+If you select Load as Main Image it will replace the current image. 
+Instead select Load as Additional Image - this will enable easy comparison of the two images.
 
 ![Figure. ITK-SNAP additional image](fig/itk-snap-additional-image.svg)
 
@@ -194,7 +196,7 @@ Here, we provide instructions for handling multiple DICOM images, applying overl
 * You will also see that both images now appear in the Cursor Inspector, where you can see the intensity value at the cursor for both images. 
 * You can also change the displayed image by clicking on it in the Cursor Inspector
 
-![Figure. ITK-SNAP thumbnails](fig/itk-snap-thumbnails.png)
+![Figure. ITK-SNAP thumbnails, handlding two DICOM images (`inhale_BH_CT` and `exhale_BH_CT` for `CT-PET-VI-02`)](fig/itk-snap-thumbnails.png)
 
 #### Colour overlay
 * In some cases you may want to display an image as a colour overlay on top of another image, e.g. displaying a PET image overlaid on the corresponding CT.
