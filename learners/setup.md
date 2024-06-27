@@ -29,9 +29,9 @@ Bare in mind that:
 
 #### Extracting and renaming data paths
 Original data directory paths for this work were renamed for easy interpretability as follows:
-* `5.000000-Thorax Insp 2.0 B*` ranamed as `inhale_BH_CT`
-* `7.000000-Thorax Exp 2.0 B*` renamed as `exhale_BH_CT`
-* `3.000000-CT Lung 3.0 B*` ranamed as `CT_for_PET`
+* `5.000000-Thorax Insp 2.0 B*` ranamed as `inhale_BH_CT`   
+* `7.000000-Thorax Exp 2.0 B*` renamed as `exhale_BH_CT`   
+* `3.000000-CT Lung 3.0 B*` ranamed as `CT_for_PET`   
 * `4.000000-Galligas Lung-0*` renamed as `PET`
 
 See how the original data paths and renamed look like
