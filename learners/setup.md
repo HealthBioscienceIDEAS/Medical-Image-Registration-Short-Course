@@ -29,12 +29,10 @@ Bare in mind that:
 
 #### Extracting and renaming data paths
 Original data directory paths for this work were renamed for easy interpretability as follows:
-```callout
-`5.000000-Thorax Insp 2.0 B*` ranamed as `inhale_BH_CT`
-`7.000000-Thorax Exp 2.0 B*` renamed as `exhale_BH_CT`
-`3.000000-CT Lung 3.0 B*` ranamed as `CT_for_PET`
-`4.000000-Galligas Lung-0*` renamed as `PET`
-```
+* `5.000000-Thorax Insp 2.0 B*` ranamed as `inhale_BH_CT`
+* `7.000000-Thorax Exp 2.0 B*` renamed as `exhale_BH_CT`
+* `3.000000-CT Lung 3.0 B*` ranamed as `CT_for_PET`
+* `4.000000-Galligas Lung-0*` renamed as `PET`
 
 See how the original data paths and renamed look like
 ```bash
@@ -123,7 +121,7 @@ Installing python virtual environment with dependencies (e.g., nibabel, etc).
 See further instructions [here](https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course/tree/main/_dependencies). 
 
 #### Using conda
-```
+```bash
 conda create -n "mirVE" python=3.11 pip -c conda-forge
 conda config --set pip_interop_enabled True
 conda activate mirVE
@@ -132,7 +130,7 @@ pip install -r requirements.txt
 ```
 
 #### Using python virtual environment
-```
+```bash
 # Installing dependencies in Ubuntu 22.04
 sudo apt-get install -y python3-pip
 sudo apt-get install -y python3-venv
@@ -181,7 +179,7 @@ Installing ITK-SNAP in differen operating systems
 ### Linux (tested on Ubuntu 22.04 x64 GNU/Linux)
 
 - Open your Terminal to install it
-```
+```bash
 sudo apt-get install tree # to visualise files and paths
 FILENAME=itksnap-nightly-rel_4.0-Linux-gcc64.tar.gz  #Length: 200943059 (192M) [application/x-gzip]
 cd ~/Downloads/
