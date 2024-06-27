@@ -233,7 +233,7 @@ In some cases you may want to display an image as a colour overlay on top of ano
 
 ### Layer inspector tools
 * Load `CT-PET-VI-02/CT_for_PET` and `CT-PET-VI-02/PET` scan datasets, using hot semi-transparency (as shown above).
-* Go to `Tools->Layer Inspector`. This opens the Image Layer Inspector window. you will see the two images on the left, and five tabs along the top of the window.
+* Go to `Tools->Layer Inspector`. This opens the Image Layer Inspector window. You will see the two images on the left, and five tabs along the top of the window.
 * PET image appears in Cursor Inspector (called Galligas Lung) in italic and CT image as CT Lung in bold. 
 
 * **The General tab** displays the filename and the nickname for the selected image. 
@@ -241,7 +241,7 @@ In some cases you may want to display an image as a colour overlay on top of ano
 
 ![Figure. ITK-SNAP: Layer inspector with general tab](fig/itk-snap-layer-inspector-general-tab.png)
 
-* **The Contrast tab** enables you to adjust how the image intensities are displayed for the different images. e.g. Select the lung image and set the maximum value to 1000 (push enter after typing the number) and this will make the structures in the lung easier to see.
+* **The Contrast tab** enables you to adjust how the image intensities are displayed for the different images, e.g. Select the lung image and set the maximum value to 1000 (push enter after typing the number) and this will make the structures in the lung easier to see.
 
 ![Figure. ITK-SNAP: Layer inspector with contrast tab](fig/itk-snap-layer-inspector-contrast-tab.png)
 
@@ -447,7 +447,7 @@ print(nii3ct.header)
 ```
 * `sform` transformation matrix
 You can see that the `sform` is stored in the `srow_x`, `srow_y`, and `srow_z` fields of the header. 
-These specify the top three rows of a 4x4 matrix representing an affine transformation using homogenous coordinates. 
+These specify the top three rows of a 4x4 matrix representing an affine transformation using homogeneous coordinates. 
 The fourth row is not stored as it is always `[0 0 0 1]`. 
 You will notice that the sform matrix matches the affine transform in the `Nifti1Image` object.
 
@@ -457,7 +457,7 @@ There are 5 different sform/qform codes defined:
 
 | Code | Label | Meaning |
 | --- | --- | --- |
-| 0  | unknown | sform not definted | 
+| 0  | unknown | sform not defined | 
 | 1  | scanner | RAS+ is scanner coordinates | 
 | 2  | aligned | RAS+ aligned to some other scan | 
 | 3  | talairach | RAS+ in Talairach atlas space | 
@@ -504,7 +504,7 @@ and posterior of the image/patient, but the nifti format assumes a RAS world coo
 system (i.e. the values increase as you move to the right and anterior of the patient).
 Therefore, the world coordinates decrease as the voxel indices increase.
 
-#### ITK-SNAP visualistaion coordinate system
+#### ITK-SNAP visualisation coordinate system
 TOADD 
 
 ## Modifying `NifTi` images and headers with Nibabel
@@ -531,7 +531,7 @@ plt.imshow(image_data[:,:,140], cmap="gray"); plt.show()
 Casting image data to float64 prevents any integer-related errors and problems in downstream processing when using the data read by NiBabel. 
 However, this does not change the type of the image stored on disk, which as we have seen is int16 for this image, and this could still lead to downstream errors or unexpected behaviour for any processing that works directly on the images stored on disk. 
 We are going to convert the image saved on disk to a floating point image, using the `set_data_dtype` function to set the data type to float32. 
-Esentially, we are going to use 32 bit rather than 64 bit floating point, as this is usually sufficiently accurate. 
+Essentially, we are going to use 32 bit rather than 64 bit floating point, as this is usually sufficiently accurate. 
 
 ```python
 print(nii3ct.get_data_dtype())

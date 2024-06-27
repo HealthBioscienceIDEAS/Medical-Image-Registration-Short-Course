@@ -22,19 +22,19 @@ Download the [data zip file](https://example.com/FIXME) and unzip it to your Des
 
 ### CT-vs-PET-Ventilation-Imaging 
 CT Ventilation as a Functional Imaging Modality for Lung Cancer Radiotherapy from [TCIA](https://www.cancerimagingarchive.net/collection/ct-vs-pet-ventilation-imaging/).
-We recomend to focus on exhale/inhale breath hold CT (BHCT) Dicoms. 
+We recommend to focus on exhale/inhale breath hold CT (BHCT) Dicoms. 
 Bare in mind that:
 * The BHCT scans for CT-PET-VI-02 & CT-PET-VI-03 show very little motion between inhale and exhale
 * The BHCT scans for CT-PET-VI-05 have a different number of slices between the inhale and exhale
 
 #### Extracting and renaming data paths
 Original data directory paths for this work were renamed for easy interpretability as follows:   
-* `5.000000-Thorax Insp 2.0 B*` ranamed as `inhale_BH_CT`   
+* `5.000000-Thorax Insp 2.0 B*` renamed as `inhale_BH_CT`   
 * `7.000000-Thorax Exp 2.0 B*` renamed as `exhale_BH_CT`   
-* `3.000000-CT Lung 3.0 B*` ranamed as `CT_for_PET`   
+* `3.000000-CT Lung 3.0 B*` renamed as `CT_for_PET`   
 * `4.000000-Galligas Lung-0*` renamed as `PET`
 
-See how the original data paths and renamed look like
+See how the original data paths and renamed paths look like
 ```bash
 #Original directory paths
 /CT-PET-VI-02$ tree -d 
@@ -116,7 +116,7 @@ See how the original data paths and renamed look like
 
 ## Software Setup
 
-### Installing Dependencies in Python Virtual environmnets
+### Installing Dependencies in Python Virtual environments
 Installing python virtual environment with dependencies (e.g., nibabel, etc).
 See further instructions [here](https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course/tree/main/_dependencies). 
 
