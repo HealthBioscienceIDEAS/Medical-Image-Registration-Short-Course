@@ -79,17 +79,19 @@ def demonsReg(source, target, sigma_elastic=1, sigma_fluid=1, num_lev=3, use_com
 ```
 
 
-## 3. Preparing Images for demons image registration algorithm
+## 3. Preparing Images and figure for demons image registration algorithm
 
-We start by making copies of the full-resolution images.
+We start by making copies of the full-resolution images and initiating a figure for plotting during registration process.
 
 ```python
     # make copies of full resolution images
     source_full = source
     target_full = target
+
+    #Preparing figure for live update during registration process
+    fig, axs = plt.subplots(1, 3, figsize=(12, 6))
+    iteration_text = fig.text(0.5, 0.92, '', ha='center', va='top', fontsize=10, color='black')
 ```
-
-
 
 
 
@@ -182,15 +184,11 @@ if use_target_grad:
 ```
 
 
-## 8. Figure to do Live update of Registration process
+## 8. Live update of Registration process
 
 Here, we introduce `live_update` function which works on updating warped_image, deformation field and update field subplots during the registration process. This function is used inside the main iterative loop of the registration process (See next step).
 
   ```python
-    #Preparing function for live update during registration process
-    fig, axs = plt.subplots(1, 3, figsize=(12, 6))
-    iteration_text = fig.text(0.5, 0.92, '', ha='center', va='top', fontsize=10, color='black')
-
     # Function to update the display
     def live_update():
         # Clear the axes
@@ -329,8 +327,7 @@ In this step, we perform the main iterative loop where the actual image registra
       # update previous values of def_field and MSD
       def_field_prev = def_field.copy()
       prev_MSD = MSD.copy()
-      
-    plt.show()
+
 ```
 
 ### 9.1. Results after Level 1 iterations:
@@ -425,7 +422,7 @@ if lev == num_lev:
 
 ## 12. Preparing Images for calling the demonsReg function
 
-Follow `exampleSolution3.py` available in `src/mirc/Example` for running the function. Below, we describe how we prepare images: `cine_MR_img_1.png`, `cine_MR_img_2.png`, and `cine_MR_img_3.png`. These images are available in `episodes/data`. 
+Follow `exampleSolution3.py` available in `src/mirc/example` for running the function. Below, we describe how we prepare images: `cine_MR_img_1.png`, `cine_MR_img_2.png`, and `cine_MR_img_3.png`. These images are available in `episodes/data`. 
 
 
 ```python
