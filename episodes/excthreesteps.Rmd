@@ -351,75 +351,75 @@ In this step, we visualise the final results of the image registration process. 
 
 ```python
 if lev == num_lev:
-      # Initialize global variables for current index tracking
-      current_image_index = [0]
-      current_mode_index = [0]
-      
-      # Define the images and titles
-      images = [source, target, warped_image]
-      image_titles = ['Source Image', 'Target Image', 'Warped Image']
-      modes = ['Deformation Field', 'Jacobian']
-      
-      
-      def on_key(event):
-          if event.key == 'right':
-              current_image_index[0] = (current_image_index[0] + 1) % len(images)
-          elif event.key == 'left':
-              current_image_index[0] = (current_image_index[0] - 1) % len(images)
-          elif event.key == 'up' or event.key == 'down':
-              current_mode_index[0] = (current_mode_index[0] + 1) % len(modes)
-          update_display()
-      
+  # Initialize global variables for current index tracking
+  current_image_index = [0]
+  current_mode_index = [0]
+  
+  # Define the images and titles
+  images = [source, target, warped_image]
+  image_titles = ['Source Image', 'Target Image', 'Warped Image']
+  modes = ['Deformation Field', 'Jacobian']
+  
+  
+  def on_key(event):
+      if event.key == 'right':
+          current_image_index[0] = (current_image_index[0] + 1) % len(images)
+      elif event.key == 'left':
+          current_image_index[0] = (current_image_index[0] - 1) % len(images)
+      elif event.key == 'up' or event.key == 'down':
+          current_mode_index[0] = (current_mode_index[0] + 1) % len(modes)
+      update_display()
+  
 
 
-      def update_display():
-          axs_combined[0].clear()
-          plt.sca(axs_combined[0])
-          dispImage(images[current_image_index[0]], title=image_titles[current_image_index[0]])
-
-          axs_combined[1].clear()
-          plt.sca(axs_combined[1])
-          if modes[current_mode_index[0]] == 'Deformation Field': 
-              dispDefField(def_field, spacing=disp_spacing, plot_type=disp_method_df)
-              axs_combined[1].set_title('Deformation Field')
-
-          else:
-              [jacobian, _] = calcJacobian(def_field)
-              dispImage(jacobian, title='Jacobian')
-              plt.set_cmap('jet')
-              #plt.colorbar()
-
-          axs_combined[2].clear()
-          plt.sca(axs_combined[2])
-          diff_image = images[current_image_index[0]] - target
-          dispImage(diff_image, title='Difference Image')
-
-          fig_combined.canvas.draw()
-
-
-      # Create a single figure with 3 subplots
-      fig_combined, axs_combined = plt.subplots(1, 3, figsize=(12, 6))
-
-      # Display initial images
+  def update_display():
+      axs_combined[0].clear()
       plt.sca(axs_combined[0])
       dispImage(images[current_image_index[0]], title=image_titles[current_image_index[0]])
 
+      axs_combined[1].clear()
       plt.sca(axs_combined[1])
-      dispDefField(def_field, spacing=disp_spacing, plot_type=disp_method_df)
-      axs_combined[1].set_title('Deformation Field')
+      if modes[current_mode_index[0]] == 'Deformation Field': 
+          dispDefField(def_field, spacing=disp_spacing, plot_type=disp_method_df)
+          axs_combined[1].set_title('Deformation Field')
 
+      else:
+          [jacobian, _] = calcJacobian(def_field)
+          dispImage(jacobian, title='Jacobian')
+          plt.set_cmap('jet')
+          #plt.colorbar()
+
+      axs_combined[2].clear()
       plt.sca(axs_combined[2])
       diff_image = images[current_image_index[0]] - target
       dispImage(diff_image, title='Difference Image')
 
-      # Add instructions for navigating images
-      fig_combined.text(0.5, 0.02, 'Press <- or -> to navigate between source, target and warped images, Press Up or Down to switch between deformation field and Jacobian', ha='center', va='top', fontsize=12, color='black')
+      fig_combined.canvas.draw()
 
-      # Connect the key event handler to the figure
-      fig_combined.canvas.mpl_connect('key_press_event', on_key)
 
-      plt.tight_layout()
-      plt.show()
+  # Create a single figure with 3 subplots
+  fig_combined, axs_combined = plt.subplots(1, 3, figsize=(12, 6))
+
+  # Display initial images
+  plt.sca(axs_combined[0])
+  dispImage(images[current_image_index[0]], title=image_titles[current_image_index[0]])
+
+  plt.sca(axs_combined[1])
+  dispDefField(def_field, spacing=disp_spacing, plot_type=disp_method_df)
+  axs_combined[1].set_title('Deformation Field')
+
+  plt.sca(axs_combined[2])
+  diff_image = images[current_image_index[0]] - target
+  dispImage(diff_image, title='Difference Image')
+
+  # Add instructions for navigating images
+  fig_combined.text(0.5, 0.02, 'Press <- or -> to navigate between source, target and warped images, Press Up or Down to switch between deformation field and Jacobian', ha='center', va='top', fontsize=12, color='black')
+
+  # Connect the key event handler to the figure
+  fig_combined.canvas.mpl_connect('key_press_event', on_key)
+
+  plt.tight_layout()
+  plt.show()
 ```
 
 
