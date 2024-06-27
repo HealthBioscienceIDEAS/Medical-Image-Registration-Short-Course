@@ -369,13 +369,11 @@ nii3ct.shape
 ```
 
 3. Affine transform, mapping from voxel space to world space
-```callout
 There are two common ways of specifying the affine transformation mapping from voxel coordinates
 to world coordinates in the nifti header, called the `sform` and the `qform'.
 Another transformation is that neither the sform or qform is used the mapping is performed based just on the voxel dimensions.
 The **sform** directly stores the affine transformation in the header
 whereas the **qform** stores the affine transformation using [quaternions](https://en.wikipedia.org/wiki/Quaternion). 
-```
 
 :::::::::::::::::::::::::::::::::::::: spoiler
 
@@ -483,12 +481,17 @@ print(nii3ct.get_qform())
 # [   0.            0.            0.            1.        ]]
 ```
 
-```callout
-However, the nifti format does not require that the sform and qform specify the same
-matrix, and it is not well defined what should be done when they are both provided and are
-different from each other. 
+
+
+:::::::::::::::::::::::::::::::::::::: spoiler
+
+### Advincing on using `sform`
+However, the nifti format does not require that the sform and qform specify the same matrix.
+It is also not well defined what should be done when they are both provided and are different from each other. 
 Often the `qform` is simply ignored and the `sform` is used, so the general advice is to only use the `sform` and set the `qform` to unknown to avoid any confusion.
-```
+
+::::::::::::::::::::::::::::::::::::::
+
 
 ### Coordinate system  
 #### LPS   
@@ -703,6 +706,16 @@ print(nii3ct_float32.header)
 
 ### Cropping data
 Cropping data might often contain background voxels which can be useful in some instances but might take up valuable RAM memory, especially for large images.
+We are going to crop the image from slice 103 to slice 381 in the x dimension (Sagittal slices) and from slice 160 to 340 in the y dimension (Coronal slices).
+Use ITK-SNAP to confirm that cropping the image to these slices will only remove slices that do not contain the patient.
+
+:::::::::::::::::::::::::::::::::::::: spoiler
+
+### Notes on `Nifti1Image` object
+It is not possible to change the image data in a Nifti1Image object, e.g. to use a smaller array corresponding to a cropped image. 
+Therefore, if you want to modify the image data you need to create a new array with the modified data, then create a new Nifti1Image object using this new array which is used to save the modified image to disk.
+
+::::::::::::::::::::::::::::::::::::::
 
 * Read the image data from disk using `get_fdata`  and then create a new array containing a copy of the desired slices:
 ```python
@@ -727,6 +740,24 @@ plt.imshow(image_data[:,:,100], cmap="gray"); plt.show()
 image_data_cropped = image_data[103:381,160:340,:].copy()
 #x[sagittal], y[coronal], z[axial] #voxel units
 ```
+
+:::::::::::::::::::::::::::::::::::::: spoiler
+
+### Notes on copying data
+It is important to create a copy of the data (using the copy function, as show above).
+Otherwise the new image will reference the data in the original image, and if you make any changes to the values in the new image they will also be changed in the original image.
+
+::::::::::::::::::::::::::::::::::::::
+
+
+
+When creating a new Nifti1Image object you can provide an affine transform and/or a Nifti1Header object (e.g. nii_1.header). 
+When you just provide an affine, a default header is created with the sform set according to the provided affine transform and the qform set to unknown. 
+When you provide a header, the values in it will be copied into the header for the new image, except that the dim values will be updated based on the image data provided. 
+If you provide an affine as well as a header, and the affine is different to the sform or qform in the header they will be set to the provided affine and unknown respectively. 
+If the affine is not provided, it is not set from the header but left empty.
+So, if any of your downstream processing will make use of the affine, make sure you manually set it from the header either when creating the Nifti1Image object or by calling the set_sform or set_qform functions for the object (which update the affine as well as setting the sform/qform). 
+Here we will provide a Nifti1Header object as we want the header for the new image to based on the uncropped image and will use the sform from the header as the affine for the new Nifti1Image.
 
 ```python
 nii3ct_float32_cropped = nib.nifti1.Nifti1Image(image_data_cropped, nii3ct_float32.get_sform(), nii3ct_float32.header)
@@ -783,16 +814,29 @@ print(nii3ct_float32_cropped.header)
 #magic           : b'n+1'
 ```
 
+The cropped image can now be saved using Nibabel’s save function.
+
 ```python
 nib.save(nii3ct_float32_cropped, "data/ct_for_pet_cropped.nii.gz")
 ```
 
-* Setting world coordinates of voxel (103, 160, 0) in the uncropped image.
+Now load the cropped image into ITK-SNAP. 
+You will see that the image has been cropped in the x and y dimensions as expected, but it is shifted relative to the uncropped image:
+
+![Figure. ITK-SNAP: Cropped image in ITK-SNAP](fig/itk-snap_ct_for_pet_cropped_nii_gz.png)
+
+This is because we did not update the origin/offset in the nifti header to account for the slices we removed. 
+The origin gives the world coordinates of the voxel (0, 0, 0). 
+So, if we want the images to remain aligned, we need to set the origin for the cropped image to be the same as the world coordinates of voxel (103, 160, 0) in the uncropped image. 
+This can be calculated using the affine from the uncropped image, and used to create a new affine matrix with this as the origin (the origin is the top 3 values in the 4th column of the matrix). 
+The new affine matrix can then be used to set the sform (which also sets the affine) for the cropped image, which can then be saved.
+
 ```python
 cropped_origin = nii3ct_float32.affine@np.array([103,160,0,1])
 cropped_origin
 #array([ 148.92578125,  123.23828125, -553.5       ,    1.        ])
 ```
+
 
 ```python
 aff_mat_cropped = nii3ct_float32_cropped.get_sform()
@@ -812,6 +856,7 @@ print(aff_mat_cropped)
 # [   0.            0.            0.            1.        ]]
 ```
 
+Note, NiBabel provides handy functionality for slicing nifti images and updating the affine transforms and header accordingly using the slicer attribute:
 
 ```python
 nii3ct_float32_cropped.set_sform(aff_mat_cropped)
@@ -836,6 +881,34 @@ nii3ct_float32_cropped_with_nibabel_slicer.affine
 #       [   0.        ,    0.        ,    0.        ,    1.        ]])
 ```
 
+But you wouldn’t have learnt so much if we’d simply done that to start with :)
+
+If you load the cropped and aligned image into ITK-SNAP using overlay semi-transparent feature, you will see that it is now aligned with the original image but has fewer slices in the x and y dimensions. 
+
+![Figure. ITK-SNAP: Cropped image in ITK-SNAP](fig/itk-snap-overlay-semi-transparent-cropped-affine.png)
+
+
+If we try to perform a registration between these images as they are, it will likely have difficulties as the images are so far out of alignment to start with. 
+One way to roughly align the images prior to performing a registration is to align the centres of the images by modifying the origin for the 2nd subject such that the image centres for both images have the same world coordinates. 
+
+This can be done by following these steps:   
+* Load `ct_for_pet_cropped.nii.gz`   
+* Calculate the centre of this image in voxel coordinates   
+* Calculate the centre of this image in world coordinates   
+* Calculate the centre of the cropped image from subject 1 in voxel coordinates   
+* Calculate the centre of the cropped image from subject 1 in world coordinates   
+* Calculate the translation (in world coordinates) required to align the images: Centre image 1 = centre image 2 + translation
+
+Add this translation to the origin for image 2
+Save the image for image 2 using the header with the updated origin
+Try and write code to implement these steps yourself, based on what you have learnt so far. 
+If you get stuck ask me or one of the PGTAs for help. 
+
+If you have implemented this correctly when you load the aligned image from image 2 into ITK-SNAP is should appear roughly aligned with the images from image 1.
+You can use `Color Map` feature tab and the scroll bar to see the differences between two images.
+
+![Figure. ITK-SNAP main window](fig/itk-snap-calculating-registrations.png)
+
 ### Cropped and aligned image
 Automated image registrations can be prone to be failure if there are very large initial differences between the images. A manual alignment is subjective, but can provide a good enough starting guess that keeps the objective, automated registration more reliable.  
 * Manually aligning images
@@ -855,4 +928,8 @@ You can use [niftyreg](https://nipype.readthedocs.io/en/latest/api/generated/nip
 	* [Tutorial: Getting Started with ITK-SnAP](http://www.itksnap.org/docs/viewtutorial.php)
 	* [ITK-SNAP 3.x Training Class Final Program](http://itksnap.org/files/handout_201409.pdf)
 
+* AI-based medical image registration:
+	* https://github.com/Project-MONAI/tutorials/tree/main/2d_registration
+	* https://github.com/Project-MONAI/tutorials/tree/main/3d_registration
+	* https://github.com/Project-MONAI/tutorials/tree/main/3d_regression
 
