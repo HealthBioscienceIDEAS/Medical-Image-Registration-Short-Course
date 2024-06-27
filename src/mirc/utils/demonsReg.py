@@ -5,18 +5,23 @@ provided for use in image registration exercises 3 for module MPHY0025 (IPMI)
 
 Jamie McClelland
 UCL
+
+Changes has been done by: 
+Zakaria Senousy
+ARC, UCL
 """
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 
+
 import numpy as np
 from skimage.transform import rescale, resize
 from scipy.ndimage import gaussian_filter
-from utils3 import dispImage, resampImageWithDefField, calcMSD, dispDefField
+from utils3 import dispImage, resampImageWithDefField, calcMSD, dispDefField, calcJacobian
 
 def demonsReg(source, target, sigma_elastic=1, sigma_fluid=1, num_lev=3, use_composition=False,
-              use_target_grad=False, max_it=1000, check_MSD=True, disp_freq=5, disp_spacing=2, 
+              use_target_grad=False, max_it=1000, check_MSD=True, disp_freq=3, disp_spacing=2, 
               scale_update_for_display=10, disp_method_df='grid', disp_method_up='arrows'):
   """
   SYNTAX:
@@ -64,7 +69,7 @@ def demonsReg(source, target, sigma_elastic=1, sigma_fluid=1, num_lev=3, use_com
         MSD will be evaluated at each iteration, and if there is no
         improvement since the previous iteration the registration will move
         to the next resolution level or finish if it is on the final level.
-    disp_freq = 5
+    disp_freq = 3
         the frequency with which to update the displayed images. the images
         will be updated every disp_freq iterations. If disp_freq is set to
         0 the images will not be updated during the registration
@@ -83,6 +88,10 @@ def demonsReg(source, target, sigma_elastic=1, sigma_fluid=1, num_lev=3, use_com
   # make copies of full resolution images
   source_full = source;
   target_full = target;
+  
+  #Preparing function for live update during registration process
+  fig, axs = plt.subplots(1, 3, figsize=(12, 6))
+  iteration_text = fig.text(0.5, 0.92, '', ha='center', va='top', fontsize=10, color='black')
   
   # loop over resolution levels
   for lev in range(1, num_lev + 1):
@@ -131,55 +140,48 @@ def demonsReg(source, target, sigma_elastic=1, sigma_fluid=1, num_lev=3, use_com
     # not change during the registration
     if use_target_grad:
       [img_grad_x, img_grad_y] = np.gradient(target)
-            
-    # DISPLAY RESULTS
-    # figure 1 - source image (does not change during registration)
-    # figure 2 - target image (does not change during registration)
-    # figure 3 - source image transformed by current deformation field
-    # figure 4 - deformation field
-    # figure 5 - update
-    
-    # Create a single figure with 5 subplots in one row
-    fig, axs = plt.subplots(1, 5, figsize=(12, 5))
 
-    plt.sca(axs[0])
-    dispImage(source, title='Source Image')
-
-    plt.sca(axs[1])
-    dispImage(target, title='Target Image')
-
-    plt.sca(axs[2])
-    dispImage(warped_image, title='Warped Image')
-    x_lims = plt.xlim()
-    y_lims = plt.ylim()
-
-    # Plotting the deformation field in the second subplot
-    plt.sca(axs[3])
-    dispDefField(def_field, spacing=disp_spacing, plot_type=disp_method_df)
-    plt.xlim(x_lims)
-    plt.ylim(y_lims)
-    plt.title('Deformation Field')
-
-    # Plotting the updated deformation field in the third subplot
-    plt.sca(axs[4])
-    up_field_to_display = scale_update_for_display * np.dstack((update_x, update_y))
-    up_field_to_display += np.dstack((X, Y))
-    dispDefField(up_field_to_display, spacing=disp_spacing, plot_type=disp_method_up)
-    plt.xlim(x_lims)
-    plt.ylim(y_lims)
-    plt.title('Updated Deformation Field')
-    
-    # Adjust layout for better spacing
-    plt.tight_layout()
-    plt.subplots_adjust(top=0.95)
-
-    # Display the figure
-    plt.show()
 
     
-    # if first level pause so user can position figure
-    if lev == 1:
-      input('position the figures as desired and then push enter to run the registration')
+    # Function to update the display
+    def live_update():
+        # Clear the axes
+        for ax in axs:
+            ax.clear()
+
+        # Plotting the warped image in the first subplot
+        plt.sca(axs[0])
+        dispImage(warped_image, title='Warped Image')
+        x_lims = plt.xlim()
+        y_lims = plt.ylim()
+        # Plotting the deformation field in the second subplot
+        plt.sca(axs[1])
+        dispDefField(def_field, spacing=disp_spacing, plot_type=disp_method_df)
+        axs[1].set_xlim(x_lims)
+        axs[1].set_ylim(y_lims)
+        axs[1].set_title('Deformation Field')
+
+        # Plotting the updated deformation field in the third subplot
+        plt.sca(axs[2])
+        up_field_to_display = scale_update_for_display * np.dstack((update_x, update_y))
+        up_field_to_display += np.dstack((X, Y))
+        dispDefField(up_field_to_display, spacing=disp_spacing, plot_type=disp_method_up)
+        axs[2].set_xlim(x_lims)
+        axs[2].set_ylim(y_lims)
+        axs[2].set_title('Update Field')
+
+        # Update the iteration text
+        iteration_text.set_text('Level {0:d}, Iteration {1:d}: MSD = {2:.6f}'.format(lev, it, prev_MSD))
+        
+        # Adjust layout for better spacing
+        plt.tight_layout()
+
+        # Redraw the figure
+        fig.canvas.draw()
+        fig.canvas.flush_events()  # Ensure the figure updates immediately
+
+        plt.pause(0.5)
+    
     
     # main iterative loop - repeat until max number of iterations reached
     for it in range(max_it):
@@ -256,38 +258,7 @@ def demonsReg(source, target, sigma_elastic=1, sigma_fluid=1, num_lev=3, use_com
       # update images if required for this iteration
       if disp_freq > 0 and it % disp_freq == 0:
         # Create a single figure with 3 subplots in one row and three columns
-        fig, axs = plt.subplots(1, 3, figsize=(12, 6))
-
-        # Plotting the warped image in the first subplot
-        plt.sca(axs[0])
-        dispImage(warped_image, title='Warped Image')
-        plt.pause(0.05)
-
-        # Plotting the deformation field in the second subplot
-        plt.sca(axs[1])
-        dispDefField(def_field, spacing=disp_spacing, plot_type=disp_method_df)
-        plt.xlim(x_lims)
-        plt.ylim(y_lims)
-        plt.title('Deformation Field')
-        plt.pause(0.05)
-
-        # Plotting the updated deformation field in the third subplot
-        plt.sca(axs[2])
-        up_field_to_display = scale_update_for_display * np.dstack((update_x, update_y))
-        up_field_to_display += np.dstack((X, Y))
-        dispDefField(up_field_to_display, spacing=disp_spacing, plot_type=disp_method_up)
-        plt.xlim(x_lims)
-        plt.ylim(y_lims)
-        plt.title('Updated Deformation Field')
-        plt.pause(0.1)
-        
-        plt.figtext(0.5, 0.92, 'Level {0:d}, Iteration {1:d}: MSD = {2:.6f}'.format(lev, it, prev_MSD), ha='center', va='top', fontsize=10, color='black')
-        
-        # Adjust layout for better spacing
-        plt.tight_layout()
-
-        # Display the figure
-        plt.show()
+        live_update()
       
       # calculate MSD between target and warped image
       MSD = calcMSD(target, warped_image)
@@ -306,36 +277,79 @@ def demonsReg(source, target, sigma_elastic=1, sigma_fluid=1, num_lev=3, use_com
       # update previous values of def_field and MSD
       def_field_prev = def_field.copy()
       prev_MSD = MSD.copy()
+    
+    #plt.show()
+
+    if lev == num_lev:
+      # Initialise global variables for current index tracking
+      current_image_index = [0]
+      current_mode_index = [0]
       
-  # display the final results
-    # Create a single figure with 3 subplots in one row
-    fig, axs = plt.subplots(1, 3, figsize=(12, 5))
+      # Define the images and titles
+      images = [source, target, warped_image]
+      image_titles = ['Source Image', 'Target Image', 'Warped Image']
+      modes = ['Deformation Field', 'Jacobian']
+      
+      
+      def on_key(event):
+          if event.key == 'right':
+              current_image_index[0] = (current_image_index[0] + 1) % len(images)
+          elif event.key == 'left':
+              current_image_index[0] = (current_image_index[0] - 1) % len(images)
+          elif event.key == 'up' or event.key == 'down':
+              current_mode_index[0] = (current_mode_index[0] + 1) % len(modes)
+          update_display()
+      
 
-    # Plotting the warped image in the first subplot
-    plt.sca(axs[0])
-    dispImage(warped_image, title='Warped Image')
 
-    # Plotting the deformation field in the second subplot
-    plt.sca(axs[1])
-    dispDefField(def_field, spacing=disp_spacing, plot_type=disp_method_df)
-    plt.xlim(x_lims)
-    plt.ylim(y_lims)
-    plt.title('Deformation Field')
+      def update_display():
+          axs_combined[0].clear()
+          plt.sca(axs_combined[0])
+          dispImage(images[current_image_index[0]], title=image_titles[current_image_index[0]])
 
-    # Plotting the updated deformation field in the third subplot
-    plt.sca(axs[2])
-    up_field_to_display = scale_update_for_display * np.dstack((update_x, update_y))
-    up_field_to_display += np.dstack((X, Y))
-    dispDefField(up_field_to_display, spacing=disp_spacing, plot_type=disp_method_up)
-    plt.xlim(x_lims)
-    plt.ylim(y_lims)
-    plt.title('Updated Deformation Field')
+          axs_combined[1].clear()
+          plt.sca(axs_combined[1])
+          if modes[current_mode_index[0]] == 'Deformation Field': 
+              dispDefField(def_field, spacing=disp_spacing, plot_type=disp_method_df)
+              axs_combined[1].set_title('Deformation Field')
 
-    # Adjust layout for better spacing
-    plt.tight_layout()
+          else:
+              [jacobian, _] = calcJacobian(def_field)
+              dispImage(jacobian, title='Jacobian')
+              plt.set_cmap('jet')
+              #plt.colorbar()
 
-    # Display the figure
-    plt.show()
+          axs_combined[2].clear()
+          plt.sca(axs_combined[2])
+          diff_image = images[current_image_index[0]] - target
+          dispImage(diff_image, title='Difference Image')
+
+          fig_combined.canvas.draw()
+
+
+      # Create a single figure with 3 subplots
+      fig_combined, axs_combined = plt.subplots(1, 3, figsize=(12, 6))
+
+      # Display initial images
+      plt.sca(axs_combined[0])
+      dispImage(images[current_image_index[0]], title=image_titles[current_image_index[0]])
+
+      plt.sca(axs_combined[1])
+      dispDefField(def_field, spacing=disp_spacing, plot_type=disp_method_df)
+      axs_combined[1].set_title('Deformation Field')
+
+      plt.sca(axs_combined[2])
+      diff_image = images[current_image_index[0]] - target
+      dispImage(diff_image, title='Difference Image')
+
+      # Add instructions for navigating images
+      fig_combined.text(0.5, 0.02, 'Press <- or -> to navigate between source, target and warped images, Press Up or Down to switch between deformation field and Jacobian', ha='center', va='top', fontsize=12, color='black')
+
+      # Connect the key event handler to the figure
+      fig_combined.canvas.mpl_connect('key_press_event', on_key)
+
+      plt.tight_layout()
+      plt.show()
 
   # return the transformed image and the deformation field
   return warped_image, def_field
