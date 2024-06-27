@@ -82,8 +82,10 @@ For example, datasets in ITK-SNAP are illustrated in the following figures.
 Refer to [`Summary and Setup`](https://healthbioscienceideas.github.io/Medical-Image-Registration-Short-Course/#data-sets) section for further details on CT-vs-PET-Ventilation-Imaging dataset.
 
 
-Notes 
-```callout
+
+:::::::::::::::::::::::::::::::::::::: spoiler
+
+### Data sharing ethics and policies
 1. Data may require extensive cleaning and pre-processing 
    before it is suitable to be used.
 2. When using open datasets that contain images of humans, 
@@ -100,7 +102,8 @@ Notes
    Most data that comes from a hospital will be in 
    DICOM format, whereas NifTi is a very popular format 
    in the medical image analysis community.
-```
+
+::::::::::::::::::::::::::::::::::::::
 
 ### DICOM format
 Digital Imaging and Communications in Medicine (DICOM) is a technical standard for the digital storage and transmission of medical images and related information.
@@ -118,15 +121,19 @@ Furthermore, there are complicated ‘links’ (provided by unique identifiers, 
 Therefore, a common first step of any image processing pipeline is to convert the DICOM image to a more suitable format such as `NifTi`. 
 Generally, most conversions go from DICOM to NIfTI. There are scenarios when you might want to convert from NIfTI **back** to DICOM, for example, if you need to import them into a clinical system that only works with DICOM.
 
-Notes
-```callout
+
+
+:::::::::::::::::::::::::::::::::::::: spoiler
+
+### Warning on converting images back to DICOM 
 Converting images back to DICOM such that 
 they are correctly interpreted by a clinical system 
 can be very tricky and requires a good understanding 
 of the DICOM standard. 
 More information on the DICOM standard 
 can be found here: https://www.dicomstandard.org
-```
+
+::::::::::::::::::::::::::::::::::::::
 
 ### NifTi format
 The Neuroimaging Informatics Technology Initiative (NIfTI) image format are usually stored as a single file containing the imaging data and header information.
@@ -369,11 +376,14 @@ The **sform** directly stores the affine transformation in the header
 whereas the **qform** stores the affine transformation using [quaternions](https://en.wikipedia.org/wiki/Quaternion). 
 ```
 
-```callout
+:::::::::::::::::::::::::::::::::::::: spoiler
+
+### Recommending `sform` over `qform`
 We strongly advise always using the `sform` over the `qform`, as:
 * It is easier to understand (at least for instructors).
 * It can contain shears which cannot be represented using the `qform`.
-```
+
+::::::::::::::::::::::::::::::::::::::
 
 ```python
 nii3ct.affine
@@ -452,11 +462,15 @@ There are 5 different sform/qform codes defined:
 | 3  | talairach | RAS+ in Talairach atlas space | 
 | 4  | mni | RAS+ in MNI atlas space | 
 
-```callout
+
+:::::::::::::::::::::::::::::::::::::: spoiler
+
+### Which code to use?
 But for most purposes all that matters is whether the code is unknown (numerical value 0) or one of the other valid values. 
 If the code is unknown then the sform/qform is not specified (and any values provided in the sform/qform fields of the header will be ignored).
 For any other valid values the sform/qform is specified and the affine transform will be determined from the corresponding header values.
-```
+
+::::::::::::::::::::::::::::::::::::::
 
 ### `qform` transform 
 You can also see `qform` transform using the `get_qform` function, which returns the affine matrix represented by the qform:
@@ -545,10 +559,13 @@ qform_code      : unknown
 
 The floating point image can now be written to disk using the save function. 
 
-Notes.
-```callout
-We do not need to manually modify the type of the image data – setting the data type for the Nifti1Image object tells it which type to use when writing the image data to disk.
-```
+
+:::::::::::::::::::::::::::::::::::::: spoiler
+
+### We do not need to manually modify the type of the image data? 
+Setting the data type for the Nifti1Image object tells it which type to use when writing the image data to disk.
+
+::::::::::::::::::::::::::::::::::::::
 
 ```python
 nib.save(nii3ct, 'data/ct_for_pet_float32.nii.gz')
