@@ -89,7 +89,7 @@ def demonsReg(source, target, sigma_elastic=1, sigma_fluid=1, num_lev=3, use_com
   source_full = source;
   target_full = target;
   
-  #Preparing function for live update during registration process
+  #Preparing figure for live update during registration process
   fig, axs = plt.subplots(1, 3, figsize=(12, 6))
   iteration_text = fig.text(0.5, 0.92, '', ha='center', va='top', fontsize=10, color='black')
   
