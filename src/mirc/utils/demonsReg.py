@@ -3,22 +3,18 @@ function to peform a registration between two 2D images using the demons  algori
  
 provided for use in image registration exercises 3 for module MPHY0025 (IPMI)
 
-Jamie McClelland
-UCL
-
-Changes has been done by: 
-Zakaria Senousy
-ARC, UCL
+Authors: Jamie McClelland, UCL
+Contributors: Zakaria Senousy and Miguel Xochicale, UCL-ARC
 """
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 
-
 import numpy as np
 from skimage.transform import rescale, resize
 from scipy.ndimage import gaussian_filter
-from utils3 import dispImage, resampImageWithDefField, calcMSD, dispDefField, calcJacobian
+from src.mirc.utils.utils3 import dispImage, resampImageWithDefField, calcMSD, dispDefField, calcJacobian
+
 
 def demonsReg(source, target, sigma_elastic=1, sigma_fluid=1, num_lev=3, use_composition=False,
               use_target_grad=False, max_it=1000, check_MSD=True, disp_freq=3, disp_spacing=2, 
