@@ -1,4 +1,4 @@
-# Demo data
+# Medical Data Imaging 
 
 ## CT-vs-PET-Ventilation-Imaging
 CT Ventilation as a Functional Imaging Modality for Lung Cancer Radiotherapy from [TCIA](https://www.cancerimagingarchive.net/collection/ct-vs-pet-ventilation-imaging/).
@@ -39,7 +39,12 @@ Data paths look like these:
 ```
 
 
-### Data is converted using:
+### Citations & Data Usage Policy
+Data Citation Required: Users must abide by [the TCIA Data Usage Policy and Restrictions](https://www.cancerimagingarchive.net/data-usage-policies-and-restrictions/). 
+Attribution must include the following citation, including the Digital Object Identifier:
+> Eslick, E. M., Kipritidis, J., Gradinscak, D., Stevens, M. J., Bailey, D. L., Harris, B., Booth, J. T., & Keall, P. J. (2022). CT Ventilation as a functional imaging modality for lung cancer radiotherapy (CT-vs-PET-Ventilation-Imaging) (Version 1) [Data set]. The Cancer Imaging Archive. https://doi.org/10.7937/3ppx-7s22
+
+### Data is converted from DICOM to nifti using `dicom2nifti`:
 ```
 from pathlib import Path 
 import dicom2nifti 
@@ -50,5 +55,5 @@ dicom2nifti.convert_directory(dicoms, ".", compression=True, reorient=True)
 
 ## Demons Image Registration Exercise Data
 
-Please check `data` folder inside `episodes` for accessing `cine_MR_img_1.png`, `cine_MR_img_2.png`, and `cine_MR_img_3.png` that are used for demonReg.py and `exampleSolution3.py`.
+Please check [`data`](https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course/tree/main/episodes/data) folder inside `episodes` for accessing `cine_MR_img_1.png`, `cine_MR_img_2.png`, and `cine_MR_img_3.png` that are used for [`demonReg.py`](https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course/blob/main/src/mirc/utils/demonsReg.py) and [`exampleSolution3.py`](https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course/blob/main/src/mirc/examples/exampleSolution3.py).
 
