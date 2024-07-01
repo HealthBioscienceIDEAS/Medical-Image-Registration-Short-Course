@@ -9,6 +9,9 @@ episodes/*html
 site/*
 !site/README.md
 
+## Temporal files for ITK-SNAP registration
+**Untitled.txt
+
 # History files
 .Rhistory
 .Rapp.history

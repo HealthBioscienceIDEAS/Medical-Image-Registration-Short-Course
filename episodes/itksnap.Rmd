@@ -508,7 +508,10 @@ system (i.e. the values increase as you move to the right and anterior of the pa
 Therefore, the world coordinates decrease as the voxel indices increase.
 
 #### ITK-SNAP visualisation coordinate system
-TOADD 
+ITK-SNAP provides the option, `Tools>Reorient Image`, to set image orientation using three-letter code (**RAI** code), describing the image rows, columns, and slice map to the anatomical coordinates. 
+For example, the code **ASL** means that image rows (X) run from **A**nterior to **P**osterior, image columns (Y) run from **S**uperior to **I**nferior, and images slices (Z) run from **L**eft to **R**ight. 
+
+![Figure. ITK-SNAP Reorient image](fig/itk-snap-tools-reorient-image.png)
 
 ## Modifying `NifTi` images and headers with Nibabel
 
@@ -916,7 +919,7 @@ For manual image registration in ITK-SNAP go to Tools > image registration
 
 ![Figure. ITK-SNAP main window](fig/itk-snap-image-manual-registration.png)
 
-* Automatic registration (affine)
+* Automatic registration (affine)   
 You can use [niftyreg](https://nipype.readthedocs.io/en/latest/api/generated/nipype.interfaces.niftyreg.reg.html), [Reg_aladin](http://cmictig.cs.ucl.ac.uk/wiki/index.php/Reg_aladin) or [DL methods](https://github.com/Project-MONAI/tutorials/tree/main/3d_registration).
 
 ## References 
