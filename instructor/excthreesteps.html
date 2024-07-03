@@ -230,7 +230,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Demons Image Registration</h1>
-        <p>Last updated on 2024-07-02 |
+        <p>Last updated on 2024-07-03 |
         
         <a href="https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course/edit/main/episodes/excthreesteps.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
         
@@ -279,6 +279,30 @@ python</p>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">conda</span> activate mirVE</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="ex">python</span></span></code></pre>
 </div>
+<div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
+  <h3 class="accordion-header" id="headingSpoiler1">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div>
+  How to avoid ModuleNotFoundError: No module named VARIABLE?
+  </h3>
+</button>
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div class="accordion-body">
+<p>You need to export relative imports, using the following notation for
+either linux or windows (might be similar to mac)</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co">#WINDOWS</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="bu">set</span> PYTHONPATH=%PYTHONPATH%<span class="kw">;</span><span class="ex">C:\path\to\your\project</span><span class="dt">\</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="ex">#LINUX</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="bu">export</span> <span class="va">PYTHONPATH</span><span class="op">=</span><span class="st">"</span><span class="va">${PYTHONPATH}</span><span class="st">:/path/to/your/project/"</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 <p>This document explains the implementation of a 2D image registration
 algorithm using the Demons algorithm. The implementation includes
 visualisation updates within a single window containing three panes for
@@ -292,17 +316,17 @@ another Python file containing utility functions used for tasks such as
 displaying images and handling deformed and updated fields. Both
 <code>demonsReg.py</code> and <code>utils3.py</code> are available in
 <code>src/mirc/utils</code></p>
-<div class="codewrapper sourceCode" id="cb2">
+<div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="im">import</span> matplotlib</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>matplotlib.use(<span class="st">'TkAgg'</span>)  <span class="co"># Set the backend for matplotlib</span></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt  <span class="co"># Import matplotlib for plotting</span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np  <span class="co"># Import numpy for numerical operations</span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="im">from</span> skimage.transform <span class="im">import</span> rescale, resize  <span class="co"># Import functions for image transformation from scikit-image</span></span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="im">from</span> scipy.ndimage <span class="im">import</span> gaussian_filter  <span class="co"># Import gaussian_filter function from scipy's ndimage module</span></span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="im">from</span> utils3 <span class="im">import</span> dispImage, resampImageWithDefField, calcMSD, dispDefField  <span class="co"># Import specific functions from a custom module</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="im">import</span> matplotlib</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>matplotlib.use(<span class="st">'TkAgg'</span>)  <span class="co"># Set the backend for matplotlib</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt  <span class="co"># Import matplotlib for plotting</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np  <span class="co"># Import numpy for numerical operations</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="im">from</span> skimage.transform <span class="im">import</span> rescale, resize  <span class="co"># Import functions for image transformation from scikit-image</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="im">from</span> scipy.ndimage <span class="im">import</span> gaussian_filter  <span class="co"># Import gaussian_filter function from scipy's ndimage module</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="im">from</span> utils3 <span class="im">import</span> dispImage, resampImageWithDefField, calcMSD, dispDefField  <span class="co"># Import specific functions from a custom module</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -311,37 +335,37 @@ displaying images and handling deformed and updated fields. Both
 2D images using the Demons algorithm, transforming the source image to
 match the target. It offers flexibility through various optional
 parameters to customise the registration process:</p>
-<div class="codewrapper sourceCode" id="cb3">
+<div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="kw">def</span> demonsReg(source, target, sigma_elastic<span class="op">=</span><span class="dv">1</span>, sigma_fluid<span class="op">=</span><span class="dv">1</span>, num_lev<span class="op">=</span><span class="dv">3</span>, use_composition<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>              use_target_grad<span class="op">=</span><span class="va">False</span>, max_it<span class="op">=</span><span class="dv">1000</span>, check_MSD<span class="op">=</span><span class="va">True</span>, disp_freq<span class="op">=</span><span class="dv">3</span>, disp_spacing<span class="op">=</span><span class="dv">2</span>, </span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>              scale_update_for_display<span class="op">=</span><span class="dv">10</span>, disp_method_df<span class="op">=</span><span class="st">'grid'</span>, disp_method_up<span class="op">=</span><span class="st">'arrows'</span>):</span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">    Perform a registration between the 2D source image and the 2D target</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">    image using the demons algorithm. The source image is warped (resampled)</span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">    into the space of the target image.</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">    Parameters:</span></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">    - source: 2D numpy array, the source image to be registered.</span></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">    - target: 2D numpy array, the target image for registration.</span></span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">    - sigma_elastic: float, standard deviation for elastic regularisation.</span></span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">    - sigma_fluid: float, standard deviation for fluid regularisation.</span></span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">    - num_lev: int, number of levels in the multi-resolution scheme.</span></span>
-<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">    - use_composition: bool, whether to use composition in the update step.</span></span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">    - use_target_grad: bool, whether to use the target image gradient.</span></span>
-<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">    - max_it: int, maximum number of iterations for the registration.</span></span>
-<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="co">    - check_MSD: bool, whether to check Mean Squared Difference for improvements.</span></span>
-<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="co">    - disp_freq: int, frequency of display updates during registration.</span></span>
-<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="co">    - disp_spacing: int, spacing between grid lines or arrows in display.</span></span>
-<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="co">    - scale_update_for_display: int, scale factor for displaying the update field.</span></span>
-<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="co">    - disp_method_df: str, method for displaying the deformation field ('grid' or 'arrows').</span></span>
-<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="co">    - disp_method_up: str, method for displaying the update field ('grid' or 'arrows').</span></span>
-<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="co">    Returns:</span></span>
-<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="co">    - warped_image: 2D numpy array, the source image warped into the target image space.</span></span>
-<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="co">    - def_field: 3D numpy array, the deformation field used to warp the source image.</span></span>
-<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="co">    """</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="kw">def</span> demonsReg(source, target, sigma_elastic<span class="op">=</span><span class="dv">1</span>, sigma_fluid<span class="op">=</span><span class="dv">1</span>, num_lev<span class="op">=</span><span class="dv">3</span>, use_composition<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>              use_target_grad<span class="op">=</span><span class="va">False</span>, max_it<span class="op">=</span><span class="dv">1000</span>, check_MSD<span class="op">=</span><span class="va">True</span>, disp_freq<span class="op">=</span><span class="dv">3</span>, disp_spacing<span class="op">=</span><span class="dv">2</span>, </span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>              scale_update_for_display<span class="op">=</span><span class="dv">10</span>, disp_method_df<span class="op">=</span><span class="st">'grid'</span>, disp_method_up<span class="op">=</span><span class="st">'arrows'</span>):</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">    Perform a registration between the 2D source image and the 2D target</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">    image using the demons algorithm. The source image is warped (resampled)</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">    into the space of the target image.</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">    Parameters:</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">    - source: 2D numpy array, the source image to be registered.</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">    - target: 2D numpy array, the target image for registration.</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">    - sigma_elastic: float, standard deviation for elastic regularisation.</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">    - sigma_fluid: float, standard deviation for fluid regularisation.</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">    - num_lev: int, number of levels in the multi-resolution scheme.</span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">    - use_composition: bool, whether to use composition in the update step.</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">    - use_target_grad: bool, whether to use the target image gradient.</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">    - max_it: int, maximum number of iterations for the registration.</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co">    - check_MSD: bool, whether to check Mean Squared Difference for improvements.</span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co">    - disp_freq: int, frequency of display updates during registration.</span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co">    - disp_spacing: int, spacing between grid lines or arrows in display.</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="co">    - scale_update_for_display: int, scale factor for displaying the update field.</span></span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a><span class="co">    - disp_method_df: str, method for displaying the deformation field ('grid' or 'arrows').</span></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="co">    - disp_method_up: str, method for displaying the update field ('grid' or 'arrows').</span></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a><span class="co">    - warped_image: 2D numpy array, the source image warped into the target image space.</span></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a><span class="co">    - def_field: 3D numpy array, the deformation field used to warp the source image.</span></span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a><span class="co">    """</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -349,36 +373,36 @@ parameters to customise the registration process:</p>
 algorithm<a class="anchor" aria-label="anchor" href="#preparing-images-and-figure-for-demons-image-registration-algorithm"></a></h2>
 <p>We start by making copies of the full-resolution images and
 initiating a figure for plotting during registration process.</p>
-<div class="codewrapper sourceCode" id="cb4">
+<div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>    <span class="co"># make copies of full resolution images</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>    source_full <span class="op">=</span> source</span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    target_full <span class="op">=</span> target</span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>    <span class="co">#Preparing figure for live update during registration process</span></span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    fig, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>    iteration_text <span class="op">=</span> fig.text(<span class="fl">0.5</span>, <span class="fl">0.92</span>, <span class="st">''</span>, ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'top'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, color<span class="op">=</span><span class="st">'black'</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>    <span class="co"># make copies of full resolution images</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>    source_full <span class="op">=</span> source</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>    target_full <span class="op">=</span> target</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>    <span class="co">#Preparing figure for live update during registration process</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>    fig, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>    iteration_text <span class="op">=</span> fig.text(<span class="fl">0.5</span>, <span class="fl">0.92</span>, <span class="st">''</span>, ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'top'</span>, fontsize<span class="op">=</span><span class="dv">10</span>, color<span class="op">=</span><span class="st">'black'</span>)</span></code></pre>
 </div>
 </div>
 <div class="section level2">
 <h2 id="multi-resolution-scheme-and-initialisation">4. Multi-Resolution Scheme and Initialisation<a class="anchor" aria-label="anchor" href="#multi-resolution-scheme-and-initialisation"></a></h2>
 <p>In this step, we initialise variables and set up the multi-resolution
 scheme by looping over different resolution levels.</p>
-<div class="codewrapper sourceCode" id="cb5">
+<div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Loop over resolution levels</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="cf">for</span> lev <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, num_lev <span class="op">+</span> <span class="dv">1</span>):</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>    </span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>    <span class="co"># Resample images if not at the final level</span></span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>    <span class="cf">if</span> lev <span class="op">!=</span> num_lev:</span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>        resamp_factor <span class="op">=</span> np.power(<span class="dv">2</span>, num_lev <span class="op">-</span> lev)</span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>        target <span class="op">=</span> rescale(target_full, <span class="fl">1.0</span> <span class="op">/</span> resamp_factor, mode<span class="op">=</span><span class="st">'edge'</span>, order<span class="op">=</span><span class="dv">3</span>, anti_aliasing<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>        source <span class="op">=</span> rescale(source_full, <span class="fl">1.0</span> <span class="op">/</span> resamp_factor, mode<span class="op">=</span><span class="st">'edge'</span>, order<span class="op">=</span><span class="dv">3</span>, anti_aliasing<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>        target <span class="op">=</span> target_full</span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>        source <span class="op">=</span> source_full</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># Loop over resolution levels</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="cf">for</span> lev <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, num_lev <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>    </span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>    <span class="co"># Resample images if not at the final level</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>    <span class="cf">if</span> lev <span class="op">!=</span> num_lev:</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>        resamp_factor <span class="op">=</span> np.power(<span class="dv">2</span>, num_lev <span class="op">-</span> lev)</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>        target <span class="op">=</span> rescale(target_full, <span class="fl">1.0</span> <span class="op">/</span> resamp_factor, mode<span class="op">=</span><span class="st">'edge'</span>, order<span class="op">=</span><span class="dv">3</span>, anti_aliasing<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>        source <span class="op">=</span> rescale(source_full, <span class="fl">1.0</span> <span class="op">/</span> resamp_factor, mode<span class="op">=</span><span class="st">'edge'</span>, order<span class="op">=</span><span class="dv">3</span>, anti_aliasing<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>        target <span class="op">=</span> target_full</span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>        source <span class="op">=</span> source_full</span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -392,26 +416,26 @@ set up using the grid coordinates derived from the target image
 dimensions. Additionally, placeholders for the displacement field
 components (disp_field_x and disp_field_y) are created to track
 incremental changes in the deformation over iterations.</p>
-<div class="codewrapper sourceCode" id="cb6">
+<div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>    <span class="co"># If first level, initialise deformation and displacement fields</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>    <span class="cf">if</span> lev <span class="op">==</span> <span class="dv">1</span>:</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>        X, Y <span class="op">=</span> np.mgrid[<span class="dv">0</span>:target.shape[<span class="dv">0</span>], <span class="dv">0</span>:target.shape[<span class="dv">1</span>]]</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>        def_field <span class="op">=</span> np.zeros((X.shape[<span class="dv">0</span>], X.shape[<span class="dv">1</span>], <span class="dv">2</span>))</span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>        def_field[:, :, <span class="dv">0</span>] <span class="op">=</span> X</span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>        def_field[:, :, <span class="dv">1</span>] <span class="op">=</span> Y</span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>        disp_field_x <span class="op">=</span> np.zeros(target.shape)</span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>        disp_field_y <span class="op">=</span> np.zeros(target.shape)</span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>        <span class="co"># Otherwise, upsample displacement field from previous level</span></span>
-<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>        disp_field_x <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> resize(disp_field_x, (target.shape[<span class="dv">0</span>], target.shape[<span class="dv">1</span>]), mode<span class="op">=</span><span class="st">'edge'</span>, order<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>        disp_field_y <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> resize(disp_field_y, (target.shape[<span class="dv">0</span>], target.shape[<span class="dv">1</span>]), mode<span class="op">=</span><span class="st">'edge'</span>, order<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>        <span class="co"># Recalculate deformation field for this level from displacement field</span></span>
-<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a>        X, Y <span class="op">=</span> np.mgrid[<span class="dv">0</span>:target.shape[<span class="dv">0</span>], <span class="dv">0</span>:target.shape[<span class="dv">1</span>]]</span>
-<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>        def_field <span class="op">=</span> np.zeros((X.shape[<span class="dv">0</span>], X.shape[<span class="dv">1</span>], <span class="dv">2</span>))  <span class="co"># Clear def_field from previous level</span></span>
-<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a>        def_field[:, :, <span class="dv">0</span>] <span class="op">=</span> X <span class="op">+</span> disp_field_x</span>
-<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a>        def_field[:, :, <span class="dv">1</span>] <span class="op">=</span> Y <span class="op">+</span> disp_field_y</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>    <span class="co"># If first level, initialise deformation and displacement fields</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>    <span class="cf">if</span> lev <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>        X, Y <span class="op">=</span> np.mgrid[<span class="dv">0</span>:target.shape[<span class="dv">0</span>], <span class="dv">0</span>:target.shape[<span class="dv">1</span>]]</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>        def_field <span class="op">=</span> np.zeros((X.shape[<span class="dv">0</span>], X.shape[<span class="dv">1</span>], <span class="dv">2</span>))</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>        def_field[:, :, <span class="dv">0</span>] <span class="op">=</span> X</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>        def_field[:, :, <span class="dv">1</span>] <span class="op">=</span> Y</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>        disp_field_x <span class="op">=</span> np.zeros(target.shape)</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>        disp_field_y <span class="op">=</span> np.zeros(target.shape)</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>        <span class="co"># Otherwise, upsample displacement field from previous level</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>        disp_field_x <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> resize(disp_field_x, (target.shape[<span class="dv">0</span>], target.shape[<span class="dv">1</span>]), mode<span class="op">=</span><span class="st">'edge'</span>, order<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>        disp_field_y <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> resize(disp_field_y, (target.shape[<span class="dv">0</span>], target.shape[<span class="dv">1</span>]), mode<span class="op">=</span><span class="st">'edge'</span>, order<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>        <span class="co"># Recalculate deformation field for this level from displacement field</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>        X, Y <span class="op">=</span> np.mgrid[<span class="dv">0</span>:target.shape[<span class="dv">0</span>], <span class="dv">0</span>:target.shape[<span class="dv">1</span>]]</span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>        def_field <span class="op">=</span> np.zeros((X.shape[<span class="dv">0</span>], X.shape[<span class="dv">1</span>], <span class="dv">2</span>))  <span class="co"># Clear def_field from previous level</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>        def_field[:, :, <span class="dv">0</span>] <span class="op">=</span> X <span class="op">+</span> disp_field_x</span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>        def_field[:, :, <span class="dv">1</span>] <span class="op">=</span> Y <span class="op">+</span> disp_field_y</span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -420,24 +444,24 @@ incremental changes in the deformation over iterations.</p>
 initial warped image for the current resolution level. These updates are
 essential for applying iterative transformations to align the source
 image with the target image.</p>
-<div class="codewrapper sourceCode" id="cb7">
+<div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>    <span class="co"># Initialise updates</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>    update_x <span class="op">=</span> np.zeros(target.shape)</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>    update_y <span class="op">=</span> np.zeros(target.shape)</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    update_def_field <span class="op">=</span> np.zeros(def_field.shape)</span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>    </span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>    <span class="co"># Calculate the transformed image at the start of this level</span></span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>    warped_image <span class="op">=</span> resampImageWithDefField(source, def_field)</span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>    </span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>    <span class="co"># Store the current def_field and MSD value to check for improvements at the end of iteration </span></span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>    def_field_prev <span class="op">=</span> def_field.copy()</span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>    prev_MSD <span class="op">=</span> calcMSD(target, warped_image)</span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>    </span>
-<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>    <span class="co"># If target image gradient is being used, this can be calculated now as it will not change during the registration</span></span>
-<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>    <span class="cf">if</span> use_target_grad:</span>
-<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>        img_grad_x, img_grad_y <span class="op">=</span> np.gradient(target)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>    <span class="co"># Initialise updates</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>    update_x <span class="op">=</span> np.zeros(target.shape)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>    update_y <span class="op">=</span> np.zeros(target.shape)</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>    update_def_field <span class="op">=</span> np.zeros(def_field.shape)</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>    </span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>    <span class="co"># Calculate the transformed image at the start of this level</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>    warped_image <span class="op">=</span> resampImageWithDefField(source, def_field)</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>    </span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>    <span class="co"># Store the current def_field and MSD value to check for improvements at the end of iteration </span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>    def_field_prev <span class="op">=</span> def_field.copy()</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>    prev_MSD <span class="op">=</span> calcMSD(target, warped_image)</span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>    </span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>    <span class="co"># If target image gradient is being used, this can be calculated now as it will not change during the registration</span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a>    <span class="cf">if</span> use_target_grad:</span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a>        img_grad_x, img_grad_y <span class="op">=</span> np.gradient(target)</span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -447,21 +471,21 @@ source image using the current deformation field, calculates and stores
 the initial Mean Squared Difference (MSD), and optionally computes the
 gradient of the target image. This sets the stage for the iterative
 registration process.</p>
-<div class="codewrapper sourceCode" id="cb8">
+<div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># calculate the transformed image at the start of this level</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>warped_image <span class="op">=</span> resampImageWithDefField(source, def_field)</span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co"># store the current def_field and MSD value to check for improvements at </span></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co"># end of iteration </span></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>def_field_prev <span class="op">=</span> def_field.copy()</span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>prev_MSD <span class="op">=</span> calcMSD(target, warped_image)</span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>        </span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co"># if target image gradient is being used this can be calculated now as it will</span></span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co"># not change during the registration</span></span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="cf">if</span> use_target_grad:</span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>  [img_grad_x, img_grad_y] <span class="op">=</span> np.gradient(target)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># calculate the transformed image at the start of this level</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>warped_image <span class="op">=</span> resampImageWithDefField(source, def_field)</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co"># store the current def_field and MSD value to check for improvements at </span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co"># end of iteration </span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>def_field_prev <span class="op">=</span> def_field.copy()</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>prev_MSD <span class="op">=</span> calcMSD(target, warped_image)</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>        </span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co"># if target image gradient is being used this can be calculated now as it will</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co"># not change during the registration</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="cf">if</span> use_target_grad:</span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>  [img_grad_x, img_grad_y] <span class="op">=</span> np.gradient(target)</span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -470,47 +494,47 @@ registration process.</p>
 updating warped_image, deformation field and update field subplots
 during the registration process. This function is used inside the main
 iterative loop of the registration process (See next step).</p>
-<div class="codewrapper sourceCode" id="cb9">
+<div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>  <span class="co"># Function to update the display</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="kw">def</span> live_update():</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>      <span class="co"># Clear the axes</span></span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>      <span class="cf">for</span> ax <span class="kw">in</span> axs:</span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>          ax.clear()</span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>      <span class="co"># Plotting the warped image in the first subplot</span></span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>      plt.sca(axs[<span class="dv">0</span>])</span>
-<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>      dispImage(warped_image, title<span class="op">=</span><span class="st">'Warped Image'</span>)</span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>      x_lims <span class="op">=</span> plt.xlim()</span>
-<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>      y_lims <span class="op">=</span> plt.ylim()</span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>      <span class="co"># Plotting the deformation field in the second subplot</span></span>
-<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>      plt.sca(axs[<span class="dv">1</span>])</span>
-<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>      dispDefField(def_field, spacing<span class="op">=</span>disp_spacing, plot_type<span class="op">=</span>disp_method_df)</span>
-<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a>      axs[<span class="dv">1</span>].set_xlim(x_lims)</span>
-<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a>      axs[<span class="dv">1</span>].set_ylim(y_lims)</span>
-<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a>      axs[<span class="dv">1</span>].set_title(<span class="st">'Deformation Field'</span>)</span>
-<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a></span>
-<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a>      <span class="co"># Plotting the updated deformation field in the third subplot</span></span>
-<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a>      plt.sca(axs[<span class="dv">2</span>])</span>
-<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a>      up_field_to_display <span class="op">=</span> scale_update_for_display <span class="op">*</span> np.dstack((update_x, update_y))</span>
-<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a>      up_field_to_display <span class="op">+=</span> np.dstack((X, Y))</span>
-<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a>      dispDefField(up_field_to_display, spacing<span class="op">=</span>disp_spacing, plot_type<span class="op">=</span>disp_method_up)</span>
-<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a>      axs[<span class="dv">2</span>].set_xlim(x_lims)</span>
-<span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a>      axs[<span class="dv">2</span>].set_ylim(y_lims)</span>
-<span id="cb9-26"><a href="#cb9-26" tabindex="-1"></a>      axs[<span class="dv">2</span>].set_title(<span class="st">'Update Field'</span>)</span>
-<span id="cb9-27"><a href="#cb9-27" tabindex="-1"></a></span>
-<span id="cb9-28"><a href="#cb9-28" tabindex="-1"></a>      <span class="co"># Update the iteration text</span></span>
-<span id="cb9-29"><a href="#cb9-29" tabindex="-1"></a>      iteration_text.set_text(<span class="st">'Level </span><span class="sc">{0:d}</span><span class="st">, Iteration </span><span class="sc">{1:d}</span><span class="st">: MSD = </span><span class="sc">{2:.6f}</span><span class="st">'</span>.<span class="bu">format</span>(lev, it, prev_MSD))</span>
-<span id="cb9-30"><a href="#cb9-30" tabindex="-1"></a>      </span>
-<span id="cb9-31"><a href="#cb9-31" tabindex="-1"></a>      <span class="co"># Adjust layout for better spacing</span></span>
-<span id="cb9-32"><a href="#cb9-32" tabindex="-1"></a>      plt.tight_layout()</span>
-<span id="cb9-33"><a href="#cb9-33" tabindex="-1"></a></span>
-<span id="cb9-34"><a href="#cb9-34" tabindex="-1"></a>      <span class="co"># Redraw the figure</span></span>
-<span id="cb9-35"><a href="#cb9-35" tabindex="-1"></a>      fig.canvas.draw()</span>
-<span id="cb9-36"><a href="#cb9-36" tabindex="-1"></a>      fig.canvas.flush_events()  <span class="co"># Ensure the figure updates immediately</span></span>
-<span id="cb9-37"><a href="#cb9-37" tabindex="-1"></a></span>
-<span id="cb9-38"><a href="#cb9-38" tabindex="-1"></a>      plt.pause(<span class="fl">0.5</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>  <span class="co"># Function to update the display</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="kw">def</span> live_update():</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>      <span class="co"># Clear the axes</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>      <span class="cf">for</span> ax <span class="kw">in</span> axs:</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>          ax.clear()</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>      <span class="co"># Plotting the warped image in the first subplot</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>      plt.sca(axs[<span class="dv">0</span>])</span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>      dispImage(warped_image, title<span class="op">=</span><span class="st">'Warped Image'</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>      x_lims <span class="op">=</span> plt.xlim()</span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>      y_lims <span class="op">=</span> plt.ylim()</span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a>      <span class="co"># Plotting the deformation field in the second subplot</span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a>      plt.sca(axs[<span class="dv">1</span>])</span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a>      dispDefField(def_field, spacing<span class="op">=</span>disp_spacing, plot_type<span class="op">=</span>disp_method_df)</span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a>      axs[<span class="dv">1</span>].set_xlim(x_lims)</span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a>      axs[<span class="dv">1</span>].set_ylim(y_lims)</span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a>      axs[<span class="dv">1</span>].set_title(<span class="st">'Deformation Field'</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a>      <span class="co"># Plotting the updated deformation field in the third subplot</span></span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a>      plt.sca(axs[<span class="dv">2</span>])</span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a>      up_field_to_display <span class="op">=</span> scale_update_for_display <span class="op">*</span> np.dstack((update_x, update_y))</span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a>      up_field_to_display <span class="op">+=</span> np.dstack((X, Y))</span>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a>      dispDefField(up_field_to_display, spacing<span class="op">=</span>disp_spacing, plot_type<span class="op">=</span>disp_method_up)</span>
+<span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a>      axs[<span class="dv">2</span>].set_xlim(x_lims)</span>
+<span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a>      axs[<span class="dv">2</span>].set_ylim(y_lims)</span>
+<span id="cb10-26"><a href="#cb10-26" tabindex="-1"></a>      axs[<span class="dv">2</span>].set_title(<span class="st">'Update Field'</span>)</span>
+<span id="cb10-27"><a href="#cb10-27" tabindex="-1"></a></span>
+<span id="cb10-28"><a href="#cb10-28" tabindex="-1"></a>      <span class="co"># Update the iteration text</span></span>
+<span id="cb10-29"><a href="#cb10-29" tabindex="-1"></a>      iteration_text.set_text(<span class="st">'Level </span><span class="sc">{0:d}</span><span class="st">, Iteration </span><span class="sc">{1:d}</span><span class="st">: MSD = </span><span class="sc">{2:.6f}</span><span class="st">'</span>.<span class="bu">format</span>(lev, it, prev_MSD))</span>
+<span id="cb10-30"><a href="#cb10-30" tabindex="-1"></a>      </span>
+<span id="cb10-31"><a href="#cb10-31" tabindex="-1"></a>      <span class="co"># Adjust layout for better spacing</span></span>
+<span id="cb10-32"><a href="#cb10-32" tabindex="-1"></a>      plt.tight_layout()</span>
+<span id="cb10-33"><a href="#cb10-33" tabindex="-1"></a></span>
+<span id="cb10-34"><a href="#cb10-34" tabindex="-1"></a>      <span class="co"># Redraw the figure</span></span>
+<span id="cb10-35"><a href="#cb10-35" tabindex="-1"></a>      fig.canvas.draw()</span>
+<span id="cb10-36"><a href="#cb10-36" tabindex="-1"></a>      fig.canvas.flush_events()  <span class="co"># Ensure the figure updates immediately</span></span>
+<span id="cb10-37"><a href="#cb10-37" tabindex="-1"></a></span>
+<span id="cb10-38"><a href="#cb10-38" tabindex="-1"></a>      plt.pause(<span class="fl">0.5</span>)</span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -520,103 +544,103 @@ image registration occurs. The loop continues until the maximum number
 of iterations is reached or until convergence criteria are met. The loop
 updates the deformation field iteratively to minimise the Mean Squared
 Difference (MSD) between the target and warped images.</p>
-<div class="codewrapper sourceCode" id="cb10">
+<div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># main iterative loop - repeat until max number of iterations reached</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>    <span class="cf">for</span> it <span class="kw">in</span> <span class="bu">range</span>(max_it):</span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>      </span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>      <span class="co"># calculate update from demons forces</span></span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>      <span class="co">#</span></span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>      <span class="co"># if the warped image gradient is used (instead of the target image gradient)</span></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>      <span class="co"># this needs to be calculated </span></span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>      <span class="cf">if</span> <span class="kw">not</span> use_target_grad:</span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>        [img_grad_x, img_grad_y] <span class="op">=</span> np.gradient(warped_image)</span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>        </span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>      <span class="co"># calculate difference image</span></span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a>      diff <span class="op">=</span> target <span class="op">-</span> warped_image</span>
-<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a>      <span class="co"># calculate denominator of demons forces</span></span>
-<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a>      denom <span class="op">=</span> np.power(img_grad_x, <span class="dv">2</span>) <span class="op">+</span> np.power(img_grad_y, <span class="dv">2</span>) <span class="op">+</span> np.power(diff, <span class="dv">2</span>)</span>
-<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a>      <span class="co"># calculate x and y components of numerator of demons forces</span></span>
-<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a>      numer_x <span class="op">=</span> diff <span class="op">*</span> img_grad_x</span>
-<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a>      numer_y <span class="op">=</span> diff <span class="op">*</span> img_grad_y</span>
-<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a>      <span class="co"># calculate the x and y components of the update</span></span>
-<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a>      <span class="co">#denom[denom &lt; 0.01] = np.nan</span></span>
-<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a>      update_x <span class="op">=</span> numer_x <span class="op">/</span> denom</span>
-<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a>      update_y <span class="op">=</span> numer_y <span class="op">/</span> denom</span>
-<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a>      </span>
-<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a>      <span class="co"># set nan values to 0</span></span>
-<span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a>      update_x[np.isnan(update_x)] <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a>      update_y[np.isnan(update_y)] <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb10-26"><a href="#cb10-26" tabindex="-1"></a>            </span>
-<span id="cb10-27"><a href="#cb10-27" tabindex="-1"></a>      <span class="co"># if fluid like regularisation used smooth the update</span></span>
-<span id="cb10-28"><a href="#cb10-28" tabindex="-1"></a>      <span class="cf">if</span> sigma_fluid <span class="op">&gt;</span> <span class="dv">0</span>:</span>
-<span id="cb10-29"><a href="#cb10-29" tabindex="-1"></a>        update_x <span class="op">=</span> gaussian_filter(update_x, sigma_fluid, mode<span class="op">=</span><span class="st">'nearest'</span>)</span>
-<span id="cb10-30"><a href="#cb10-30" tabindex="-1"></a>        update_y <span class="op">=</span> gaussian_filter(update_y, sigma_fluid, mode<span class="op">=</span><span class="st">'nearest'</span>)</span>
-<span id="cb10-31"><a href="#cb10-31" tabindex="-1"></a>      </span>
-<span id="cb10-32"><a href="#cb10-32" tabindex="-1"></a>      <span class="co"># update displacement field using addition (original demons) or</span></span>
-<span id="cb10-33"><a href="#cb10-33" tabindex="-1"></a>      <span class="co"># composition (diffeomorphic demons)</span></span>
-<span id="cb10-34"><a href="#cb10-34" tabindex="-1"></a>      <span class="cf">if</span> use_composition:</span>
-<span id="cb10-35"><a href="#cb10-35" tabindex="-1"></a>        <span class="co"># compose update with current transformation - this is done by</span></span>
-<span id="cb10-36"><a href="#cb10-36" tabindex="-1"></a>        <span class="co"># transforming (resampling) the current transformation using the</span></span>
-<span id="cb10-37"><a href="#cb10-37" tabindex="-1"></a>        <span class="co"># update. we can use the same function as used for resampling</span></span>
-<span id="cb10-38"><a href="#cb10-38" tabindex="-1"></a>        <span class="co"># images, and treat each component of the current deformation</span></span>
-<span id="cb10-39"><a href="#cb10-39" tabindex="-1"></a>        <span class="co"># field as an image</span></span>
-<span id="cb10-40"><a href="#cb10-40" tabindex="-1"></a>        <span class="co"># the update is a displacement field, but to resample an image</span></span>
-<span id="cb10-41"><a href="#cb10-41" tabindex="-1"></a>        <span class="co"># we need a deformation field, so need to calculate deformation</span></span>
-<span id="cb10-42"><a href="#cb10-42" tabindex="-1"></a>        <span class="co"># field corresponding to update.</span></span>
-<span id="cb10-43"><a href="#cb10-43" tabindex="-1"></a>        update_def_field[:, :, <span class="dv">0</span>] <span class="op">=</span> update_x <span class="op">+</span> X</span>
-<span id="cb10-44"><a href="#cb10-44" tabindex="-1"></a>        update_def_field[:, :, <span class="dv">1</span>] <span class="op">=</span> update_y <span class="op">+</span> Y</span>
-<span id="cb10-45"><a href="#cb10-45" tabindex="-1"></a>        <span class="co"># use this to resample the current deformation field, storing</span></span>
-<span id="cb10-46"><a href="#cb10-46" tabindex="-1"></a>        <span class="co"># the result in the same variable, i.e. we overwrite/update the</span></span>
-<span id="cb10-47"><a href="#cb10-47" tabindex="-1"></a>        <span class="co"># current deformation field with the composed transformation</span></span>
-<span id="cb10-48"><a href="#cb10-48" tabindex="-1"></a>        def_field <span class="op">=</span> resampImageWithDefField(def_field, update_def_field)</span>
-<span id="cb10-49"><a href="#cb10-49" tabindex="-1"></a>        <span class="co"># calculate the displacement field from the composed deformation field</span></span>
-<span id="cb10-50"><a href="#cb10-50" tabindex="-1"></a>        disp_field_x <span class="op">=</span> def_field[:, :, <span class="dv">0</span>] <span class="op">-</span> X</span>
-<span id="cb10-51"><a href="#cb10-51" tabindex="-1"></a>        disp_field_y <span class="op">=</span> def_field[:, :, <span class="dv">1</span>] <span class="op">-</span> Y</span>
-<span id="cb10-52"><a href="#cb10-52" tabindex="-1"></a>        <span class="co"># replace nans in disp field with 0s</span></span>
-<span id="cb10-53"><a href="#cb10-53" tabindex="-1"></a>        disp_field_x[np.isnan(disp_field_x)] <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb10-54"><a href="#cb10-54" tabindex="-1"></a>        disp_field_y[np.isnan(disp_field_y)] <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb10-55"><a href="#cb10-55" tabindex="-1"></a>      <span class="cf">else</span>:</span>
-<span id="cb10-56"><a href="#cb10-56" tabindex="-1"></a>        <span class="co"># add the update to the current displacement field</span></span>
-<span id="cb10-57"><a href="#cb10-57" tabindex="-1"></a>        disp_field_x <span class="op">=</span> disp_field_x <span class="op">+</span> update_x</span>
-<span id="cb10-58"><a href="#cb10-58" tabindex="-1"></a>        disp_field_y <span class="op">=</span> disp_field_y <span class="op">+</span> update_y</span>
-<span id="cb10-59"><a href="#cb10-59" tabindex="-1"></a>      </span>
-<span id="cb10-60"><a href="#cb10-60" tabindex="-1"></a>      </span>
-<span id="cb10-61"><a href="#cb10-61" tabindex="-1"></a>      <span class="co"># if elastic like regularisation used smooth the displacement field</span></span>
-<span id="cb10-62"><a href="#cb10-62" tabindex="-1"></a>      <span class="cf">if</span> sigma_elastic <span class="op">&gt;</span> <span class="dv">0</span>:</span>
-<span id="cb10-63"><a href="#cb10-63" tabindex="-1"></a>        disp_field_x <span class="op">=</span> gaussian_filter(disp_field_x, sigma_elastic, mode<span class="op">=</span><span class="st">'nearest'</span>)</span>
-<span id="cb10-64"><a href="#cb10-64" tabindex="-1"></a>        disp_field_y <span class="op">=</span> gaussian_filter(disp_field_y, sigma_elastic, mode<span class="op">=</span><span class="st">'nearest'</span>)</span>
-<span id="cb10-65"><a href="#cb10-65" tabindex="-1"></a>      </span>
-<span id="cb10-66"><a href="#cb10-66" tabindex="-1"></a>      <span class="co"># update deformation field from disp field</span></span>
-<span id="cb10-67"><a href="#cb10-67" tabindex="-1"></a>      def_field[:, :, <span class="dv">0</span>] <span class="op">=</span> disp_field_x <span class="op">+</span> X</span>
-<span id="cb10-68"><a href="#cb10-68" tabindex="-1"></a>      def_field[:, :, <span class="dv">1</span>] <span class="op">=</span> disp_field_y <span class="op">+</span> Y</span>
-<span id="cb10-69"><a href="#cb10-69" tabindex="-1"></a>            </span>
-<span id="cb10-70"><a href="#cb10-70" tabindex="-1"></a>      <span class="co"># transform the image using the updated deformation field</span></span>
-<span id="cb10-71"><a href="#cb10-71" tabindex="-1"></a>      warped_image <span class="op">=</span> resampImageWithDefField(source, def_field)</span>
-<span id="cb10-72"><a href="#cb10-72" tabindex="-1"></a></span>
-<span id="cb10-73"><a href="#cb10-73" tabindex="-1"></a>      <span class="co"># update images if required for this iteration</span></span>
-<span id="cb10-74"><a href="#cb10-74" tabindex="-1"></a>      <span class="cf">if</span> disp_freq <span class="op">&gt;</span> <span class="dv">0</span> <span class="kw">and</span> it <span class="op">%</span> disp_freq <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb10-75"><a href="#cb10-75" tabindex="-1"></a>        <span class="co"># Create a single figure with 3 subplots in one row and three columns</span></span>
-<span id="cb10-76"><a href="#cb10-76" tabindex="-1"></a>        live_update()</span>
-<span id="cb10-77"><a href="#cb10-77" tabindex="-1"></a>      </span>
-<span id="cb10-78"><a href="#cb10-78" tabindex="-1"></a>      <span class="co"># calculate MSD between target and warped image</span></span>
-<span id="cb10-79"><a href="#cb10-79" tabindex="-1"></a>      MSD <span class="op">=</span> calcMSD(target, warped_image)</span>
-<span id="cb10-80"><a href="#cb10-80" tabindex="-1"></a></span>
-<span id="cb10-81"><a href="#cb10-81" tabindex="-1"></a>      <span class="co"># display numerical results</span></span>
-<span id="cb10-82"><a href="#cb10-82" tabindex="-1"></a>      <span class="bu">print</span>(<span class="st">'Level </span><span class="sc">{0:d}</span><span class="st">, Iteration </span><span class="sc">{1:d}</span><span class="st">: MSD = </span><span class="sc">{2:f}</span><span class="ch">\n</span><span class="st">'</span>.<span class="bu">format</span>(lev, it, MSD))</span>
-<span id="cb10-83"><a href="#cb10-83" tabindex="-1"></a>      </span>
-<span id="cb10-84"><a href="#cb10-84" tabindex="-1"></a>      <span class="co"># check for improvement in MSD if required</span></span>
-<span id="cb10-85"><a href="#cb10-85" tabindex="-1"></a>      <span class="cf">if</span> check_MSD <span class="kw">and</span> MSD <span class="op">&gt;=</span> prev_MSD:</span>
-<span id="cb10-86"><a href="#cb10-86" tabindex="-1"></a>        <span class="co"># restore previous results and finish level</span></span>
-<span id="cb10-87"><a href="#cb10-87" tabindex="-1"></a>        def_field <span class="op">=</span> def_field_prev</span>
-<span id="cb10-88"><a href="#cb10-88" tabindex="-1"></a>        warped_image <span class="op">=</span> resampImageWithDefField(source, def_field)</span>
-<span id="cb10-89"><a href="#cb10-89" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'No improvement in MSD'</span>)</span>
-<span id="cb10-90"><a href="#cb10-90" tabindex="-1"></a>        <span class="cf">break</span></span>
-<span id="cb10-91"><a href="#cb10-91" tabindex="-1"></a>      </span>
-<span id="cb10-92"><a href="#cb10-92" tabindex="-1"></a>      <span class="co"># update previous values of def_field and MSD</span></span>
-<span id="cb10-93"><a href="#cb10-93" tabindex="-1"></a>      def_field_prev <span class="op">=</span> def_field.copy()</span>
-<span id="cb10-94"><a href="#cb10-94" tabindex="-1"></a>      prev_MSD <span class="op">=</span> MSD.copy()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co"># main iterative loop - repeat until max number of iterations reached</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>    <span class="cf">for</span> it <span class="kw">in</span> <span class="bu">range</span>(max_it):</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>      </span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>      <span class="co"># calculate update from demons forces</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>      <span class="co">#</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>      <span class="co"># if the warped image gradient is used (instead of the target image gradient)</span></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>      <span class="co"># this needs to be calculated </span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>      <span class="cf">if</span> <span class="kw">not</span> use_target_grad:</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>        [img_grad_x, img_grad_y] <span class="op">=</span> np.gradient(warped_image)</span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>        </span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>      <span class="co"># calculate difference image</span></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>      diff <span class="op">=</span> target <span class="op">-</span> warped_image</span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>      <span class="co"># calculate denominator of demons forces</span></span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>      denom <span class="op">=</span> np.power(img_grad_x, <span class="dv">2</span>) <span class="op">+</span> np.power(img_grad_y, <span class="dv">2</span>) <span class="op">+</span> np.power(diff, <span class="dv">2</span>)</span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>      <span class="co"># calculate x and y components of numerator of demons forces</span></span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>      numer_x <span class="op">=</span> diff <span class="op">*</span> img_grad_x</span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a>      numer_y <span class="op">=</span> diff <span class="op">*</span> img_grad_y</span>
+<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a>      <span class="co"># calculate the x and y components of the update</span></span>
+<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a>      <span class="co">#denom[denom &lt; 0.01] = np.nan</span></span>
+<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a>      update_x <span class="op">=</span> numer_x <span class="op">/</span> denom</span>
+<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a>      update_y <span class="op">=</span> numer_y <span class="op">/</span> denom</span>
+<span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a>      </span>
+<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a>      <span class="co"># set nan values to 0</span></span>
+<span id="cb11-24"><a href="#cb11-24" tabindex="-1"></a>      update_x[np.isnan(update_x)] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb11-25"><a href="#cb11-25" tabindex="-1"></a>      update_y[np.isnan(update_y)] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb11-26"><a href="#cb11-26" tabindex="-1"></a>            </span>
+<span id="cb11-27"><a href="#cb11-27" tabindex="-1"></a>      <span class="co"># if fluid like regularisation used smooth the update</span></span>
+<span id="cb11-28"><a href="#cb11-28" tabindex="-1"></a>      <span class="cf">if</span> sigma_fluid <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb11-29"><a href="#cb11-29" tabindex="-1"></a>        update_x <span class="op">=</span> gaussian_filter(update_x, sigma_fluid, mode<span class="op">=</span><span class="st">'nearest'</span>)</span>
+<span id="cb11-30"><a href="#cb11-30" tabindex="-1"></a>        update_y <span class="op">=</span> gaussian_filter(update_y, sigma_fluid, mode<span class="op">=</span><span class="st">'nearest'</span>)</span>
+<span id="cb11-31"><a href="#cb11-31" tabindex="-1"></a>      </span>
+<span id="cb11-32"><a href="#cb11-32" tabindex="-1"></a>      <span class="co"># update displacement field using addition (original demons) or</span></span>
+<span id="cb11-33"><a href="#cb11-33" tabindex="-1"></a>      <span class="co"># composition (diffeomorphic demons)</span></span>
+<span id="cb11-34"><a href="#cb11-34" tabindex="-1"></a>      <span class="cf">if</span> use_composition:</span>
+<span id="cb11-35"><a href="#cb11-35" tabindex="-1"></a>        <span class="co"># compose update with current transformation - this is done by</span></span>
+<span id="cb11-36"><a href="#cb11-36" tabindex="-1"></a>        <span class="co"># transforming (resampling) the current transformation using the</span></span>
+<span id="cb11-37"><a href="#cb11-37" tabindex="-1"></a>        <span class="co"># update. we can use the same function as used for resampling</span></span>
+<span id="cb11-38"><a href="#cb11-38" tabindex="-1"></a>        <span class="co"># images, and treat each component of the current deformation</span></span>
+<span id="cb11-39"><a href="#cb11-39" tabindex="-1"></a>        <span class="co"># field as an image</span></span>
+<span id="cb11-40"><a href="#cb11-40" tabindex="-1"></a>        <span class="co"># the update is a displacement field, but to resample an image</span></span>
+<span id="cb11-41"><a href="#cb11-41" tabindex="-1"></a>        <span class="co"># we need a deformation field, so need to calculate deformation</span></span>
+<span id="cb11-42"><a href="#cb11-42" tabindex="-1"></a>        <span class="co"># field corresponding to update.</span></span>
+<span id="cb11-43"><a href="#cb11-43" tabindex="-1"></a>        update_def_field[:, :, <span class="dv">0</span>] <span class="op">=</span> update_x <span class="op">+</span> X</span>
+<span id="cb11-44"><a href="#cb11-44" tabindex="-1"></a>        update_def_field[:, :, <span class="dv">1</span>] <span class="op">=</span> update_y <span class="op">+</span> Y</span>
+<span id="cb11-45"><a href="#cb11-45" tabindex="-1"></a>        <span class="co"># use this to resample the current deformation field, storing</span></span>
+<span id="cb11-46"><a href="#cb11-46" tabindex="-1"></a>        <span class="co"># the result in the same variable, i.e. we overwrite/update the</span></span>
+<span id="cb11-47"><a href="#cb11-47" tabindex="-1"></a>        <span class="co"># current deformation field with the composed transformation</span></span>
+<span id="cb11-48"><a href="#cb11-48" tabindex="-1"></a>        def_field <span class="op">=</span> resampImageWithDefField(def_field, update_def_field)</span>
+<span id="cb11-49"><a href="#cb11-49" tabindex="-1"></a>        <span class="co"># calculate the displacement field from the composed deformation field</span></span>
+<span id="cb11-50"><a href="#cb11-50" tabindex="-1"></a>        disp_field_x <span class="op">=</span> def_field[:, :, <span class="dv">0</span>] <span class="op">-</span> X</span>
+<span id="cb11-51"><a href="#cb11-51" tabindex="-1"></a>        disp_field_y <span class="op">=</span> def_field[:, :, <span class="dv">1</span>] <span class="op">-</span> Y</span>
+<span id="cb11-52"><a href="#cb11-52" tabindex="-1"></a>        <span class="co"># replace nans in disp field with 0s</span></span>
+<span id="cb11-53"><a href="#cb11-53" tabindex="-1"></a>        disp_field_x[np.isnan(disp_field_x)] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb11-54"><a href="#cb11-54" tabindex="-1"></a>        disp_field_y[np.isnan(disp_field_y)] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb11-55"><a href="#cb11-55" tabindex="-1"></a>      <span class="cf">else</span>:</span>
+<span id="cb11-56"><a href="#cb11-56" tabindex="-1"></a>        <span class="co"># add the update to the current displacement field</span></span>
+<span id="cb11-57"><a href="#cb11-57" tabindex="-1"></a>        disp_field_x <span class="op">=</span> disp_field_x <span class="op">+</span> update_x</span>
+<span id="cb11-58"><a href="#cb11-58" tabindex="-1"></a>        disp_field_y <span class="op">=</span> disp_field_y <span class="op">+</span> update_y</span>
+<span id="cb11-59"><a href="#cb11-59" tabindex="-1"></a>      </span>
+<span id="cb11-60"><a href="#cb11-60" tabindex="-1"></a>      </span>
+<span id="cb11-61"><a href="#cb11-61" tabindex="-1"></a>      <span class="co"># if elastic like regularisation used smooth the displacement field</span></span>
+<span id="cb11-62"><a href="#cb11-62" tabindex="-1"></a>      <span class="cf">if</span> sigma_elastic <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb11-63"><a href="#cb11-63" tabindex="-1"></a>        disp_field_x <span class="op">=</span> gaussian_filter(disp_field_x, sigma_elastic, mode<span class="op">=</span><span class="st">'nearest'</span>)</span>
+<span id="cb11-64"><a href="#cb11-64" tabindex="-1"></a>        disp_field_y <span class="op">=</span> gaussian_filter(disp_field_y, sigma_elastic, mode<span class="op">=</span><span class="st">'nearest'</span>)</span>
+<span id="cb11-65"><a href="#cb11-65" tabindex="-1"></a>      </span>
+<span id="cb11-66"><a href="#cb11-66" tabindex="-1"></a>      <span class="co"># update deformation field from disp field</span></span>
+<span id="cb11-67"><a href="#cb11-67" tabindex="-1"></a>      def_field[:, :, <span class="dv">0</span>] <span class="op">=</span> disp_field_x <span class="op">+</span> X</span>
+<span id="cb11-68"><a href="#cb11-68" tabindex="-1"></a>      def_field[:, :, <span class="dv">1</span>] <span class="op">=</span> disp_field_y <span class="op">+</span> Y</span>
+<span id="cb11-69"><a href="#cb11-69" tabindex="-1"></a>            </span>
+<span id="cb11-70"><a href="#cb11-70" tabindex="-1"></a>      <span class="co"># transform the image using the updated deformation field</span></span>
+<span id="cb11-71"><a href="#cb11-71" tabindex="-1"></a>      warped_image <span class="op">=</span> resampImageWithDefField(source, def_field)</span>
+<span id="cb11-72"><a href="#cb11-72" tabindex="-1"></a></span>
+<span id="cb11-73"><a href="#cb11-73" tabindex="-1"></a>      <span class="co"># update images if required for this iteration</span></span>
+<span id="cb11-74"><a href="#cb11-74" tabindex="-1"></a>      <span class="cf">if</span> disp_freq <span class="op">&gt;</span> <span class="dv">0</span> <span class="kw">and</span> it <span class="op">%</span> disp_freq <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb11-75"><a href="#cb11-75" tabindex="-1"></a>        <span class="co"># Create a single figure with 3 subplots in one row and three columns</span></span>
+<span id="cb11-76"><a href="#cb11-76" tabindex="-1"></a>        live_update()</span>
+<span id="cb11-77"><a href="#cb11-77" tabindex="-1"></a>      </span>
+<span id="cb11-78"><a href="#cb11-78" tabindex="-1"></a>      <span class="co"># calculate MSD between target and warped image</span></span>
+<span id="cb11-79"><a href="#cb11-79" tabindex="-1"></a>      MSD <span class="op">=</span> calcMSD(target, warped_image)</span>
+<span id="cb11-80"><a href="#cb11-80" tabindex="-1"></a></span>
+<span id="cb11-81"><a href="#cb11-81" tabindex="-1"></a>      <span class="co"># display numerical results</span></span>
+<span id="cb11-82"><a href="#cb11-82" tabindex="-1"></a>      <span class="bu">print</span>(<span class="st">'Level </span><span class="sc">{0:d}</span><span class="st">, Iteration </span><span class="sc">{1:d}</span><span class="st">: MSD = </span><span class="sc">{2:f}</span><span class="ch">\n</span><span class="st">'</span>.<span class="bu">format</span>(lev, it, MSD))</span>
+<span id="cb11-83"><a href="#cb11-83" tabindex="-1"></a>      </span>
+<span id="cb11-84"><a href="#cb11-84" tabindex="-1"></a>      <span class="co"># check for improvement in MSD if required</span></span>
+<span id="cb11-85"><a href="#cb11-85" tabindex="-1"></a>      <span class="cf">if</span> check_MSD <span class="kw">and</span> MSD <span class="op">&gt;=</span> prev_MSD:</span>
+<span id="cb11-86"><a href="#cb11-86" tabindex="-1"></a>        <span class="co"># restore previous results and finish level</span></span>
+<span id="cb11-87"><a href="#cb11-87" tabindex="-1"></a>        def_field <span class="op">=</span> def_field_prev</span>
+<span id="cb11-88"><a href="#cb11-88" tabindex="-1"></a>        warped_image <span class="op">=</span> resampImageWithDefField(source, def_field)</span>
+<span id="cb11-89"><a href="#cb11-89" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'No improvement in MSD'</span>)</span>
+<span id="cb11-90"><a href="#cb11-90" tabindex="-1"></a>        <span class="cf">break</span></span>
+<span id="cb11-91"><a href="#cb11-91" tabindex="-1"></a>      </span>
+<span id="cb11-92"><a href="#cb11-92" tabindex="-1"></a>      <span class="co"># update previous values of def_field and MSD</span></span>
+<span id="cb11-93"><a href="#cb11-93" tabindex="-1"></a>      def_field_prev <span class="op">=</span> def_field.copy()</span>
+<span id="cb11-94"><a href="#cb11-94" tabindex="-1"></a>      prev_MSD <span class="op">=</span> MSD.copy()</span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="results-after-level-1-iterations">9.1. Results after Level 1 iterations:<a class="anchor" aria-label="anchor" href="#results-after-level-1-iterations"></a></h3>
@@ -650,79 +674,79 @@ Matplotlib figure with subplots is created, initial images and plots are
 displayed, and instructions for navigation are added at the bottom. The
 figure is connected to the event handler to enable interactive
 navigation and mode switching.</p>
-<div class="codewrapper sourceCode" id="cb11">
+<div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="cf">if</span> lev <span class="op">==</span> num_lev:</span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="co"># Initialize global variables for current index tracking</span></span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>  current_image_index <span class="op">=</span> [<span class="dv">0</span>]</span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  current_mode_index <span class="op">=</span> [<span class="dv">0</span>]</span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>  </span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>  <span class="co"># Define the images and titles</span></span>
-<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>  images <span class="op">=</span> [source, target, warped_image]</span>
-<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>  image_titles <span class="op">=</span> [<span class="st">'Source Image'</span>, <span class="st">'Target Image'</span>, <span class="st">'Warped Image'</span>]</span>
-<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>  modes <span class="op">=</span> [<span class="st">'Deformation Field'</span>, <span class="st">'Jacobian'</span>]</span>
-<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>  </span>
-<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>  </span>
-<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>  <span class="kw">def</span> on_key(event):</span>
-<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>      <span class="cf">if</span> event.key <span class="op">==</span> <span class="st">'right'</span>:</span>
-<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>          current_image_index[<span class="dv">0</span>] <span class="op">=</span> (current_image_index[<span class="dv">0</span>] <span class="op">+</span> <span class="dv">1</span>) <span class="op">%</span> <span class="bu">len</span>(images)</span>
-<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>      <span class="cf">elif</span> event.key <span class="op">==</span> <span class="st">'left'</span>:</span>
-<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>          current_image_index[<span class="dv">0</span>] <span class="op">=</span> (current_image_index[<span class="dv">0</span>] <span class="op">-</span> <span class="dv">1</span>) <span class="op">%</span> <span class="bu">len</span>(images)</span>
-<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a>      <span class="cf">elif</span> event.key <span class="op">==</span> <span class="st">'up'</span> <span class="kw">or</span> event.key <span class="op">==</span> <span class="st">'down'</span>:</span>
-<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a>          current_mode_index[<span class="dv">0</span>] <span class="op">=</span> (current_mode_index[<span class="dv">0</span>] <span class="op">+</span> <span class="dv">1</span>) <span class="op">%</span> <span class="bu">len</span>(modes)</span>
-<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a>      update_display()</span>
-<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a>  </span>
-<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a></span>
-<span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a></span>
-<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a>  <span class="kw">def</span> update_display():</span>
-<span id="cb11-24"><a href="#cb11-24" tabindex="-1"></a>      axs_combined[<span class="dv">0</span>].clear()</span>
-<span id="cb11-25"><a href="#cb11-25" tabindex="-1"></a>      plt.sca(axs_combined[<span class="dv">0</span>])</span>
-<span id="cb11-26"><a href="#cb11-26" tabindex="-1"></a>      dispImage(images[current_image_index[<span class="dv">0</span>]], title<span class="op">=</span>image_titles[current_image_index[<span class="dv">0</span>]])</span>
-<span id="cb11-27"><a href="#cb11-27" tabindex="-1"></a></span>
-<span id="cb11-28"><a href="#cb11-28" tabindex="-1"></a>      axs_combined[<span class="dv">1</span>].clear()</span>
-<span id="cb11-29"><a href="#cb11-29" tabindex="-1"></a>      plt.sca(axs_combined[<span class="dv">1</span>])</span>
-<span id="cb11-30"><a href="#cb11-30" tabindex="-1"></a>      <span class="cf">if</span> modes[current_mode_index[<span class="dv">0</span>]] <span class="op">==</span> <span class="st">'Deformation Field'</span>: </span>
-<span id="cb11-31"><a href="#cb11-31" tabindex="-1"></a>          dispDefField(def_field, spacing<span class="op">=</span>disp_spacing, plot_type<span class="op">=</span>disp_method_df)</span>
-<span id="cb11-32"><a href="#cb11-32" tabindex="-1"></a>          axs_combined[<span class="dv">1</span>].set_title(<span class="st">'Deformation Field'</span>)</span>
-<span id="cb11-33"><a href="#cb11-33" tabindex="-1"></a></span>
-<span id="cb11-34"><a href="#cb11-34" tabindex="-1"></a>      <span class="cf">else</span>:</span>
-<span id="cb11-35"><a href="#cb11-35" tabindex="-1"></a>          [jacobian, _] <span class="op">=</span> calcJacobian(def_field)</span>
-<span id="cb11-36"><a href="#cb11-36" tabindex="-1"></a>          dispImage(jacobian, title<span class="op">=</span><span class="st">'Jacobian'</span>)</span>
-<span id="cb11-37"><a href="#cb11-37" tabindex="-1"></a>          plt.set_cmap(<span class="st">'jet'</span>)</span>
-<span id="cb11-38"><a href="#cb11-38" tabindex="-1"></a>          <span class="co">#plt.colorbar()</span></span>
-<span id="cb11-39"><a href="#cb11-39" tabindex="-1"></a></span>
-<span id="cb11-40"><a href="#cb11-40" tabindex="-1"></a>      axs_combined[<span class="dv">2</span>].clear()</span>
-<span id="cb11-41"><a href="#cb11-41" tabindex="-1"></a>      plt.sca(axs_combined[<span class="dv">2</span>])</span>
-<span id="cb11-42"><a href="#cb11-42" tabindex="-1"></a>      diff_image <span class="op">=</span> images[current_image_index[<span class="dv">0</span>]] <span class="op">-</span> target</span>
-<span id="cb11-43"><a href="#cb11-43" tabindex="-1"></a>      dispImage(diff_image, title<span class="op">=</span><span class="st">'Difference Image'</span>)</span>
-<span id="cb11-44"><a href="#cb11-44" tabindex="-1"></a></span>
-<span id="cb11-45"><a href="#cb11-45" tabindex="-1"></a>      fig_combined.canvas.draw()</span>
-<span id="cb11-46"><a href="#cb11-46" tabindex="-1"></a></span>
-<span id="cb11-47"><a href="#cb11-47" tabindex="-1"></a></span>
-<span id="cb11-48"><a href="#cb11-48" tabindex="-1"></a>  <span class="co"># Create a single figure with 3 subplots</span></span>
-<span id="cb11-49"><a href="#cb11-49" tabindex="-1"></a>  fig_combined, axs_combined <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
-<span id="cb11-50"><a href="#cb11-50" tabindex="-1"></a></span>
-<span id="cb11-51"><a href="#cb11-51" tabindex="-1"></a>  <span class="co"># Display initial images</span></span>
-<span id="cb11-52"><a href="#cb11-52" tabindex="-1"></a>  plt.sca(axs_combined[<span class="dv">0</span>])</span>
-<span id="cb11-53"><a href="#cb11-53" tabindex="-1"></a>  dispImage(images[current_image_index[<span class="dv">0</span>]], title<span class="op">=</span>image_titles[current_image_index[<span class="dv">0</span>]])</span>
-<span id="cb11-54"><a href="#cb11-54" tabindex="-1"></a></span>
-<span id="cb11-55"><a href="#cb11-55" tabindex="-1"></a>  plt.sca(axs_combined[<span class="dv">1</span>])</span>
-<span id="cb11-56"><a href="#cb11-56" tabindex="-1"></a>  dispDefField(def_field, spacing<span class="op">=</span>disp_spacing, plot_type<span class="op">=</span>disp_method_df)</span>
-<span id="cb11-57"><a href="#cb11-57" tabindex="-1"></a>  axs_combined[<span class="dv">1</span>].set_title(<span class="st">'Deformation Field'</span>)</span>
-<span id="cb11-58"><a href="#cb11-58" tabindex="-1"></a></span>
-<span id="cb11-59"><a href="#cb11-59" tabindex="-1"></a>  plt.sca(axs_combined[<span class="dv">2</span>])</span>
-<span id="cb11-60"><a href="#cb11-60" tabindex="-1"></a>  diff_image <span class="op">=</span> images[current_image_index[<span class="dv">0</span>]] <span class="op">-</span> target</span>
-<span id="cb11-61"><a href="#cb11-61" tabindex="-1"></a>  dispImage(diff_image, title<span class="op">=</span><span class="st">'Difference Image'</span>)</span>
-<span id="cb11-62"><a href="#cb11-62" tabindex="-1"></a></span>
-<span id="cb11-63"><a href="#cb11-63" tabindex="-1"></a>  <span class="co"># Add instructions for navigating images</span></span>
-<span id="cb11-64"><a href="#cb11-64" tabindex="-1"></a>  fig_combined.text(<span class="fl">0.5</span>, <span class="fl">0.02</span>, <span class="st">'Press &lt;- or -&gt; to navigate between source, target and warped images, Press Up or Down to switch between deformation field and Jacobian'</span>, ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'top'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, color<span class="op">=</span><span class="st">'black'</span>)</span>
-<span id="cb11-65"><a href="#cb11-65" tabindex="-1"></a></span>
-<span id="cb11-66"><a href="#cb11-66" tabindex="-1"></a>  <span class="co"># Connect the key event handler to the figure</span></span>
-<span id="cb11-67"><a href="#cb11-67" tabindex="-1"></a>  fig_combined.canvas.mpl_connect(<span class="st">'key_press_event'</span>, on_key)</span>
-<span id="cb11-68"><a href="#cb11-68" tabindex="-1"></a></span>
-<span id="cb11-69"><a href="#cb11-69" tabindex="-1"></a>  plt.tight_layout()</span>
-<span id="cb11-70"><a href="#cb11-70" tabindex="-1"></a>  plt.show()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="cf">if</span> lev <span class="op">==</span> num_lev:</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="co"># Initialize global variables for current index tracking</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  current_image_index <span class="op">=</span> [<span class="dv">0</span>]</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>  current_mode_index <span class="op">=</span> [<span class="dv">0</span>]</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>  </span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>  <span class="co"># Define the images and titles</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>  images <span class="op">=</span> [source, target, warped_image]</span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>  image_titles <span class="op">=</span> [<span class="st">'Source Image'</span>, <span class="st">'Target Image'</span>, <span class="st">'Warped Image'</span>]</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>  modes <span class="op">=</span> [<span class="st">'Deformation Field'</span>, <span class="st">'Jacobian'</span>]</span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a>  </span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>  </span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a>  <span class="kw">def</span> on_key(event):</span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a>      <span class="cf">if</span> event.key <span class="op">==</span> <span class="st">'right'</span>:</span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a>          current_image_index[<span class="dv">0</span>] <span class="op">=</span> (current_image_index[<span class="dv">0</span>] <span class="op">+</span> <span class="dv">1</span>) <span class="op">%</span> <span class="bu">len</span>(images)</span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a>      <span class="cf">elif</span> event.key <span class="op">==</span> <span class="st">'left'</span>:</span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a>          current_image_index[<span class="dv">0</span>] <span class="op">=</span> (current_image_index[<span class="dv">0</span>] <span class="op">-</span> <span class="dv">1</span>) <span class="op">%</span> <span class="bu">len</span>(images)</span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a>      <span class="cf">elif</span> event.key <span class="op">==</span> <span class="st">'up'</span> <span class="kw">or</span> event.key <span class="op">==</span> <span class="st">'down'</span>:</span>
+<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a>          current_mode_index[<span class="dv">0</span>] <span class="op">=</span> (current_mode_index[<span class="dv">0</span>] <span class="op">+</span> <span class="dv">1</span>) <span class="op">%</span> <span class="bu">len</span>(modes)</span>
+<span id="cb12-19"><a href="#cb12-19" tabindex="-1"></a>      update_display()</span>
+<span id="cb12-20"><a href="#cb12-20" tabindex="-1"></a>  </span>
+<span id="cb12-21"><a href="#cb12-21" tabindex="-1"></a></span>
+<span id="cb12-22"><a href="#cb12-22" tabindex="-1"></a></span>
+<span id="cb12-23"><a href="#cb12-23" tabindex="-1"></a>  <span class="kw">def</span> update_display():</span>
+<span id="cb12-24"><a href="#cb12-24" tabindex="-1"></a>      axs_combined[<span class="dv">0</span>].clear()</span>
+<span id="cb12-25"><a href="#cb12-25" tabindex="-1"></a>      plt.sca(axs_combined[<span class="dv">0</span>])</span>
+<span id="cb12-26"><a href="#cb12-26" tabindex="-1"></a>      dispImage(images[current_image_index[<span class="dv">0</span>]], title<span class="op">=</span>image_titles[current_image_index[<span class="dv">0</span>]])</span>
+<span id="cb12-27"><a href="#cb12-27" tabindex="-1"></a></span>
+<span id="cb12-28"><a href="#cb12-28" tabindex="-1"></a>      axs_combined[<span class="dv">1</span>].clear()</span>
+<span id="cb12-29"><a href="#cb12-29" tabindex="-1"></a>      plt.sca(axs_combined[<span class="dv">1</span>])</span>
+<span id="cb12-30"><a href="#cb12-30" tabindex="-1"></a>      <span class="cf">if</span> modes[current_mode_index[<span class="dv">0</span>]] <span class="op">==</span> <span class="st">'Deformation Field'</span>: </span>
+<span id="cb12-31"><a href="#cb12-31" tabindex="-1"></a>          dispDefField(def_field, spacing<span class="op">=</span>disp_spacing, plot_type<span class="op">=</span>disp_method_df)</span>
+<span id="cb12-32"><a href="#cb12-32" tabindex="-1"></a>          axs_combined[<span class="dv">1</span>].set_title(<span class="st">'Deformation Field'</span>)</span>
+<span id="cb12-33"><a href="#cb12-33" tabindex="-1"></a></span>
+<span id="cb12-34"><a href="#cb12-34" tabindex="-1"></a>      <span class="cf">else</span>:</span>
+<span id="cb12-35"><a href="#cb12-35" tabindex="-1"></a>          [jacobian, _] <span class="op">=</span> calcJacobian(def_field)</span>
+<span id="cb12-36"><a href="#cb12-36" tabindex="-1"></a>          dispImage(jacobian, title<span class="op">=</span><span class="st">'Jacobian'</span>)</span>
+<span id="cb12-37"><a href="#cb12-37" tabindex="-1"></a>          plt.set_cmap(<span class="st">'jet'</span>)</span>
+<span id="cb12-38"><a href="#cb12-38" tabindex="-1"></a>          <span class="co">#plt.colorbar()</span></span>
+<span id="cb12-39"><a href="#cb12-39" tabindex="-1"></a></span>
+<span id="cb12-40"><a href="#cb12-40" tabindex="-1"></a>      axs_combined[<span class="dv">2</span>].clear()</span>
+<span id="cb12-41"><a href="#cb12-41" tabindex="-1"></a>      plt.sca(axs_combined[<span class="dv">2</span>])</span>
+<span id="cb12-42"><a href="#cb12-42" tabindex="-1"></a>      diff_image <span class="op">=</span> images[current_image_index[<span class="dv">0</span>]] <span class="op">-</span> target</span>
+<span id="cb12-43"><a href="#cb12-43" tabindex="-1"></a>      dispImage(diff_image, title<span class="op">=</span><span class="st">'Difference Image'</span>)</span>
+<span id="cb12-44"><a href="#cb12-44" tabindex="-1"></a></span>
+<span id="cb12-45"><a href="#cb12-45" tabindex="-1"></a>      fig_combined.canvas.draw()</span>
+<span id="cb12-46"><a href="#cb12-46" tabindex="-1"></a></span>
+<span id="cb12-47"><a href="#cb12-47" tabindex="-1"></a></span>
+<span id="cb12-48"><a href="#cb12-48" tabindex="-1"></a>  <span class="co"># Create a single figure with 3 subplots</span></span>
+<span id="cb12-49"><a href="#cb12-49" tabindex="-1"></a>  fig_combined, axs_combined <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb12-50"><a href="#cb12-50" tabindex="-1"></a></span>
+<span id="cb12-51"><a href="#cb12-51" tabindex="-1"></a>  <span class="co"># Display initial images</span></span>
+<span id="cb12-52"><a href="#cb12-52" tabindex="-1"></a>  plt.sca(axs_combined[<span class="dv">0</span>])</span>
+<span id="cb12-53"><a href="#cb12-53" tabindex="-1"></a>  dispImage(images[current_image_index[<span class="dv">0</span>]], title<span class="op">=</span>image_titles[current_image_index[<span class="dv">0</span>]])</span>
+<span id="cb12-54"><a href="#cb12-54" tabindex="-1"></a></span>
+<span id="cb12-55"><a href="#cb12-55" tabindex="-1"></a>  plt.sca(axs_combined[<span class="dv">1</span>])</span>
+<span id="cb12-56"><a href="#cb12-56" tabindex="-1"></a>  dispDefField(def_field, spacing<span class="op">=</span>disp_spacing, plot_type<span class="op">=</span>disp_method_df)</span>
+<span id="cb12-57"><a href="#cb12-57" tabindex="-1"></a>  axs_combined[<span class="dv">1</span>].set_title(<span class="st">'Deformation Field'</span>)</span>
+<span id="cb12-58"><a href="#cb12-58" tabindex="-1"></a></span>
+<span id="cb12-59"><a href="#cb12-59" tabindex="-1"></a>  plt.sca(axs_combined[<span class="dv">2</span>])</span>
+<span id="cb12-60"><a href="#cb12-60" tabindex="-1"></a>  diff_image <span class="op">=</span> images[current_image_index[<span class="dv">0</span>]] <span class="op">-</span> target</span>
+<span id="cb12-61"><a href="#cb12-61" tabindex="-1"></a>  dispImage(diff_image, title<span class="op">=</span><span class="st">'Difference Image'</span>)</span>
+<span id="cb12-62"><a href="#cb12-62" tabindex="-1"></a></span>
+<span id="cb12-63"><a href="#cb12-63" tabindex="-1"></a>  <span class="co"># Add instructions for navigating images</span></span>
+<span id="cb12-64"><a href="#cb12-64" tabindex="-1"></a>  fig_combined.text(<span class="fl">0.5</span>, <span class="fl">0.02</span>, <span class="st">'Press &lt;- or -&gt; to navigate between source, target and warped images, Press Up or Down to switch between deformation field and Jacobian'</span>, ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'top'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, color<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb12-65"><a href="#cb12-65" tabindex="-1"></a></span>
+<span id="cb12-66"><a href="#cb12-66" tabindex="-1"></a>  <span class="co"># Connect the key event handler to the figure</span></span>
+<span id="cb12-67"><a href="#cb12-67" tabindex="-1"></a>  fig_combined.canvas.mpl_connect(<span class="st">'key_press_event'</span>, on_key)</span>
+<span id="cb12-68"><a href="#cb12-68" tabindex="-1"></a></span>
+<span id="cb12-69"><a href="#cb12-69" tabindex="-1"></a>  plt.tight_layout()</span>
+<span id="cb12-70"><a href="#cb12-70" tabindex="-1"></a>  plt.show()</span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -732,36 +756,36 @@ navigation and mode switching.</p>
 describe how we prepare images: <code>cine_MR_img_1.png</code>,
 <code>cine_MR_img_2.png</code>, and <code>cine_MR_img_3.png</code>.
 These images are available in <code>episodes/data</code>.</p>
-<div class="codewrapper sourceCode" id="cb12">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="im">import</span> skimage.io</span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>cine_MR_img_1 <span class="op">=</span> skimage.io.imread(<span class="st">'path/to/your/image/../cine_MR_1.png'</span>) </span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>cine_MR_img_2 <span class="op">=</span> skimage.io.imread(<span class="st">'path/to/your/image/../cine_MR_2.png'</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>cine_MR_img_3 <span class="op">=</span> skimage.io.imread(<span class="st">'path/to/your/image/../cine_MR_3.png'</span>)</span></code></pre>
-</div>
-<p>Converting all images into double data for standard orientation.</p>
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co"># ***************</span></span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="co"># ADD CODE HERE TO CONVERT ALL THE IMAGES TO DOUBLE DATA TYPE AND TO REORIENTATE THEM</span></span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co"># INTO 'STANDARD ORIENTATION'</span></span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>cine_MR_img_1 <span class="op">=</span> np.double(cine_MR_img_1)</span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>cine_MR_img_2 <span class="op">=</span> np.double(cine_MR_img_2)</span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>cine_MR_img_3 <span class="op">=</span> np.double(cine_MR_img_3)</span>
-<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a></span>
-<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a>cine_MR_img_1 <span class="op">=</span> np.flip(cine_MR_img_1.T, <span class="dv">1</span>)</span>
-<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a>cine_MR_img_2 <span class="op">=</span> np.flip(cine_MR_img_2.T, <span class="dv">1</span>)</span>
-<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a>cine_MR_img_3 <span class="op">=</span> np.flip(cine_MR_img_3.T, <span class="dv">1</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="im">import</span> skimage.io</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>cine_MR_img_1 <span class="op">=</span> skimage.io.imread(<span class="st">'path/to/your/image/../cine_MR_1.png'</span>) </span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>cine_MR_img_2 <span class="op">=</span> skimage.io.imread(<span class="st">'path/to/your/image/../cine_MR_2.png'</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>cine_MR_img_3 <span class="op">=</span> skimage.io.imread(<span class="st">'path/to/your/image/../cine_MR_3.png'</span>)</span></code></pre>
 </div>
-<div class="section level3">
-<h3 id="calling-the-function">Calling the function:<a class="anchor" aria-label="anchor" href="#calling-the-function"></a></h3>
+<p>Converting all images into double data for standard orientation.</p>
 <div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>demonsReg(cine_MR_img_1, cine_MR_img_2)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="co"># ***************</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="co"># ADD CODE HERE TO CONVERT ALL THE IMAGES TO DOUBLE DATA TYPE AND TO REORIENTATE THEM</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co"># INTO 'STANDARD ORIENTATION'</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>cine_MR_img_1 <span class="op">=</span> np.double(cine_MR_img_1)</span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>cine_MR_img_2 <span class="op">=</span> np.double(cine_MR_img_2)</span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>cine_MR_img_3 <span class="op">=</span> np.double(cine_MR_img_3)</span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>cine_MR_img_1 <span class="op">=</span> np.flip(cine_MR_img_1.T, <span class="dv">1</span>)</span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a>cine_MR_img_2 <span class="op">=</span> np.flip(cine_MR_img_2.T, <span class="dv">1</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a>cine_MR_img_3 <span class="op">=</span> np.flip(cine_MR_img_3.T, <span class="dv">1</span>)</span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="calling-the-function">Calling the function:<a class="anchor" aria-label="anchor" href="#calling-the-function"></a></h3>
+<div class="codewrapper sourceCode" id="cb15">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>demonsReg(cine_MR_img_1, cine_MR_img_2)</span></code></pre>
 </div>
 </div>
 <div class="section level3">
@@ -833,8 +857,8 @@ any links that you are not going to use.
   "url": "https://HealthBioscienceIDEAS.github.io/Medical-Image-Registration-Short-Course/instructor/excthreesteps.html",
   "identifier": "https://HealthBioscienceIDEAS.github.io/Medical-Image-Registration-Short-Course/instructor/excthreesteps.html",
   "dateCreated": "2024-05-13",
-  "dateModified": "2024-07-02",
-  "datePublished": "2024-07-02"
+  "dateModified": "2024-07-03",
+  "datePublished": "2024-07-03"
 }
 
   </script><script>
