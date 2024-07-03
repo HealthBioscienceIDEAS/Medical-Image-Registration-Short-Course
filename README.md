@@ -23,14 +23,15 @@ git clone git@github.com:HealthBioscienceIDEAS/Medical-Image-Registration-Short-
 ```
 
 ## Maintainers
+This project exists thanks to all mainteners. Sort list by last name (alphabetically). 
 * [Dave Cash](https://github.com/davecash75)
 * [Jamie Mcclelland](https://github.com/jamie-mcclelland)
 
 ## Contributors
-This project exists thanks to all the people who contribute.
+This project exists thanks to all the people who contribute. Sort list by last name (alphabetically). 
 * [Dave Cash](https://github.com/davecash75)
-* [Jamie Mcclelland](https://github.com/jamie-mcclelland)
 * [Milan Malfait](https://github.com/milanmlft)
+* [Jamie Mcclelland](https://github.com/jamie-mcclelland)
 * [Zakaria Senousy](https://github.com/zsenousy)
 * [Stephen Thompson](https://github.com/thompson318)
 * [Miguel Xochicale](https://github.com/mxochicale)
