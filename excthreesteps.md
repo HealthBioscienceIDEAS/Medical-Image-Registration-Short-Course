@@ -25,6 +25,20 @@ Open terminal, activate `mirVE` environment and run python
 conda activate mirVE
 python
 ```
+:::::::::::::::::::::::::::::::::::::: spoiler
+
+## How to avoid `ModuleNotFoundError: No module named VARIABLE`?
+
+You need to export relative imports, using the following notation for either linux or windows (might be similar to mac)
+
+```bash
+#WINDOWS
+set PYTHONPATH=%PYTHONPATH%;C:\path\to\your\project\
+#LINUX
+export PYTHONPATH="${PYTHONPATH}:/path/to/your/project/"
+```
+
+::::::::::::::::::::::::::::::::::::::
 
 This document explains the implementation of a 2D image registration algorithm using the Demons algorithm. The implementation includes visualisation updates within a single window containing three panes for easier comparison of source, target, and warped images.
 
