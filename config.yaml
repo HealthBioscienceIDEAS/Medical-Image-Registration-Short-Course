@@ -59,23 +59,22 @@ contact: 'team@carpentries.org'
 # - another-learner.md
 
 # Order of episodes in your lesson
-episodes: 
+episodes:
 #- introduction.Rmd
 - itksnap.Rmd
 - excthreesteps.Rmd
 
 # Information for Learners
-learners: 
+learners:
 
 # Information for Instructors
-instructors: 
+instructors:
 
 # Learner Profiles
-profiles: 
+profiles:
 
 # Customisation ---------------------------------------------
 #
 # This space below is where custom yaml items (e.g. pinning
 # sandpaper and varnish versions) should live
 varnish: 'HealthBioscienceIDEAS/varnish@IDEAS'
-sandpaper: 'HealthBioscienceIDEAS/sandpaper@IDEAS'
