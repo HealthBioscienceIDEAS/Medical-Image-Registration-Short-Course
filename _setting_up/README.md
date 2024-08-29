@@ -1,184 +1,114 @@
-# Installing R, Carpentries packages, and previewing Sandpaper in multi OS (Linux, Windows and Mac)
+# How to setup local previews of the Workbench website
 
-## Steps in Ubuntu 22.04 x64
-1. Create new repo: https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course
-2. Clone repo `git clone https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course`
-3. install R (if you haven't done already) [:link:](https://cran.r-project.org/bin/linux/ubuntu/) 
-```
-sudo apt-get install r-cran-xml
-sudo apt-get install libxml2-dev
-sudo apt install libgit2-dev
-sudo apt install r-cran-curl
+## Installing requirements
+### Windows/Mac
+1. If R is not already installed, install R using the following: 
+   * [Windows](https://cran.r-project.org/bin/windows/base/) and use the default settings during the installation of **RGUi 4.x.x**
+   * [Mac](https://cran.r-project.org/bin/macosx/)
+1. **Optional, but recommended** Download [RStudio Desktop](https://posit.co/download/rstudio-desktop/)
+1. From RGui Console or RStudio, enter the following command: 
+   ```r
+   options(repos = c(
+   carpentries = "https://carpentries.r-universe.dev/",
+   CRAN = "https://cran.rstudio.com/"
+   ))
+   install.packages(c("remotes"), dep =TRUE)
+   ```
+1. **For Mac only** Before installing Varnish and Sandpaper, there are some 
+additional packages that will need to be installed. The easiest way is via 
+[Homebrew](https://brew.sh/):
+   ```bash
+   brew install freetype fribidi harfbuzz libpng libgit2
+   ```
+1. Enter the following command to install the local version of varnish. This
+version is needed to incorporate the IDEAS identity for the site. 
+   ```r
+   remotes::install_github("HealthBioscienceIDEAS/varnish", dependencies = TRUE)`
+   ```
+1. Install the sandpaper package. 
+   ```r
+   install.packages(c("sandpaper", "pegboard", "tinkr"),
+   repos = c("https://carpentries.r-universe.dev/", getOption("repos")))
+   ```
+You can find further instructions on the
+[Carpentries Workbench documentation](https://carpentries.github.io/sandpaper-docs/index.html)
+1. Go to the section on [previewing the website](#previewing-episodes)
 
-```
-4. Open R and run the following to install dependencies
-```
-options(repos = c(
-  carpentries = "https://carpentries.r-universe.dev/", 
-  CRAN = "https://cran.rstudio.com/"
-))
-install.packages(c("remotes"), dep =TRUE)
-```
+### Linux
+This installation was performed using Ubuntu 22.04 x64
 
-5. In R, run 
-```
-remotes::install_github("HealthBioscienceIDEAS/sandpaper", dependencies = TRUE)
-# this one is taking some 20mins the fist time as it seems is building various packages
-# Terminal logs
-Downloading GitHub repo HealthBioscienceIDEAS/sandpaper@HEAD
-These packages have more recent versions available.
-It is recommended to update all of them.
-Which would you like to update?
-
-1: All                                      
-2: CRAN packages only                       
-3: None                                     
-4: pegboard (0.7.5 -> a32a7836d...) [GitHub]
-5: varnish  (1.0.2 -> 56d594d27...) [GitHub]
-6: curl     (4.3.2 -> 5.2.1       ) [CRAN]  
-7: httr     (1.4.2 -> 1.4.7       ) [CRAN]  
-8: gh       (1.3.0 -> 1.4.1       ) [CRAN]  
-9: covr     (3.5.1 -> 3.6.4       ) [CRAN]  
-
-Enter one or more numbers, or an empty line to skip updates: 1
-
-The downloaded source packages are in
-	‘/tmp/Rtmpn94NAu/downloaded_packages’
-Downloading GitHub repo carpentries/pegboard@HEAD
-These packages have more recent versions available.
-It is recommended to update all of them.
-Which would you like to update?
-
-1: All                                        
-2: CRAN packages only                         
-3: None                                       
-4: tinkr (0.2.0.9000 -> be564d524...) [GitHub]
-
-Enter one or more numbers, or an empty line to skip updates: 1
-
-── R CMD build ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-✔  checking for file ‘/tmp/Rtmpn94NAu/remotes50ddb31b7ca85/HealthBioscienceIDEAS-sandpaper-fb14e02/DESCRIPTION’ ...
-─  preparing ‘sandpaper’:
-✔  checking DESCRIPTION meta-information ...
-─  checking for LF line-endings in source and make files and shell scripts (420ms)
-─  checking for empty or unneeded directories
-   Omitted ‘LazyData’ from DESCRIPTION
-─  building ‘sandpaper_0.16.4.tar.gz’
+1. install R (if you haven't done already) from  [CRAN](https://cran.r-project.org/bin/linux/ubuntu/) 
+   ```bash
+   sudo apt-get install r-cran-xml
+   sudo apt-get install libxml2-dev
+   sudo apt install libgit2-dev
+   sudo apt install r-cran-curl
+   ```
+1. Open R and run the following to install dependencies
+   ```r
+   options(repos = c(
+     carpentries = "https://carpentries.r-universe.dev/", 
+     CRAN = "https://cran.rstudio.com/"
+   ))
+   install.packages(c("remotes"), dep =TRUE)
+   ```
+1. In R, run 
+   ```
+   remotes::install_github("HealthBioscienceIDEAS/varnish", dependencies = TRUE)
+   # this one takes a long time, about 20mins for the the fist time 
+   # due to dependencies
+   # You may see something similar to below in the output of the terminal
+   # (this has been truncated - a fair amount of additional text should
+   # follow showing progress of the installation)
    
-Installing package into ‘/home/mxochicale/R/x86_64-pc-linux-gnu-library/4.4’
-(as ‘lib’ is unspecified)
-* installing *source* package ‘sandpaper’ ...
-** using staged installation
-** R
-** inst
-** byte-compile and prepare package for lazy loading
-** help
-*** installing help indices
-*** copying figures
-** building package indices
-** installing vignettes
-** testing if installed package can be loaded from temporary location
-** testing if installed package can be loaded from final location
-** testing if installed package keeps a record of temporary installation path
-* DONE (sandpaper)
-Warning message:
-In i.p(...) : installation of package ‘curl’ had non-zero exit status
+   Downloading GitHub repo HealthBioscienceIDEAS/varnish@HEAD
+   These packages have more recent versions available.
+   It is recommended to update all of them.
+   Which would you like to update?
 
-```
+   1: All                                      
+   2: CRAN packages only                       
+   3: None
+   ...(individual packages)
 
-6. In R, run 
-```
-sandpaper::create_lesson("~/Desktop/medical-registration/Medical-Image-Registration-Short-Course")
-## LOGS
+   Enter one or more numbers, or an empty line to skip updates: 1
+   ...(truncated)
+   ```
 
-> sandpaper::create_lesson("~/Desktop/medical-registration/Medical-Image-Registration-Short-Course")
-No personal access token (PAT) available.gistration/Medical-Image-Registration-Short-Course...
-Obtain a PAT from here:
-https://github.com/settings/tokens
-For more on what to do with the PAT, see ?gh_whoami.
-ℹ No schedule set, using Rmd files in episodes/ directory.
-→ To remove this message, define your schedule in config.yaml or use `set_episodes()` to generate it.
-───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-ℹ To save this configuration, use
-
-set_episodes(path = path, order = ep, write = TRUE)
-• Edit '/home/mxochicale/Desktop/medical-registration/Medical-Image-Registration-Short-Course/episodes/introduction.Rmd'
-✔ First episode created in /home/mxochicale/Desktop/medical-registration/Medical-Image-Registration-Short-Course/episodes/introduction.Rmd
-ℹ Workflows up-to-date!
-✔ Lesson successfully created in ~/Desktop/medical-registration/Medical-Image-Registration-Short-Course
-✔ Setting active project to '/home/mxochicale/Desktop/medical-registration/Medical-Image-Registration-Short-Course'
-✔ Changing working directory to '/home/mxochicale/Desktop/medical-registration/Medical-Image-Registration-Short-Course/'
-~/Desktop/medical-registration/Medical-Image-Registration-Short-Course
-> 
-```
-
-7. Setting up config file in sandpaper template:
-```
-carpentry: 'IDEAS'
-title: ''Medical-Image-Registration-Short-Course'
-created: '2024-05-13'
-source: 'https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course'
-varnish: 'HealthBioscienceIDEAS/varnish@IDEAS'
-sandpaper: 'HealthBioscienceIDEAS/sandpaper@IDEAS'
-```
-
-8. Set up GitHub Pages 
-* Go go [pages](https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course/settings/pages) and select gh-pages branch with `/root` and click save
-* Pass CI [actions](https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course/actions/runs/9064118161)
-* :tada: you have created: https://healthbioscienceideas.github.io/Medical-Image-Registration-Short-Course/
-
-
-## Steps on Windows
-
-1. Create new repo: https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course
-
-2. Clone repo `git clone https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course`
-
-3. Installing R using the following: https://cran.r-project.org/bin/windows/base/
-
-4. Using the default settings during the installation of **RGUi 4.x.x**
-
-5. From RGui Console, enter the following command: 
-```
-options(repos = c(
-carpentries = "https://carpentries.r-universe.dev/",
-CRAN = "https://cran.rstudio.com/"
-))
-install.packages(c("remotes"), dep =TRUE)
-```
-
-6. Enter the following command: 
-`remotes::install_github("HealthBioscienceIDEAS/sandpaper", dependencies = TRUE)
-`
-7. Change path from RGUi to the GitHub folder of the medical image registration course. This is done from the Menu list by picking 'File' then 'Change Dir..'
-
-8. Run the following command to start sandpaper: 
-`sandpaper::build_lesson()
-`
-9. You may notice some package not installed called _**Pandoc**_ after running the sandpaper command. If so, install Pandoc then run _step 8_ again.
-Pandoc installation: https://pandoc.org/installing.html
-
-## Steps in MAC
-Packages via homebrew: freetype, fribidi, harfbuzz, libpng, git2. 
-
-# Previewing eposides in any OS platform
-## In your local machine
+## Previewing episodes
+### In your local machine
 1. Using your terminal clone repo
-```
-git clone git@github.com:HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course.git
-```
+   ```bash
+   git clone git@github.com:HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course.git 
+   ```
+1. If you are working on a specific branch, checkout the branch locally:
+   ```bash
+   git checkout feature-branch-name
+   ``` 
+1. In RStudio, open the medical imaging regsitration course repository by going to
+File->Open Project and then selecting the path where you cloned the repository.
+1. Run the following command to start sandpaper: 
+   ```r
+   sandpaper::build_lesson()
+   ```
+1. You may notice errors that the package _**Pandoc**_  was not installed
+after running the sandpaper command. If so, install Pandoc then try building 
+the lesson again. If successful, R which will launch your internet browser with the episode
 
-2. Checkout `feature-branch-name`.
-```
-git checkout feature-branch-name
-``` 
+   Pandoc installation: https://pandoc.org/installing.html
+1. An alternative approach is to use the `serve` function
+   ```r
+   sandpaper::serve()
+   ```
+   Not only will this build the lesson and put the web page in RStudio's viewer,
+   but it will also update live when you save any changes.
 
-3. Run `sandpaper::build_lesson()` in R which will launch your internet browser with the episode
-```
-R
-sandpaper::build_lesson()
-```
-## In GitHub
+### On GitHub
 You can also preview your episodes once you have a Pull-Request.
-1. Select branch called md-outputs-<PR-number> for each PR where it stores the rendered markdown files. This is controlled by the [pr-receive](https://carpentries.github.io/sandpaper-docs/pull-request.html#reviewing-a-pull-request) workflow. 
+
+Select branch called md-outputs-<PR-number> for each PR where it stores the 
+rendered markdown files. This is controlled by the [pr-receive](https://carpentries.github.io/sandpaper-docs/pull-request.html#reviewing-a-pull-request) workflow. 
+
+Note this will only preview the markdown, it will not look like the final
+rendered website.
 
