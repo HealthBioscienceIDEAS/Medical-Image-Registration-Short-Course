@@ -27,8 +27,11 @@ version is needed to incorporate the IDEAS identity for the site.
    ```
 1. Install the sandpaper package. 
    ```r
-   install.packages(c("sandpaper", "pegboard", "tinkr"),
-   repos = c("https://carpentries.r-universe.dev/", getOption("repos")))
+   options(repos = c(
+     carpentries = "https://carpentries.r-universe.dev/", 
+     CRAN = "https://cran.rstudio.com/"
+   ))
+   install.packages("sandpaper", dep = TRUE)
    ```
 You can find further instructions on the
 [Carpentries Workbench documentation](https://carpentries.github.io/sandpaper-docs/index.html)
