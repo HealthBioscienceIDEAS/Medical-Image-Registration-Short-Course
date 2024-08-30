@@ -42,14 +42,7 @@ This installation was performed using Ubuntu 22.04 x64
    ```
 1. Open R and run the following to install dependencies
    ```r
-   options(repos = c(
-     carpentries = "https://carpentries.r-universe.dev/", 
-     CRAN = "https://cran.rstudio.com/"
-   ))
-   install.packages(c("remotes"), dep =TRUE)
-   ```
-1. In R, run 
-   ```
+   install.packages("remotes")
    remotes::install_github("HealthBioscienceIDEAS/varnish", dependencies = TRUE)
    # this one takes a long time, about 20mins for the the fist time 
    # due to dependencies
@@ -70,7 +63,14 @@ This installation was performed using Ubuntu 22.04 x64
    Enter one or more numbers, or an empty line to skip updates: 1
    ...(truncated)
    ```
-
+1. Install the sandpaper package. 
+   ```r
+   options(repos = c(
+     carpentries = "https://carpentries.r-universe.dev/", 
+     CRAN = "https://cran.rstudio.com/"
+   ))
+   install.packages("sandpaper", dep = TRUE)
+   ```
 ## Previewing episodes
 ### In your local machine
 1. Using your terminal clone repo
