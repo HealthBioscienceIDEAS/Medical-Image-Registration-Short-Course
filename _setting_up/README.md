@@ -6,14 +6,6 @@
    * [Windows](https://cran.r-project.org/bin/windows/base/) and use the default settings during the installation of **RGUi 4.x.x**
    * [Mac](https://cran.r-project.org/bin/macosx/)
 1. **Optional, but recommended** Download [RStudio Desktop](https://posit.co/download/rstudio-desktop/)
-1. From RGui Console or RStudio, enter the following command: 
-   ```r
-   options(repos = c(
-   carpentries = "https://carpentries.r-universe.dev/",
-   CRAN = "https://cran.rstudio.com/"
-   ))
-   install.packages(c("remotes"), dep =TRUE)
-   ```
 1. **For Mac only** Before installing Varnish and Sandpaper, there are some 
 additional packages that will need to be installed. The easiest way is via 
 [Homebrew](https://brew.sh/):
@@ -23,6 +15,7 @@ additional packages that will need to be installed. The easiest way is via
 1. Enter the following command to install the local version of varnish. This
 version is needed to incorporate the IDEAS identity for the site. 
    ```r
+   install.packages("remotes")
    remotes::install_github("HealthBioscienceIDEAS/varnish", dependencies = TRUE)`
    ```
 1. Install the sandpaper package. 
