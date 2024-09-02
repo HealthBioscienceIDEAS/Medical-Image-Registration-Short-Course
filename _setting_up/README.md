@@ -12,12 +12,6 @@ additional packages that will need to be installed. The easiest way is via
    ```bash
    brew install freetype fribidi harfbuzz libpng libgit2
    ```
-1. Enter the following command to install the local version of varnish. This
-version is needed to incorporate the IDEAS identity for the site. 
-   ```r
-   install.packages("remotes")
-   remotes::install_github("HealthBioscienceIDEAS/varnish", dependencies = TRUE)`
-   ```
 1. Install the sandpaper package. 
    ```r
    options(repos = c(
@@ -28,6 +22,12 @@ version is needed to incorporate the IDEAS identity for the site.
    ```
 You can find further instructions on the
 [Carpentries Workbench documentation](https://carpentries.github.io/sandpaper-docs/index.html)
+1. Enter the following command to install the local version of varnish. This
+version is needed to incorporate the IDEAS identity for the site. 
+   ```r
+   install.packages("remotes")
+   remotes::install_github("HealthBioscienceIDEAS/varnish", dependencies = TRUE)`
+   ```
 1. Go to the section on [previewing the website](#previewing-episodes)
 
 ### Linux
@@ -40,7 +40,15 @@ This installation was performed using Ubuntu 22.04 x64
    sudo apt install libgit2-dev
    sudo apt install r-cran-curl
    ```
-1. Open R and run the following to install dependencies
+1. OPen R and install the sandpaper package. 
+   ```r
+   options(repos = c(
+     carpentries = "https://carpentries.r-universe.dev/", 
+     CRAN = "https://cran.rstudio.com/"
+   ))
+   install.packages("sandpaper", dep = TRUE)
+   ```
+1. Install the local IDEAS fork of the varnish repository
    ```r
    install.packages("remotes")
    remotes::install_github("HealthBioscienceIDEAS/varnish", dependencies = TRUE)
@@ -62,14 +70,6 @@ This installation was performed using Ubuntu 22.04 x64
 
    Enter one or more numbers, or an empty line to skip updates: 1
    ...(truncated)
-   ```
-1. Install the sandpaper package. 
-   ```r
-   options(repos = c(
-     carpentries = "https://carpentries.r-universe.dev/", 
-     CRAN = "https://cran.rstudio.com/"
-   ))
-   install.packages("sandpaper", dep = TRUE)
    ```
 ## Previewing episodes
 ### In your local machine
