@@ -20,7 +20,7 @@ additional packages that will need to be installed. The easiest way is via
    ))
    install.packages("sandpaper", dep = TRUE)
    ```
-You can find further instructions on the
+   You can find further instructions on the
 [Carpentries Workbench documentation](https://carpentries.github.io/sandpaper-docs/index.html)
 1. Enter the following command to install the local version of varnish. This
 version is needed to incorporate the IDEAS identity for the site. 
