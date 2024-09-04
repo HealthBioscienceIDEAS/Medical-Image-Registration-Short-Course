@@ -85,20 +85,24 @@ This installation was performed using Ubuntu 22.04 x64
 File->Open Project and then selecting the path where you cloned the repository.
 You may need to click on the R project file that is located in the repository directory.
 1. Run the following command to start sandpaper: 
+    ```r
+   sandpaper::serve()
+   ```
+   This will build the site and put it in the `Viewer` tab in RStudio. You can look at it in your
+   browser by clicking on the "Open in New Window" icon.
+   
+   If you notice errors that the package _**Pandoc**_  was not installed, try installing Pandoc and
+   then try building the lesson again. If successful, R which will launch your internet browser with the episode.
+   As you make edits and save the document you are working on, the site will be rebuilt.
+
+   **Alternative to sandpaper::serve**
+   
+   The function `build_lesson` is very similar to 
    ```r
    sandpaper::build_lesson()
    ```
-1. You may notice errors that the package _**Pandoc**_  was not installed
-after running the sandpaper command. If so, install Pandoc then try building 
-the lesson again. If successful, R which will launch your internet browser with the episode
-
-   Pandoc installation: https://pandoc.org/installing.html
-1. An alternative approach is to use the `serve` function
-   ```r
-   sandpaper::serve()
-   ```
-   Not only will this build the lesson and put the web page in RStudio's viewer,
-   but it will also update live when you save any changes.
+   except that it doesn't automatically build upon each save. If the page does not appear automatically in
+   your browser, you may need to open it manually. 
 
 ### On GitHub
 You can also preview your episodes once you have a Pull-Request.
