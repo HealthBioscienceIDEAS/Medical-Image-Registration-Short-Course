@@ -83,6 +83,7 @@ This installation was performed using Ubuntu 22.04 x64
    ``` 
 1. In RStudio, open the medical imaging regsitration course repository by going to
 File->Open Project and then selecting the path where you cloned the repository.
+You may need to click on the R project file that is located in the repository directory.
 1. Run the following command to start sandpaper: 
    ```r
    sandpaper::build_lesson()
