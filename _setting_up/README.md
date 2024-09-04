@@ -12,7 +12,7 @@ additional packages that will need to be installed. The easiest way is via
    ```bash
    brew install freetype fribidi harfbuzz libpng libgit2
    ```
-1. Install the sandpaper package. 
+1. Open RStudio and run the following lines of code to install the sandpaper package. 
    ```r
    options(repos = c(
      carpentries = "https://carpentries.r-universe.dev/", 
@@ -26,7 +26,7 @@ additional packages that will need to be installed. The easiest way is via
 version is needed to incorporate the IDEAS identity for the site. 
    ```r
    install.packages("remotes")
-   remotes::install_github("HealthBioscienceIDEAS/varnish", dependencies = TRUE)`
+   remotes::install_github("HealthBioscienceIDEAS/varnish", dependencies = TRUE)
    ```
 1. Go to the section on [previewing the website](#previewing-episodes)
 
