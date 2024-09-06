@@ -14,11 +14,11 @@ exercises: 2
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Describe the structure of medical imaging data and popular formats (DICOM and NifTi)
-- Discover and display medical imaging data in ITK-SNAP
-- Demonstrate how to convert between different medical image formats
-- Inspecting the NifTi header with `nibabel`
-- Manipulate image data (cropping images) with `nibabel` and learn how it is displayed on screen with ITK-SNAP
+- Describe the structure of medical imaging data and popular formats (DICOM and NifTi).
+- Discover and display medical imaging data in ITK-SNAP.
+- Demonstrate how to convert between different medical image formats.
+- Inspecting the NifTi header with `nibabel`.
+- Manipulate image data (cropping images) with `nibabel` and learn how it is displayed on screen with ITK-SNAP.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -96,52 +96,43 @@ Refer to [`Summary and Setup`](https://healthbioscienceideas.github.io/Medical-I
    committee (both Medical Physics and Computer Science have 
    their own local ethics committee) or from 
    UCL central ethics if your department does not have one.
-3. Although there are many formats that medical imaging 
-   data can come in, we are going to focus on DICOM and NifTi 
-   as they are two of the most common formats.
-   Most data that comes from a hospital will be in 
-   DICOM format, whereas NifTi is a very popular format 
-   in the medical image analysis community.
 
 ::::::::::::::::::::::::::::::::::::::
+Although there are many formats that medical imaging data can come in, we are going to focus on DICOM and NifTi as they are two of the most common formats. Most data that comes from a hospital will be in DICOM format, whereas NifTi is a very popular format in the medical image analysis community. The files from the TCIA are in DICOM format.
 
 ### DICOM format
-Digital Imaging and Communications in Medicine (DICOM) is a technical standard for the digital storage and transmission of medical images and related information.
-While DICOM images typically have a separate file for every slice, more modern DICOM images can come with all slices in a single file.
+Digital Imaging and Communications in Medicine (DICOM) is a technical standard for digitally storing and transmitting medical images and related information.
+While DICOM images typically have a separate file for every slice.
+If you look at the data `CT-PET-VI-02/CT_for_PET`, you will see that there are 175 individual files corresponding to 175 slices in the volume. More modern DICOM images can come with all slices in a single file.
 
-If you look at the data `CT-PET-VI-02/CT_for_PET` you will see there are 175 individual files corresponding to 175 slices in the volume. 
-In addition to the image data for each slice, each file contains a header which can contain an extensive amount of extra information relating to the scan and subject. 
-
-In a clinical setting this will include patient identifiable information such as their name, address, and other relevant details. 
+In addition to the image data for each slice, each file contains a header which can include extensive information relating to the scan and subject. 
+In a clinical setting, this will include identifiable information such as the patient's name, address, and other relevant details.
 Such information should be removed before the data is transferred from the clinical network for use in research. 
-If you ever discover patient identifiable information in the header of data you are using you should immediately alert your supervisor, manager or collaborator
+If you ever discover patient identifiable information in the header of the data you are using, you should immediately alert your supervisor, manager or collaborator.
 
-The majority of the information in the DICOM header is not directly useful for typical image processing and analysis tasks. 
-Furthermore, there are complicated ‘links’ (provided by unique identifiers, UIDs) between the DICOM headers of different files belonging to the same scan or subject. Together with DICOM routinely storing each slice as a separate files, it makes processing an entire imaging volume stored as DICOM format rather cumbersome, and the extra housekeeping required could lead to a greater chance of an error being made.
+Most of the information in the DICOM header is not directly useful for typical image processing and analysis tasks. 
+Furthermore, there are complicated ‘links’ (provided by unique identifiers, UIDs) between the DICOM headers of different files belonging to the same scan or subject. Together with DICOM routinely storing each slice as a separate file, it makes processing an entire imaging volume stored in DICOM format rather cumbersome, and the extra housekeeping required could lead to a greater chance of an error being made.
 Therefore, a common first step of any image processing pipeline is to convert the DICOM image to a more suitable format such as `NifTi`. 
-Generally, most conversions go from DICOM to NIfTI. There are scenarios when you might want to convert from NIfTI **back** to DICOM, for example, if you need to import them into a clinical system that only works with DICOM.
-
+Generally, most conversions go from DICOM to NIfTI. There are scenarios when you might want to convert from NIfTI back to DICOM, for example, if you need to import them into a clinical system that only works with DICOM.
 
 
 :::::::::::::::::::::::::::::::::::::: spoiler
 
 ### Warning on converting images back to DICOM 
-Converting images back to DICOM such that 
-they are correctly interpreted by a clinical system 
-can be very tricky and requires a good understanding 
-of the DICOM standard. 
-More information on the DICOM standard 
-can be found here: https://www.dicomstandard.org
+Converting images back to DICOM such that they are correctly interpreted by a clinical system can be very tricky and requires a good understanding of the DICOM standard. 
+More information on the DICOM standard can be found here: https://www.dicomstandard.org.
 
 ::::::::::::::::::::::::::::::::::::::
 
 ### NifTi format
 The Neuroimaging Informatics Technology Initiative (NIfTI) image format are usually stored as a single file containing the imaging data and header information.
 While the NifTI file format was originally developed by the neuroimaging community it is not specific to neuroimaging and is now widely used for many different medical imaging applications outside of the brain.
+The NifTI header contains much less information than DICOM, but does include all the key information required for interpreting, manipulating and processing the image.
 During these exercises you will learn about some of the key information stored in the NifTi header.
 
-NifTI files can also store the header and image data in separate files but this is not very common. 
-For more information, please see Anderson Winkler's blog on the [NIfTI-1]( https://brainder.org/2012/09/23/the-nifti-file-format/) and[NIfTI-2]( https://brainder.org/2015/04/03/the-nifti-2-file-format/) formats.
+There are actually two formats for NifTI files, NifTI-1 and NifTI-2, but these are very similar. 
+For more information, please see Anderson Winkler's blog on the [NIfTI-1]( https://brainder.org/2012/09/23/the-nifti-file-format/) and [NIfTI-2] ( https://brainder.org/2015/04/03/the-nifti-2-file-format/) formats.
+
 
 ## Visualisation of volumetric data with ITK-SNAP
 
@@ -159,18 +150,15 @@ ITK-SNAP application shows three orthogonal slices and a fourth window for three
 
 
 ## Viewing and understanding DICOM data
-We are using CT Lung DICOM dataset from `CT-PET-VI-02/CT_for_PET`, containing 175 dicom items and totalling 92.4 MB.
+We are one set of CT images from the TCIA dataset, in this case `CT-PET-VI-02`.
 
 ### Opening and Viewing DICOM images
-* **Open ITK-SNAP application**
-* **Load inhale scan using file browser**
-	- Open the itk-snap application. If you have used it before it will display recent images when you open it, and you can select one of these to open it. 
-
-	If the image you want to open is not listed under recent images, you can open it either by clicking the 'Open Image...' button at the bottom right of the window, or File->Open Main Image. 
-	When you do this a small window opens where you can enter the path of the file you want to open, or click Browse in your file explorer (exFinder in Mac and nautilus in Ubuntu) to open a file browser (for instance, "CT-PET-VI-02/CT_for_PET").
-	Do this and select the first slice from the Inhale_BH_CT folder, which is called 1-001.dcm. The set the File Format to DICOM Image Series and then click `Next`.
-	You will then be asked to Select DICOM series to open, but as this folder only includes one series you can just click `Next`.
-	Click `Finish`
+* Open the ITK-SNAP application. 
+  * If you have used it before, it will display recent images which you can select to open.
+* Load inhale scan `CT-PET-VI-02/inhale_BH_CT/`.
+  * If the image you want to open is not listed under recent images, you can open it either by clicking the 'Open Image...' button at the bottom right of the window or by clicking on File in the top ribbon then Open Main Image. When you do this a small window opens where you can enter the path of the file you want to open or click Browse to search your file explorer.
+  * Select the first slice from the inhale_BH_CT folder, which is called 1-001.dcm. Leave the default file format and click `Next`. You will then be asked to Select DICOM series to open, but as this folder only includes one series you can just click `Next`.
+  * Check the image summary and click `Finish`.
 
 ![Figure. ITK-SNAP opening image file](fig/itk-snap-opening-dicoms.svg)
 
@@ -178,9 +166,9 @@ We are using CT Lung DICOM dataset from `CT-PET-VI-02/CT_for_PET`, containing 17
 
 
 ### Navigating DICOM images
-* Navigate around image, see intensity value, and adjust intensity window
-* To navigate around the image, i.e. change the displayed slices, you can left clicking in the displayed slices, using the mouse wheel, or the slider next to the displayed slices.
-* To zoom, you can use the right mouse button (or control + button 1), and pan using the centre mouse button (or alt + button 1).
+* Navigate around the image and check the intensity value.
+* To navigate around the image, you can left click and drag. To move through the displayed slices, you can use the mouse wheel (or two fingers on touchpad) or use the slider next to the displayed slice.
+* To zoom, you can use the right click and drag. You can move the entire image by using the mouse centre button or alt + left click and drag.
 
 ![Figure. ITK-SNAP cursor inspector](fig/itk-snap-cursor-inspector.png)
 

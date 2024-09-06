@@ -2,7 +2,7 @@
 title: Setup
 ---
 
-
+<!--
 ## Github setup
 1. You might have already a [GitHub](https://github.com), otherwise please [create one](https://github.com/join)
 2. Generate your SSH keys as suggested [here](https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
@@ -10,55 +10,54 @@ title: Setup
 ```
 git clone git@github.com:HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course.git
 ```
+-->
 
 ## Dataset
-
 <!--
 FIXME: place any data you want learners to use in `episodes/data` and then use
        a relative link ( [data zip file](data/lesson-data.zip) ) to provide a
        link to it, replacing the example.com link.
 -->
-Download the [data zip file](https://example.com/FIXME) and unzip it to your Desktop
+Download the [data zip file](https://example.com/FIXME) and unzip it to your Desktop.
+
+Description of the zip file: TCIA and other data too.
 
 ### CT-vs-PET-Ventilation-Imaging 
 CT Ventilation as a Functional Imaging Modality for Lung Cancer Radiotherapy from [TCIA](https://www.cancerimagingarchive.net/collection/ct-vs-pet-ventilation-imaging/).
-We recommend to focus on exhale/inhale breath hold CT (BHCT) Dicoms. 
-Bare in mind that:
-* The BHCT scans for CT-PET-VI-02 & CT-PET-VI-03 show very little motion between inhale and exhale
-* The BHCT scans for CT-PET-VI-05 have a different number of slices between the inhale and exhale
+We recommend focusing on exhale/inhale breath-hold CT (BHCT) DICOMs. 
+Bear in mind that:
+
+* The BHCT scans for CT-PET-VI-02 and CT-PET-VI-03 show very little motion between inhale and exhale.
+* The BHCT scans for CT-PET-VI-05 have a different number of slices between inhale and exhale.
 
 #### Extracting and renaming data paths
 Original data directory paths for this work were renamed for easy interpretability as follows:   
-* `5.000000-Thorax Insp 2.0 B*` renamed as `inhale_BH_CT`   
-* `7.000000-Thorax Exp 2.0 B*` renamed as `exhale_BH_CT`   
-* `3.000000-CT Lung 3.0 B*` renamed as `CT_for_PET`   
-* `4.000000-Galligas Lung-0*` renamed as `PET`
+
+* `5.000000-Thorax Insp 2.0 B` renamed as `inhale_BH_CT`   
+* `7.000000-Thorax Exp 2.0 B` renamed as `exhale_BH_CT`   
+* `3.000000-CT Lung 3.0 B` renamed as `CT_for_PET`   
+* `4.000000-Galligas Lung-0` renamed as `PET`
 
 See how the original data paths and renamed paths look like
 ```bash
 #Original directory paths
 /CT-PET-VI-02$ tree -d 
-.
-├── 1000.000000-PET SUV Factors-26496 [1 item, with size 42.1 kB]
-├── 3.000000-CT Lung  3.0  B31f-61322  [175 items, totalling 92.4 MB]
-├── 4.000000-Galligas Lung-03537 [159 items, totalling 51.5 MB]
-├── 5.000000-Thorax Insp  2.0  B70f-29873 [167 items, totalling 88.1 MB]
-├── 7.000000-Thorax Exp  2.0  B70f-73355 [167 items, totalling 88.1 MB]
-└── 8.000000-RespLow  2.0  B30s  80  Ex - 100  In-44317 [810 items, totalling 426.9 MB]
+└── 05-28-1996-NA-RTRTRespLowBreathRateRNS Adult-05441
+  ├── 1000.000000-PET SUV Factors-26496 [1 item, with size 42.1 kB]
+  ├── 3.000000-CT Lung  3.0  B31f-61322  [175 items, totalling 92.4 MB]
+  ├── 4.000000-Galligas Lung-03537 [159 items, totalling 51.5 MB]
+  ├── 5.000000-Thorax Insp  2.0  B70f-29873 [167 items, totalling 88.1 MB]
+  ├── 7.000000-Thorax Exp  2.0  B70f-73355 [167 items, totalling 88.1 MB]
+  └── 8.000000-RespLow  2.0  B30s  80  Ex - 100  In-44317 [810 items, totalling 426.9 MB]
 #Renamed directory paths
-.
-├── CT-PET-VI-02
-│   ├── CT_for_PET
-│   ├── exhale_BH_CT
-│   ├── inhale_BH_CT
-│   └── PET
-
-
-
+└── CT-PET-VI-02
+    ├── CT_for_PET
+    ├── PET
+    ├── inhale_BH_CT
+    └── exhale_BH_CT
 
 #Original directory paths
 /CT-PET-VI-03$ tree -d
-.
 ├── 06-25-1996-RTRTRespLowBreathRateRNS Adult-43080
 │   ├── 1000.000000-PET SUV Factors-06580
 │   ├── 3.000000-CT Lung  3.0  B31f-08354
@@ -67,14 +66,12 @@ See how the original data paths and renamed paths look like
     ├── 5.000000-Thorax Insp  2.0  B70f-42000
     ├── 7.000000-Thorax Exp  2.0  B70f-45310
     └── 8.000000-RespLow  2.0  B30s  80  Ex - 100  In-54790
-#Renamed directory paths for `06-25-1996-RTRTRespLowBreathRateRNS Adult-43080`
-├── CT-PET-VI-03
-│   ├── CT_for_PET
-│   └── PET
-
-
-
-
+#Renamed directory paths
+└── CT-PET-VI-03
+    ├── CT_for_PET
+    ├── PET
+    ├── inhale_BH_CT
+    └── exhale_BH_CT
 
 #Original directory paths
 /CT-PET-VI-05$ tree -d
@@ -86,19 +83,14 @@ See how the original data paths and renamed paths look like
     ├── 7.000000-Thorax Exp  2.0  B70f-31579
     └── 8.000000-RespLow  2.0  B30s  80  Ex - 100  In-16454
 #Renamed directory paths
-├── CT-PET-VI-05
-│   ├── CT_for_PET
-│   ├── exhale_BH_CT
-│   ├── inhale_BH_CT
-│   └── PET
-
-
-
-
+└── CT-PET-VI-05
+    ├── CT_for_PET
+    ├── PET
+    ├── inhale_BH_CT
+    └── exhale_BH_CT
 
 #Original directory paths
 /CT-PET-VI-07$ tree -d
-.
 └── 02-14-1997-RTRTRespLowBreathRateRNS Adult-80512
     ├── 1000.000000-PET SUV Factors-99730
     ├── 4.000000-Galligas Lung-82849
@@ -107,11 +99,10 @@ See how the original data paths and renamed paths look like
     └── 8.000000-RespLow  2.0  B30s  80  Ex - 100  In-01782
 #Renamed directory paths
 └── CT-PET-VI-07
-    ├── exhale_BH_CT
+    ├── PET
     ├── inhale_BH_CT
-    └── PET
+    └── exhale_BH_CT
 ```
-
 
 
 ## Software Setup
