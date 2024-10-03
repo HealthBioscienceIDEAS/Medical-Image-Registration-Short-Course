@@ -12,106 +12,18 @@ git clone git@github.com:HealthBioscienceIDEAS/Medical-Image-Registration-Short-
 ```
 -->
 
-## Dataset
+
+## Python Setup
+### Installing Python
+Include instructions to download miniconda and recommendations for an IDE.
 <!--
-FIXME: place any data you want learners to use in `episodes/data` and then use
-       a relative link ( [data zip file](data/lesson-data.zip) ) to provide a
-       link to it, replacing the example.com link.
+Add instructions for Jupyter notebooks if used.
 -->
-Download the [data zip file](https://example.com/FIXME) and unzip it to your Desktop.
-
-Description of the zip file: TCIA and other data too.
-
-### CT-vs-PET-Ventilation-Imaging 
-CT Ventilation as a Functional Imaging Modality for Lung Cancer Radiotherapy from [TCIA](https://www.cancerimagingarchive.net/collection/ct-vs-pet-ventilation-imaging/).
-We recommend focusing on exhale/inhale breath-hold CT (BHCT) DICOMs. 
-Bear in mind that:
-
-* The BHCT scans for CT-PET-VI-02 and CT-PET-VI-03 show very little motion between inhale and exhale.
-* The BHCT scans for CT-PET-VI-05 have a different number of slices between inhale and exhale.
-
-#### Extracting and renaming data paths
-Original data directory paths for this work were renamed for easy interpretability as follows:   
-
-* `5.000000-Thorax Insp 2.0 B` renamed as `inhale_BH_CT`   
-* `7.000000-Thorax Exp 2.0 B` renamed as `exhale_BH_CT`   
-* `3.000000-CT Lung 3.0 B` renamed as `CT_for_PET`   
-* `4.000000-Galligas Lung-0` renamed as `PET`
-
-See how the original data paths and renamed paths look like
-```bash
-#Original directory paths
-/CT-PET-VI-02$ tree -d 
-└── 05-28-1996-NA-RTRTRespLowBreathRateRNS Adult-05441
-  ├── 1000.000000-PET SUV Factors-26496 [1 item, with size 42.1 kB]
-  ├── 3.000000-CT Lung  3.0  B31f-61322  [175 items, totalling 92.4 MB]
-  ├── 4.000000-Galligas Lung-03537 [159 items, totalling 51.5 MB]
-  ├── 5.000000-Thorax Insp  2.0  B70f-29873 [167 items, totalling 88.1 MB]
-  ├── 7.000000-Thorax Exp  2.0  B70f-73355 [167 items, totalling 88.1 MB]
-  └── 8.000000-RespLow  2.0  B30s  80  Ex - 100  In-44317 [810 items, totalling 426.9 MB]
-#Renamed directory paths
-└── CT-PET-VI-02
-    ├── CT_for_PET
-    ├── PET
-    ├── inhale_BH_CT
-    └── exhale_BH_CT
-
-#Original directory paths
-/CT-PET-VI-03$ tree -d
-├── 06-25-1996-RTRTRespLowBreathRateRNS Adult-43080
-│   ├── 1000.000000-PET SUV Factors-06580
-│   ├── 3.000000-CT Lung  3.0  B31f-08354
-│   └── 4.000000-Galligas Lung-15379
-└── 06-25-1996-RTRTRespLowBreathRateRNS Adult-87093
-    ├── 5.000000-Thorax Insp  2.0  B70f-42000
-    ├── 7.000000-Thorax Exp  2.0  B70f-45310
-    └── 8.000000-RespLow  2.0  B30s  80  Ex - 100  In-54790
-#Renamed directory paths
-└── CT-PET-VI-03
-    ├── CT_for_PET
-    ├── PET
-    ├── inhale_BH_CT
-    └── exhale_BH_CT
-
-#Original directory paths
-/CT-PET-VI-05$ tree -d
-└── 12-10-1996-RTRTRespLowBreathRateRNS Adult-37585
-    ├── 1000.000000-PET SUV Factors-63910
-    ├── 3.000000-CT Lung  3.0  B31f-90638
-    ├── 4.000000-Galligas Lung-26361
-    ├── 5.000000-Thorax Insp  2.0  B70f-45546
-    ├── 7.000000-Thorax Exp  2.0  B70f-31579
-    └── 8.000000-RespLow  2.0  B30s  80  Ex - 100  In-16454
-#Renamed directory paths
-└── CT-PET-VI-05
-    ├── CT_for_PET
-    ├── PET
-    ├── inhale_BH_CT
-    └── exhale_BH_CT
-
-#Original directory paths
-/CT-PET-VI-07$ tree -d
-└── 02-14-1997-RTRTRespLowBreathRateRNS Adult-80512
-    ├── 1000.000000-PET SUV Factors-99730
-    ├── 4.000000-Galligas Lung-82849
-    ├── 5.000000-Thorax Insp  2.0  B70f-20440
-    ├── 7.000000-Thorax Exp  2.0  B70f-03567
-    └── 8.000000-RespLow  2.0  B30s  80  Ex - 100  In-01782
-#Renamed directory paths
-└── CT-PET-VI-07
-    ├── PET
-    ├── inhale_BH_CT
-    └── exhale_BH_CT
-```
-
-
-## Software Setup
 
 ### Installing Dependencies in Python Virtual environments
 Installing python virtual environment with dependencies (e.g., nibabel, etc).
 See further instructions [here](https://github.com/HealthBioscienceIDEAS/Medical-Image-Registration-Short-Course/tree/main/_dependencies). 
 
-#### Using conda
 ```bash
 conda create -n "mirVE" python=3.11 pip -c conda-forge
 conda config --set pip_interop_enabled True
@@ -120,37 +32,30 @@ cd ~/_dependencies
 pip install -r requirements.txt
 ```
 
-#### Using python virtual environment
-```bash
-# Installing dependencies in Ubuntu 22.04
-sudo apt-get install -y python3-pip
-sudo apt-get install -y python3-venv
-# Create path for venv
-cd $HOME
-mkdir mirVE
-cd mirVE
-# Create virtual environment
-python3 -m venv mirVE
-source mirVE/bin/activate
-cd ~/_dependencies
-python3 -m pip install -r requirements.txt
-```
+Install file with in-built functions pip install *.
 
-### ITK-Snap
 
+## Software Setup
+### ITK-SNAP
+<!-- add link? -->
+ITK-SNAP started in 1999 with SNAP (SNake Automatic Partitioning) and developed by Paul Yushkevich with the guidance of Guido Gerig. 
+It is open-source software distributed under the GNU General Public License.
+It is written in C++ and it leverages the Insight Segmentation and Registration Toolkit (ITK) library. 
+ITK-SNAP will be used in Practical 1.
+
+<!--
 #### Hardware Requirements
 * Memory: "Overall 2Gb of memory should be enough for most users; 4Gb should suffice for users with large images." [:link:](http://www.itksnap.org/pmwiki/pmwiki.php?n=Documentation.HardwareRequirements#:~:text=Memory%20usage%20in%20SNAP%20is,for%20a%20512%20cubed%20image.)
 * Multi - Operating System: 
 	* ITK-SNAP binaries are distributed for Linux (32 and 64 bit)), 
 	* Windows (64 bit), 
 	* and MacOS Leopard (64 bit).
-
+-->
 
 ::::::::::::::::::::::::::::::::::::::: discussion
 
 ### Installation
-
-Installing ITK-SNAP in differen operating systems
+Below are instructions to install ITK-SNAP in different operating systems.
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -193,4 +98,25 @@ tar -xvzf $FILENAME
 - To add the ITK-SNAP launcher to your Dock, open the Applications folder and drag the ITK-SNAP.app icon onto the dock.
 
 :::::::::::::::::::::::::
+
+
+## Dataset
+<!--
+FIXME: place any data you want learners to use in `episodes/data` and then use
+       a relative link ( [data zip file](data/lesson-data.zip) ) to provide a
+       link to it, replacing the example.com link.
+-->
+Data for this course can be downloaded here [data zip file](https://example.com/FIXME). Data for all practicals can be found there. Datasets are labelled in the table and are described at the beginning of each practical.
+
+| Practical  | Dataset        |
+|------------|----------------|
+| Practical 1| [TCIA CT-vs-PET-Ventilation-Imaging](https://www.cancerimagingarchive.net/collection/ct-vs-pet-ventilation-imaging/) |
+| Practical 2| Dataset 2      |
+| Practical 3| Dataset 3      |
+| Practical 4| Dataset 4      |
+| Practical 5| Dataset 5      |
+| Practical 6| Dataset 6      |
+
+
+
 
