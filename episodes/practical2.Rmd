@@ -1,0 +1,22 @@
+---
+title: 'Introduction to transformations'
+teaching: 10
+exercises: 2
+---
+
+:::::::::::::::::::::::::::::::::::::: questions 
+
+- How to apply transformations to images?
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: objectives
+
+- Understand how to apply transformations to images.
+- Learn how to apply translations and rotations.
+- Learn how to compose transformations.
+- Understand the difference between push and pull interpolations.
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+# Introduction to transformations

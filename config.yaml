@@ -62,7 +62,9 @@ contact: 'team@carpentries.org'
 episodes:
 #- introduction.Rmd
 - itksnap.Rmd
-- excthreesteps.Rmd
+- practical2.Rmd
+- practical3.Rmd
+- demons.Rmd
 
 # Information for Learners
 learners:
