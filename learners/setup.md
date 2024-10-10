@@ -111,8 +111,8 @@ Data for this course can be downloaded here [data zip file](https://example.com/
 | Practical  | Dataset        |
 |------------|----------------|
 | Practical 1| [TCIA CT-vs-PET-Ventilation-Imaging](https://www.cancerimagingarchive.net/collection/ct-vs-pet-ventilation-imaging/) |
-| Practical 2| Dataset 2      |
-| Practical 3| Dataset 3      |
+| Practical 2| Lung MRI slice      |
+| Practical 3| Head CT and MRI slices      |
 | Practical 4| Dataset 4      |
 | Practical 5| Dataset 5      |
 | Practical 6| Dataset 6      |

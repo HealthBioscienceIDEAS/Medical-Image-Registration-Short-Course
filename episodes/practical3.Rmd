@@ -6,14 +6,332 @@ exercises: 2
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- Practical 3
+- What are the differences between similarity measures such as the SSD, MSD, NCC and NMI?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Practical 3
+- Understand the use of the SSD, MSD, NCC and NMI as similarity measures.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-# Practical 3
+# Practical 3: Similarity measures
+In this tutorial, we are going to use the following Python libraries:
+
+* *scikit-image*
+* *matplotlib*
+* *numpy*
+* *scipy*
+
+There is a template Jupyter notebook for you to work on *practical2.ipynb*. To make sure the animations display properly, we need the figures to be displayed in a separate window and not in the notebook. Make sure you run the following cell:
+```python
+import matplotlib
+matplotlib.use('TkAgg')
+```
+You have also been provided with some utility functions in *utils2.py* for use in these exercises. Some of the functions in *utils2.py* are the same as in *utils.py*, but there are some new functions.
+In the dataset zip file for this practical, you can find three 2D images:
+
+* *ct_slice_int8.png*: an axial CT slice of a head, stored as unsigned 8-bit integers.
+* *ct_slice_int16.png*: the same axial slice CT slice, stored as unsigned 16-bit integers.
+* *mr_slice_int16.png*: the corresponding axial MR slice, stored as unsigned 16-bit integers.
+
+## Loading and displaying the images
+Load the three 2D images. Display their data type and check these match the expected data types.
+```python
+ct_img_int8 = skimage.io.imread('data/practical3/ct_slice_int8.png')
+ct_img_int16 = skimage.io.imread('data/practical3/ct_slice_int16.png')
+mr_img_int16 = skimage.io.imread('data/practical3/mr_slice_int16.png')
+print(ct_img_int8.dtype)
+print(ct_img_int16.dtype)
+print(mr_img_int16.dtype)
+```
+
+Convert these images to double, reorient them into 'standard orientation' and display each image in a separate figure using the `dispImage` function from *utils2.py*.
+```python
+ct_img_int8 = np.double(ct_img_int8)
+ct_img_int16 = np.double(ct_img_int16)
+mr_img_int16 = np.double(mr_img_int16)
+
+ct_img_int8 = np.flip(ct_img_int8.T, 1)
+ct_img_int16 = np.flip(ct_img_int16.T, 1)
+mr_img_int16 = np.flip(mr_img_int16.T, 1)
+
+from utils2 import dispImage
+dispImage(ct_img_int8)
+plt.show()
+dispImage(ct_img_int16)
+plt.show()
+dispImage(mr_img_int16)
+plt.show()
+```
+
+The images should appear like this:
+
+![Figure. Displayed images](fig/p3-images.png)
+
+You should notice that the two CT images appear exactly the same, but if you examine the actual values in the images you will see that the images use different intensity ranges. If you move your cursor over the image the intensity values can be seen next to the figure:
+
+![Figure. Intensity values](fig/p3-int8-intensities.png)
+In the 16 bit version, the intensity values correspond to Hounsfield Units (or rather Hounsfield Units + 1000, since air has a value of -1000, but the image cannot contain negative values as it is stored as unsigned integers), but in the 8 bit image the values have been scaled as the image can only contain values from 0 to 255.
+
+## Rotations
+
+The template script contains some code to rotate each of the images between -90 degrees and 90 degrees, in steps of 1 degree. Edit the code so that on each iteration of the loop it uses the `affineMatrixFromRotationAboutPoint` function from *utils2.py* to create an affine matrix representing an anti-clockwise rotation by theta degrees about the point 10,10, and uses the `defFieldFromAffineMatrix` function to create the corresponding deformation field. Then resample each of the 3 images using the `resampImageWithDefField` function and display the transformed 8-bit CT image using the `dispImage` function. 
+
+```python
+from utils2 import affineMatrixForRotationAboutPoint, defFieldFromAffineMatrix, resampImageWithDefField
+theta = np.arange(-90, 91, 1)
+num_pix_x, num_pix_y = ct_img_int8.shape
+
+for n in range(theta.size):  
+    aff_mat = affineMatrixForRotationAboutPoint(theta[n], [10, 10])
+    def_field = defFieldFromAffineMatrix(aff_mat, num_pix_x, num_pix_y)
+
+    ct_img_int8_resamp = resampImageWithDefField(ct_img_int8, def_field)
+    ct_img_int16_resamp = resampImageWithDefField(ct_img_int16, def_field)
+    mr_img_int16_resamp = resampImageWithDefField(mr_img_int16, def_field)
+    
+    dispImage(ct_img_int8_resamp)
+    plt.pause(0.05)
+```
+
+If this has been implemented correctly the image should appear to rotate clockwise, starting with a rotation of -90 degrees (so mostly being ‘off to the left’ of the original image) and finishing with a rotation of +90 degrees (so mostly being ‘off the bottom’ of the original image), as shown in the intermediate images below:
+
+![Figure. Rotated image](fig/p3-rotated-image.png)
+
+Make sure you understand why the image appears to rotate clockwise when the function produces an affine matrix representing an anti-clockwise rotation.
+
+Note, the default padding value of NaN should be used when resampling the image so that pixels from outside the original images are ignored when calculating the similarity measures
+below.
+
+### SSD
+
+Edit the code so that on each iteration of the loop it calculates and stores the SSD between:
+
+* 1) The original 16-bit CT image and the transformed 16-bit CT image
+* 2) The original 16-bit CT image and the transformed 8-bit CT image
+* 3) The original 16-bit CT image and the transformed MR image
+* 4) The original 8-bit CT image and the transformed 8-bit CT image
+
+Now rerun the cell with the for loop (you may want to comment out the lines that display the image and pause so that the code runs faster).
+
+```python
+from utils2 import calcSSD
+theta = np.arange(-90, 91, 1)
+SSDs = np.zeros((theta.size, 4))
+num_pix_x, num_pix_y = ct_img_int8.shape
+
+for n in range(theta.size):  
+    aff_mat = affineMatrixForRotationAboutPoint(theta[n], [10, 10])
+    def_field = defFieldFromAffineMatrix(aff_mat, num_pix_x, num_pix_y)
+
+    ct_img_int8_resamp = resampImageWithDefField(ct_img_int8, def_field)
+    ct_img_int16_resamp = resampImageWithDefField(ct_img_int16, def_field)
+    mr_img_int16_resamp = resampImageWithDefField(mr_img_int16, def_field)
+    
+    SSDs[n, 0] = calcSSD(ct_img_int16, ct_img_int16_resamp)
+    SSDs[n, 1] = calcSSD(ct_img_int16, ct_img_int8_resamp)
+    SSDs[n, 2] = calcSSD(ct_img_int16, mr_img_int16_resamp)
+    SSDs[n, 3] = calcSSD(ct_img_int8, ct_img_int8_resamp)
+```
+
+Plot the SSD values on the y-axis against the theta on the x-axis for each of the four cases above.
+```python
+plt.subplot(2,2,1)
+plt.plot(theta, SSDs[:, 0])
+plt.title('SSD: 16-bit CT and 16-bit CT')
+plt.subplot(2,2,2)
+plt.plot(theta, SSDs[:, 1])
+plt.title('SSD:  16-bit CT and  8-bit CT')
+plt.subplot(2,2,3)
+plt.plot(theta, SSDs[:, 2])
+plt.title('SSD:  16-bit CT and 16-bit MR')
+plt.subplot(2,2,4)
+plt.plot(theta, SSDs[:, 3])
+plt.title('SSD:  8-bit CT and  8-bit CT')
+plt.tight_layout()
+plt.show()
+```
+
+The plots should look like this:
+
+![Figure. SSD values](fig/p3-ssd-values.png)
+
+Note that:
+* The SSD reaches a minimum (of 0) for cases 1 and 4 when the images are in alignment.
+* For cases 2 and 3 SSD does not have a minimum when the images are aligned.
+* For all cases the SSD decreases as the overlap between the images decreases.
+* Although the shape of the SSD curve for cases 1 and 4 is the same, the values of the SSD are different by 2 orders of magnitude.
+
+Make sure you understand why you get these results.
+
+### MSD
+Now edit the code so that it rotates the images as above but calculates the MSD instead of the SSD at each iteration, and then plots the MSD values. 
+
+```python
+from utils2 import calcMSD
+MSDs = np.zeros((theta.size, 4))
+
+for n in range(theta.size):
+    # create affine matrix and corresponding deformation field
+    aff_mat = affineMatrixForRotationAboutPoint(theta[n], [10, 10])
+    def_field = defFieldFromAffineMatrix(aff_mat, num_pix_x, num_pix_y)
+
+    # resample the images
+    ct_img_int8_resamp = resampImageWithDefField(ct_img_int8, def_field)
+    ct_img_int16_resamp = resampImageWithDefField(ct_img_int16, def_field)
+    mr_img_int16_resamp = resampImageWithDefField(mr_img_int16, def_field)
+    
+    # Calculate the MSD values
+    MSDs[n, 0] = calcMSD(ct_img_int16, ct_img_int16_resamp)
+    MSDs[n, 1] = calcMSD(ct_img_int16, ct_img_int8_resamp)
+    MSDs[n, 2] = calcMSD(ct_img_int16, mr_img_int16_resamp)
+    MSDs[n, 3] = calcMSD(ct_img_int8, ct_img_int8_resamp)
+    
+plt.subplot(2,2,1)
+plt.plot(theta, MSDs[:, 0])
+plt.title('MSD: 16-bit CT and 16-bit CT')
+plt.subplot(2,2,2)
+plt.plot(theta, MSDs[:, 1])
+plt.title('MSD:  16-bit CT and  8-bit CT')
+plt.subplot(2,2,3)
+plt.plot(theta, MSDs[:, 2])
+plt.title('MSD:  16-bit CT and 16-bit MR')
+plt.subplot(2,2,4)
+plt.plot(theta, MSDs[:, 3])
+plt.title('MSD:  8-bit CT and  8-bit CT')
+plt.tight_layout()
+plt.show()
+```
+
+The plots should look like this:
+
+![Figure. MSD values](fig/p3-msd-values.png)
+
+Note that:
+* The MSD for cases 1 and 4 does not decrease as the amount of overlap decreases.
+* The shape of the MSD curves for cases 1 and 4 are the same but the values are larger for case 1.
+* The MSD values for cases 2 and 3 are lower for negative values of theta and higher for positive values (this one is a bit tricky!).
+
+Make sure you understand why you get these results.
+
+### NCC and NMI
+Implement the `calcNCC` function so that it calculates the Normalised Cross Correlation (NCC) between two images.
+
+```python
+def calcNCC(A, B):
+    nan_inds = np.logical_or(np.isnan(A), np.isnan(B))
+    A = A[np.logical_not(nan_inds)]
+    B = B[np.logical_not(nan_inds)]
+    
+    mu_A = np.mean(A)
+    mu_B = np.mean(B)
+    sig_A = np.std(A)
+    sig_B = np.std(B)
+    
+    NCC = np.sum((A - mu_A) * (B - mu_B)) / (A.size * sig_A * sig_B)
+    return NCC
+```
+
+Edit the code so that it uses your `calcNCC` function and the `calcEntropies` function from *utils2.py* to calculate the (NCC) and the joint and marginal entropies (H_AB, H_A, and H_B) instead of the MSD/SSD at each iteration. Also calculate the Mutual Information (MI) and Normalised Mutual Information (NMI) from the entropy values, and plot the results for NCC, H_AB, MI, and NMI.
+
+```python
+from utils2 import calcEntropies
+NCCs = np.zeros((theta.size, 4))
+H_ABs = np.zeros((theta.size, 4))
+H_As = np.zeros((theta.size, 4))
+H_Bs = np.zeros((theta.size, 4))
+
+for n in range(theta.size):  
+    aff_mat = affineMatrixForRotationAboutPoint(theta[n], [10, 10])
+    def_field = defFieldFromAffineMatrix(aff_mat, num_pix_x, num_pix_y)
+
+    ct_img_int8_resamp = resampImageWithDefField(ct_img_int8, def_field)
+    ct_img_int16_resamp = resampImageWithDefField(ct_img_int16, def_field)
+    mr_img_int16_resamp = resampImageWithDefField(mr_img_int16, def_field)
+    
+    NCCs[n, 0] = calcNCC(ct_img_int16, ct_img_int16_resamp)
+    NCCs[n, 1] = calcNCC(ct_img_int16, ct_img_int8_resamp)
+    NCCs[n, 2] = calcNCC(ct_img_int16, mr_img_int16_resamp)
+    NCCs[n, 3] = calcNCC(ct_img_int8, ct_img_int8_resamp)
+    
+    H_ABs[n, 0], H_As[n, 0], H_Bs[n, 0]  = calcEntropies(ct_img_int16, ct_img_int16_resamp)
+    H_ABs[n, 1], H_As[n, 1], H_Bs[n, 1]  = calcEntropies(ct_img_int16, ct_img_int8_resamp)
+    H_ABs[n, 2], H_As[n, 2], H_Bs[n, 2]  = calcEntropies(ct_img_int16, mr_img_int16_resamp)
+    H_ABs[n, 3], H_As[n, 3], H_Bs[n, 3]  = calcEntropies(ct_img_int8, ct_img_int8_resamp)
+  
+MIs = H_As + H_Bs - H_ABs
+NMIs = (H_As + H_Bs) / H_ABs
+
+plt.subplot(2,2,1)
+plt.plot(theta, NCCs[:, 0])
+plt.title('NCC: 16-bit CT and 16-bit CT')
+plt.subplot(2,2,2)
+plt.plot(theta, NCCs[:, 1])
+plt.title('NCC:  16-bit CT and  8-bit CT')
+plt.subplot(2,2,3)
+plt.plot(theta, NCCs[:, 2])
+plt.title('NCC:  16-bit CT and 16-bit MR')
+plt.subplot(2,2,4)
+plt.plot(theta, NCCs[:, 3])
+plt.title('NCC:  8-bit CT and  8-bit CT')
+plt.tight_layout()
+plt.show()
+
+plt.subplot(2,2,1)
+plt.plot(theta, H_ABs[:, 0])
+plt.title('H_AB: 16-bit CT and 16-bit CT')
+plt.subplot(2,2,2)
+plt.plot(theta, H_ABs[:, 1])
+plt.title('H_AB:  16-bit CT and  8-bit CT')
+plt.subplot(2,2,3)
+plt.plot(theta, H_ABs[:, 2])
+plt.title('H_AB:  16-bit CT and 16-bit MR')
+plt.subplot(2,2,4)
+plt.plot(theta, H_ABs[:, 3])
+plt.title('H_AB:  8-bit CT and  8-bit CT')
+plt.tight_layout()
+plt.show()
+
+plt.subplot(2,2,1)
+plt.plot(theta, MIs[:, 0])
+plt.title('MI: 16-bit CT and 16-bit CT')
+plt.subplot(2,2,2)
+plt.plot(theta, MIs[:, 1])
+plt.title('MI:  16-bit CT and  8-bit CT')
+plt.subplot(2,2,3)
+plt.plot(theta, MIs[:, 2])
+plt.title('MI:  16-bit CT and 16-bit MR')
+plt.subplot(2,2,4)
+plt.plot(theta, MIs[:, 3])
+plt.title('MI:  8-bit CT and  8-bit CT')
+plt.tight_layout()
+plt.show()
+
+plt.subplot(2,2,1)
+plt.plot(theta, NMIs[:, 0])
+plt.title('NMI: 16-bit CT and 16-bit CT')
+plt.subplot(2,2,2)
+plt.plot(theta, NMIs[:, 1])
+plt.title('NMI:  16-bit CT and  8-bit CT')
+plt.subplot(2,2,3)
+plt.plot(theta, NMIs[:, 2])
+plt.title('NMI:  16-bit CT and 16-bit MR')
+plt.subplot(2,2,4)
+plt.plot(theta, NMIs[:, 3])
+plt.title('NMI:  8-bit CT and  8-bit CT')
+plt.tight_layout()
+plt.show()
+```
+
+The plots should look like this:
+
+![Figure. NCC values](fig/p3-ncc-values.png)
+![Figure. entropy values](fig/p3-entropies-values.png)
+![Figure. MI values](fig/p3-mi-values.png)
+![Figure. NMI values](fig/p3-nmi-values.png)
+
+Do the different measures perform as expected for the different cases? Based on these results, which measures are suitable for registering the different pairs of images? Does this agree with what you were taught in the lecture?
+
+Make sure you understand all the results you get.
