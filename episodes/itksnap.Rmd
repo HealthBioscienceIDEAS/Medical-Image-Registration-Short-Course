@@ -1,5 +1,5 @@
 ---
-title: 'A Practical Introduction to Working with Medical Image Data'
+title: 'Practical 1: Introduction to working with medical image data'
 teaching: 10
 exercises: 2
 ---
@@ -22,7 +22,8 @@ exercises: 2
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Dataset
+## Practical setup
+### Dataset
 
 In these exercises, we will be working with real-world medical imaging data from the Cancer Imaging Archive [(TCIA)](https://www.cancerimagingarchive.net/collection/ct-vs-pet-ventilation-imaging/).
 TCIA is a resource of public datasets that hosts a large archive of medical images of cancer accessible for public download.   
@@ -59,6 +60,9 @@ Refer to [`Summary and Setup`](https://healthbioscienceideas.github.io/Medical-I
    UCL central ethics if your department does not have one.
 
 ::::::::::::::::::::::::::::::::::::::
+
+### Code
+For the parts of this practical based on Python, you should use the `practical1.ipynb` notebook.
 
 ## Medical imaging formats
 

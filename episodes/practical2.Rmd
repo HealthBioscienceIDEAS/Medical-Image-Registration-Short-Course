@@ -1,5 +1,5 @@
 ---
-title: 'Introduction to transformations'
+title: 'Practical 2: Transformations'
 teaching: 10
 exercises: 2
 ---
@@ -19,7 +19,6 @@ exercises: 2
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-# Introduction to transformations
 In this tutorial, we are going to use the following Python libraries:
 
 * *scikit-image*
@@ -27,7 +26,7 @@ In this tutorial, we are going to use the following Python libraries:
 * *numpy*
 * *scipy*
 
-There is a template Jupyter notebook for you to work on *practical1.ipynb*. To make sure the animations display properly, we need the figures to be displayed in a separate window and not in the notebook. Make sure you run the following cell:
+There is a template Jupyter notebook for you to work on *practical2.ipynb*. To make sure the animations display properly, we need the figures to be displayed in a separate window and not in the notebook. Make sure you run the following cell:
 ```python
 import matplotlib
 matplotlib.use('TkAgg')

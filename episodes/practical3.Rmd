@@ -1,5 +1,5 @@
 ---
-title: 'Practical 3'
+title: 'Practical 3: Similarity measures'
 teaching: 10
 exercises: 2
 ---
@@ -16,7 +16,6 @@ exercises: 2
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-# Practical 3: Similarity measures
 In this tutorial, we are going to use the following Python libraries:
 
 * *scikit-image*
@@ -24,12 +23,12 @@ In this tutorial, we are going to use the following Python libraries:
 * *numpy*
 * *scipy*
 
-There is a template Jupyter notebook for you to work on *practical2.ipynb*. To make sure the animations display properly, we need the figures to be displayed in a separate window and not in the notebook. Make sure you run the following cell:
+There is a template Jupyter notebook for you to work on *practical3.ipynb*. To make sure the animations display properly, we need the figures to be displayed in a separate window and not in the notebook. Make sure you run the following cell:
 ```python
 import matplotlib
 matplotlib.use('TkAgg')
 ```
-You have also been provided with some utility functions in *utils2.py* for use in these exercises. Some of the functions in *utils2.py* are the same as in *utils.py*, but there are some new functions.
+You have also been provided with some utility functions in *utils.py* for use in these exercises. 
 In the dataset zip file for this practical, you can find three 2D images:
 
 * *ct_slice_int8.png*: an axial CT slice of a head, stored as unsigned 8-bit integers.
