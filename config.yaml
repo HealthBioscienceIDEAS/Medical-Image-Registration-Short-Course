@@ -61,7 +61,7 @@ contact: 'team@carpentries.org'
 # Order of episodes in your lesson
 episodes:
 #- introduction.Rmd
-- itksnap.Rmd
+- practical1.Rmd
 - practical2.Rmd
 - practical3.Rmd
 - practical4.Rmd
