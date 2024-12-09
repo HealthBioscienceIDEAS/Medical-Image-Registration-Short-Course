@@ -22,7 +22,7 @@ exercises: 2
 
 In these exercises, we use three 2D sagittal MR slices *cine_MR_1.png*, *cine_MR_2.png*, and *cine_MR_3.png*, showing the lung, liver, and surrounding anatomy, at different points in time during free-breathing. Image 1 is at end-exhalation, image 2 at the end-inhalation for a normal breath, and image 3 at end-inhalation for a deep breath. You can find them in the zipped data folder under `practical4`.
 
-This tutorial uses Python. There is a template Jupyter notebook for you to work on *practical4-exercises.ipynb*. You have also been provided with some utility functions in *utils.py*. When using a function from this file, you should read it and make sure you understand what it does.
+This tutorial uses Python. There is a template Jupyter notebook for you to work on `practical4-exercises.ipynb`. You have also been provided with some utility functions in `utils.py`. When using a function from this file, you should read it and make sure you understand what it does.
 There is also a function that implements the Demons registration algorithm in *demonsReg.py*. You should look at the code in *demonsReg.py* and check you can follow what it is doing. You should be able to understand what each section of code is doing, even if you don’t fully understand every line.
 
 ## 1. Loading and displaying images
