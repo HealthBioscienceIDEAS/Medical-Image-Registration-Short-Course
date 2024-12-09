@@ -429,7 +429,7 @@ If we perform a registration between these images as they are, it will likely ha
 * Add this translation to the origin for subject 2.
 * Save the image for subject 2 using the header with the updated origin.
 
-Try writing code to implement these steps yourself, based on what you have learnt.
+Try writing code to implement these steps yourself, based on what you have learned from this practical.
 
 ![Figure. Aligned images](fig/itk-snap-aligned-images.png)
 
