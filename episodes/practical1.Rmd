@@ -56,7 +56,7 @@ Most data from a hospital will be in DICOM format, whereas NIfTI is a very popul
 
 ### 1.1. DICOM format
 DICOM is a widely used technical standard for digitally storing and transmitting medical images and related information.
-While DICOM images typically have a separate file for every slice.
+DICOM images typically have a separate file for every slice.
 If you look at the data `CT-PET-VI-02/CT_for_PET`, you will see that there are 175 individual files corresponding to 175 slices in the volume. More modern DICOM images can come with all slices in a single file.
 
 In addition to the image data for each slice, each file contains a header which can include extensive information relating to the scan and subject. 
