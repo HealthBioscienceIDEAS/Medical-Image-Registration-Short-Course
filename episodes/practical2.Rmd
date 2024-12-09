@@ -20,7 +20,7 @@ exercises: 2
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-In these exercises, we use a 2D lung MRI image, *lung_MRI_slice.png*, which you can find in the zipped data folder under `practical2`.
+In these exercises, we will use a 2D slice from a lung MRI image, *lung_MRI_slice.png*, which you can find in the zipped data folder under `practical2`.
 
 This tutorial uses Python. There is a template Jupyter notebook for you to work on *practical2-exercises.ipynb*. You have also been provided with some utility functions in *utils.py*. When using a function from this file, you should read it and make sure you understand what it does.
 
