@@ -314,7 +314,7 @@ We can get information on this image's `sform` and `qform` from the `sform_code`
 | 4  | mni | RAS+ in MNI atlas space | 
 
 We can see in the above header that both `sform` and `qform` are set to scanner. We can check this using the functions `get_sform()` and `get_qform()` which should output the same matrix.
-However, the NIfTI format does not require that the `sform` and `qform` specify the same matrix, and it is not well defined what should be done when they are both provided and are different from each other. Therefore, we choose to use the `sform` and ignore the `qform`, which we set to unknown using the `set_qform()` function.
+However, the NIfTI format does not require that the `sform` and `qform` specify the same matrix, and depending on the software, it may cause issues if both are provided with the same code but have different matrices. While Nibabel gives `sform` precedence, we are still going to explicitly ignore the `qform` by setting its code to unknown using the `set_qform()` function.
 
 If we look closer at the `sform`, you can see that it is stored in the `srow_x`, `srow_y`, and `srow_z` fields of the header. 
 These specify the top three rows of a 4x4 matrix representing an affine transformation using homogeneous coordinates. 
