@@ -49,7 +49,7 @@ When you start the registration, a figure appears with 3 subplots. The first sub
 
 ![Figure. Initialisation of the demons algorithm](fig/p4-reg-first-step.png)
 
-While the registration is running, you will notice that the figures are updated and that text is outputted in the notebook stating the current resolution level, iteration number, and value of the Mean Squared Difference (MSD) between the target image and the current warped image. At the end of the registration, the figure should look like this:
+While the registration is running, you will notice that the figures are updated and that text is outputted in the notebook stating the current resolution level, iteration number, and value of the Mean Squared Difference (MSD) between the target image and the current warped image. The MSD is the similarity metric used by this demons registration. At the end of the registration, the figure should look like this:
 
 ![Figure. Output of the demons algorithm](fig/p4-reg-output.png)
 
