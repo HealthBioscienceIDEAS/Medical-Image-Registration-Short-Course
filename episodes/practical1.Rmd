@@ -318,7 +318,7 @@ However, the NIfTI format does not require that the `sform` and `qform` specify 
 
 If we look closer at the `sform`, you can see that it is stored in the `srow_x`, `srow_y`, and `srow_z` fields of the header. 
 These specify the top three rows of a 4x4 matrix representing an affine transformation using homogeneous coordinates. 
-The fourth row is not stored as it is always `[0 0 0 1]`. 
+The fourth row is not stored as it is always `[0 0 0 1]`. This is true because it makes a lot of mathematical operations involved in mapping coordinates to the right location much easier and quicker
 You will notice that the `sform` matrix matches the affine transform in the `Nifti1Image` object (`nii3ct.affine`).
 
 ### 4.3. Coordinate systems
