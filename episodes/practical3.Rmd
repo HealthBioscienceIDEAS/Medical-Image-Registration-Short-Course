@@ -57,7 +57,7 @@ Make sure you understand why the image appears to rotate clockwise when the func
 Note, the default padding value of NaN should be used when resampling the image so that pixels from outside the original images are ignored when calculating the similarity measures
 below.
 
-### 2.1. SSD
+### 2.1. Sum of Squared DIfferences (SSD)
 
 Edit the code so that on each iteration of the loop it calculates and stores the SSD between:
 
