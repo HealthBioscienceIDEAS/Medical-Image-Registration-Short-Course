@@ -251,7 +251,7 @@ We recommend using the `sform` over the `qform` for various reasons:
 
 * It is easier to conceptualise.
 * It can contain shears that cannot be represented using the `qform`, which can be helpful when representing affine transformations.
-* Common libraries (including NiBabel) ignore the `qform` if the `sform` is provided.
+* Common libraries (including NiBabel) tend to give precedence to the `sform` and use the `qform` only if the `sform` is not provided.
 
 ### 4.2. Header features 
 We can look at the header of the Nifti1Image object.
