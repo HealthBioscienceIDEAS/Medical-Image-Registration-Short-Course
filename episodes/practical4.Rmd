@@ -61,7 +61,13 @@ At the end of the registration, a second figure appears. The figure allows us to
 
 ![Figure. Output of the demons algorithm](fig/p4-reg-output2.png)
 
-If you look at the text output you will see that the final MSD value is 80.20 (rounded to 2 decimal places – more are shown in the console), and that 74 iterations were performed at the final (3rd) resolution level. If you scroll up in the console you will see that 24 iterations were also performed at the 2nd resolution level, and 17 iterations at the 1st level. If you look at the MSD value you will notice it decrease as the registration progresses, as would be expected, but that it increases between resolution levels. Do you know why it does this? Hint – it’s not just because there are more pixels in the higher resolution images, as using the mean rather than sum of squared differences should account for different numbers of pixels in the images.
+If you look at the text output you will see that the final MSD value is 80.20 (rounded to 2 decimal places – more are shown in the console), and that 74 iterations were performed at the final (3rd) resolution level. If you scroll up in the console you will see that 24 iterations were also performed at the 2nd resolution level, and 17 iterations at the 1st level. 
+:::::::::::::::challenge
+Within each resolution level, the MSD value decreases with each iteration. However, the MSD increases between resolution levels. Do you know why it does this? 
+::::::::::::::::hint
+It’s not just because there are more pixels in the higher resolution images, as using the mean rather than sum of squared differences should account for different numbers of pixels in the images.
+::::::::::::::::::::
+::::::::::::::::::::
 
 Compare the final warped image with the target and source images. How well do you think the registration did at aligning the images? Which parts of the images are well aligned, and which parts are less well aligned?
 
