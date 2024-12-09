@@ -59,7 +59,7 @@ below.
 
 ### 2.1. Sum of Squared DIfferences (SSD)
 
-Edit the code so that on each iteration of the loop it calculates and stores the SSD between:
+In this section, we are going to observe how Sum of Squared Differences (SSD) varies between our original image and our rotated image. Edit the code so that on each iteration of the loop it calculates and stores the SSD between:
 
 * 1) The original 16-bit CT image and the transformed 16-bit CT image
 * 2) The original 16-bit CT image and the transformed 8-bit CT image
