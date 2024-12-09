@@ -98,7 +98,7 @@ Note that:
 
 Make sure you understand why you get these results.
 
-### 2.3. NCC and NMI
+### 2.3. Normalized Cross Correlation (NCC) and Normalized Mutual Information (NMI)
 Implement the `calcNCC` function so that it calculates the Normalised Cross Correlation (NCC) between two images.
 
 Edit the code so that it uses your `calcNCC` function and the `calcEntropies` function from `utils.py` to calculate the (NCC) and the joint and marginal entropies ($H_{AB}$, $H_A$, and $H_B$) instead of the MSD/SSD at each iteration. Also calculate the Mutual Information (MI) and Normalised Mutual Information (NMI) from the entropy values, and plot the results for NCC, $H_{AB}$, MI, and NMI.
