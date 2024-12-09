@@ -132,7 +132,7 @@ Instead, select `Load as Additional Image` - this will enable easy comparison of
 ![Figure. ITK-SNAP additional image](fig/itk-snap-additional-image.png)
 
 * Once the second image is loaded, you will see two thumbnails in the top corner of each slice display
-* Click on these to swap the displayed slices from one image to the other, allowing you to easily see the similarities and differences between the images.
+* Click on these to swap the displayed slices from one image to the other, allowing you to easily see the similarities and differences between the images. You can also swap quickly by using the square bracket shortcut keys `[` and `]`
 * You will also see that both images now appear in the Cursor Inspector, where you can see the intensity value at the cursor for both images. 
 * You can also change the displayed image by clicking on it in the Cursor Inspector
 
