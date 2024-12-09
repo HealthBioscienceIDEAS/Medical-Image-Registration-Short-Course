@@ -6,7 +6,7 @@ exercises: 2
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- What are the methods for calculating similarity measures?
+- What measures are used to calculate similarity between two images?
 - How do similarity measures like SSD, MSD, NCC, and NMI differ in implementation and functionality?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
