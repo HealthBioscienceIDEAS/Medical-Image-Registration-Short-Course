@@ -75,6 +75,7 @@ The plots should look like this:
 ![Figure. SSD values](fig/p3-ssd-values.png)
 
 Note that:
+
 * The SSD reaches a minimum (of 0) for cases 1 and 4 when the images are in alignment.
 * For cases 2 and 3 SSD does not have a minimum when the images are aligned.
 * For all cases the SSD decreases as the overlap between the images decreases.
