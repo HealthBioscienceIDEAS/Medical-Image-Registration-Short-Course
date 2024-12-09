@@ -40,7 +40,7 @@ These images are shown below in ITK-SNAP.
 :::::::::::::::::::::::::::::::::::::: spoiler
 
 ### Data sharing ethics and policies
-When using open datasets that contain images of humans, such as those from TCIA, for your research, you will still need to get ethical approval as you do for any non-open datasets you use). This can usually be obtained from the local ethics committee.
+When using open datasets that contain images of humans, such as those from TCIA, for your research, you will still need to get ethical approval as you do for any non-open datasets you use. This is usually obtained from the local ethics committee, but tends to be a less involved process for secondary data analysis then it does for original data collection.
 
 ::::::::::::::::::::::::::::::::::::::
 
