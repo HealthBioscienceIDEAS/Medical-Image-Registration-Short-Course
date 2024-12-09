@@ -119,7 +119,7 @@ And for *splinef2d*:
 
 Now edit your code to experiment with using different angles (both smaller and larger) and rotating about a different point. Make sure you understand all the results you get.
 
-The blurring artefacts and the ‘rounding off’ of the images seen above are caused by multiple re-samplings of the image. This can be prevented by composing the rotations and applying the resulting transformation to the original image instead of the transformed image. 
+The blurring artefacts and the ‘rounding off’ of the images seen above are caused by multiple re-samplings of the image. A resampling essentially makes a copy of the image, and the interpolation slightly degrades that image. Multiple re-samplings are like copies of copies of copies - you start to notice the cumulative degradation of the images. This can be prevented by composing the rotations into a single transformation and then applying the resulting composed transformation to the original image instead of the intermediate resampled, transformed images. 
 
 ## 4. Composing transformations
 
