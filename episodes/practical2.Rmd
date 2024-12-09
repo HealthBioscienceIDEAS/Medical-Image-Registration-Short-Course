@@ -27,7 +27,7 @@ This tutorial uses Python. There is a template Jupyter notebook for you to work 
 ## 1. Loading and displaying images
 Load the 2D lung MRI image using the `imread` function from the *scikit-image* python library. If you check the data type of the image you will see it is stored as 8-bit integers. You should convert the image to double precision so that errors do not occur when processing the image due to the limited precision. 
 
-The *scikit-image* and *matplotlib* libraries used in these exercises index images using matrix coordinates. The first cooridnate is the row number (i.e. the y coordinate of the image) and the second coordinate is the column number (i.e. the x coordinate of the image). The rows are also numbered from top to bottom.
+The *scikit-image* and *matplotlib* libraries used in these exercises index images using matrix coordinates. The first coordinate is the row number (i.e. the y coordinate of the image) and the second coordinate is the column number (i.e. the x coordinate of the image). The rows are also numbered from top to bottom.
 
 It is possible to do image processing using matrix coordinates, but it can get confusing, especially when working with deformation fields or in 3D. Therefore, the approach used in these exercises is to store the image memory in 'standard orientation', so that the first coordinate indexes the x (horizontal) dimension and the second coordinate indexes the y (vertical) dimension, and the first pixel (0,0) is at the bottom-left of the image. Then, when displaying the image a wrapper function such as the `dispImage` function provided in *utils.py* can be used to reorientate the image into matrix coordinates as required for the `imshow` function from *matplotlib*.
 
