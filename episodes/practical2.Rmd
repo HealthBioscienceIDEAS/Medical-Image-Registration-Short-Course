@@ -72,7 +72,9 @@ The difference images should look like this:
 
 (the difference image for nearest neighbour is on the left, and splinef2d on the right)
 
-Make sure you understand why you get these results. If you are not sure check back over the lecture notes or ask. 
+:::::::::::::::::::discussion
+Why do these results change so much for nearest neighbour interpolation when the transformation has only shifted by half a pixel?
+:::::::::::::::::::
 
 By default, the `dispImage` function displays images by scaling the values so that they use the full intensity range, i.e. the lowest value in the image is set to black and the highest to white. However, this can lead to unintentional differences in appearance when comparing images. Therefore, it is often a good idea to ensure exactly the same intensity range is used when displaying and comparing different images by using the `int_lims` input to the `dispImage` function. For example, if you check the intensity ranges of the difference images above you will notice that the range of values is larger for the nearest neighbour difference image. Write code to redisplay the difference images, in both cases using an intensity limits of [-20, 20]. 
 
