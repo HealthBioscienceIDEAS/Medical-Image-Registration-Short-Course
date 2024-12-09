@@ -108,7 +108,9 @@ You should have noticed that the registration is using a multi-resolution approa
 Here is a summary of the registration:
 ![Figure. Output of the demons algorithm](fig/registration_animation_level1.gif)
 
+::::::::::::::::::::discussion
 Do you think using a multi-resolution approach helps? Why?
+:::::::::::::::::::::
 
 Now try running the registration with 6 resolution levels (if you use 7 levels then the first level only contains 4 pixels, so there is not very much to change and improve. Anything greater than 7 levels will result in an error, since no further down-sampling can be done). The final MSD with six levels is worse (MSD = 86.24 ) then with the default 3 resolution levels (MSD = 80.20). However, visually the results from six resolution levels appears to align the structures within the lung better than the result from using three levels. It is the structures outside the lung, e.g. the ribs, that are not aligned as well. Again, assessing the "best" registration will be dependent on the exact application.
 
