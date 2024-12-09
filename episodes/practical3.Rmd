@@ -13,7 +13,7 @@ exercises: 2
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Understand how similarity measures such as SSD, MSD, NCC, and NMI are calculated and used.
+- Understand how common similarity measures for image registration are calculated and used.
 - Learn about the advantages and disadvantages of these metrics.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
