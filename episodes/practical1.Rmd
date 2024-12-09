@@ -48,7 +48,11 @@ The first part of this tutorial makes use of the ITK-SNAP software. Make sure yo
 
 ## 1. Medical imaging formats
 
-Although there are many formats in which medical imaging data can come, we will focus on DICOM and NIfTI as they are two of the most common formats. Most data from a hospital will be in DICOM format, whereas NIfTI is a very popular format in the medical image analysis community. The files from the TCIA are in DICOM format.
+Although there are many different file formats used in medical imaging, we will focus on two of the most common formats:
+* [DICOM](https://www.dicomstandard.org/) (Digital Imaging and Communications in Medicine)
+* [NIfTI](https://nifti.nimh.nih.gov/) (Neuroimaging Informatics Technology Initiative)
+
+Most data from a hospital will be in DICOM format, whereas NIfTI is a very popular format in the medical image analysis community. The files from the TCIA are in DICOM format.
 
 ### 1.1. DICOM format
 Digital Imaging and Communications in Medicine (DICOM) is a technical standard for digitally storing and transmitting medical images and related information.
