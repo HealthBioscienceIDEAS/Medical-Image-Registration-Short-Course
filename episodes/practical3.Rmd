@@ -26,7 +26,7 @@ In these exercises, we use a three 2D images:
 
 You can find in the zipped data folder under `practical3`.
 
-This tutorial uses Python. There is a template Jupyter notebook for you to work on *practical3-exercises.ipynb*. You have also been provided with some utility functions in *utils.py*. When using a function from this file, you should read it and make sure you understand what it does.
+This tutorial uses Python. There is a template Jupyter notebook for you to work on *practical3-exercises.ipynb*. You have also been provided with some utility functions in `utils.py`. When using a function from this file, you should read it and make sure you understand what it does.
 
 ## 1. Loading and displaying the images
 Load the three 2D images. Display their data type and check these match the expected data types.
