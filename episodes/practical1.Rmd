@@ -376,7 +376,7 @@ Load the `ct_for_pet.nii.gz` image. If you open the `Image Layer Inspector` and 
 ![Figure. ITK-SNAP: Metadata for 16-bit integers vs 32-bit floats](fig/itk-snap-16-32-bits.svg)
 
 ### 5.2. Cropping data
-We are going to crop the image to remove slices that do not contain the patient (background pixels). These background pixels can take up a large amount of memory and are not usually useful for further data processing tasks.
+We are going to crop the image to remove slices that do not contain the patient (background pixels). These background pixels can take up a large amount of memory and are not usually useful for further data processing tasks. However, there are a few considerations to pay careful attention to when cropping in order to preserve the mapping of the data to world coordinates. 
 
 We are going to crop the image from slice 103 to slice 381 in the x dimension (sagittal slices) and from slice 160 to 340 in the y dimension (coronal slices). Use ITK-SNAP to confirm that cropping the image to these slices will only remove slices that do not contain the patient.
 
