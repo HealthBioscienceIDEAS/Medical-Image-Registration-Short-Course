@@ -44,7 +44,7 @@ When using open datasets that contain images of humans, such as those from TCIA,
 
 ::::::::::::::::::::::::::::::::::::::
 
-The first part of this tutorial makes use of the ITK-SNAP software. Make sure you have installed it following the instructions from the Summary and Setup page. For second part is based in Python, and you should use the template Jupyter notebook *practical1-exercises.ipynb*. 
+The first part of this tutorial makes use of the ITK-SNAP software. Make sure you have installed it following the instructions from the Summary and Setup page. The second part is based in Python, and you should use the template Jupyter notebook `practical1-exercises.ipynb`. 
 
 ## 1. Medical imaging formats
 
