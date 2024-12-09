@@ -326,7 +326,7 @@ You will notice that the `sform` matrix matches the affine transform in the `Nif
 In the above `sform` matrix, you will notice that the diagonal elements of the affine matrix match the voxel dimensions (as the affine matrix does not contain any rotations), but the values for the x and y dimensions are negative. This is because the voxel indices increase as you move to the left and posterior of the image/patient, but the NIfTI format assumes a RAS world coordinate system (i.e. the values increase as you move to the **Right**,  **Anterior**, and **Superior** of the patient). Therefore, the world coordinates decrease as the voxel indices increase.
 
 #### LPS   
-On the other hand, the original DICOM images assume the world coordinate system is LPS (i.e. values increase when moving to the left, posterior, and superior). We can calculate the affine transform from the DICOM headers, instructions are given [here](https://nipy.org/nibabel/dicom/dicom_orientation.html)). 
+On the other hand, the original DICOM images assume the world coordinate system is LPS (i.e. values increase when moving to the **Left**, **Posterior**, and **Superior**). We can calculate the affine transform from the DICOM headers, instructions are given [here](https://nipy.org/nibabel/dicom/dicom_orientation.html)). 
 
 We obtain the following affine matrix:
 ```python
