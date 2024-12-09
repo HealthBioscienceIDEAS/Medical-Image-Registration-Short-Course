@@ -22,7 +22,7 @@ exercises: 2
 
 In these exercises, we will use a 2D slice from a lung MRI image, *lung_MRI_slice.png*, which you can find in the zipped data folder under `practical2`.
 
-This tutorial uses Python. There is a template Jupyter notebook for you to work on *practical2-exercises.ipynb*. You have also been provided with some utility functions in *utils.py*. When using a function from this file, you should read it and make sure you understand what it does.
+This tutorial uses Python. There is a template Jupyter notebook for you to work on `practical2-exercises.ipynb`. You have also been provided with some utility functions in `utils.py`. When using a function from this file, you should read it and make sure you understand what it does.
 
 ## 1. Loading and displaying images
 Load the 2D lung MRI image using the `imread` function from the *scikit-image* python library. If you check the data type of the image you will see it is stored as 8-bit integers. You should convert the image to double precision so that errors do not occur when processing the image due to the limited precision. 
