@@ -91,6 +91,7 @@ The plots should look like this:
 ![Figure. MSD values](fig/p3-msd-values.png)
 
 Note that:
+
 * The MSD for cases 1 and 4 does not decrease as the amount of overlap decreases.
 * The shape of the MSD curves for cases 1 and 4 are the same but the values are larger for case 1.
 * The MSD values for cases 2 and 3 are lower for negative values of theta and higher for positive values (this one is a bit tricky!).
