@@ -72,7 +72,7 @@ conda activate ideas-reg
 conda env update --name ideas-reg --file=python-environment.yml
 ```
 
-We created a conda environment from the existing `python-environment.yml` file. This environment has been tested on all the tutorials and should help avoiding issues when running them.
+We created a conda environment from the existing `ideas-reg-environment.yml` file. This environment has been tested on all the tutorials and should help avoiding issues when running them.
 
 ### VSCode
 
