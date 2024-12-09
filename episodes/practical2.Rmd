@@ -39,7 +39,7 @@ If you have done this correctly, the image should look like this:
 ## 2. Translating and resampling images
 Create an affine matrix representing a translation by 10 pixels in the x direction and 20 pixels in the y direction. 
 
-Note that *numpy* has a [matrix class](https://numpy.org/doc/stable/reference/generated/numpy.matrix.html) but the documentation recommends not using it. we are using *numpy* arrays for this exercise.
+Note that *numpy* has a [matrix class](https://numpy.org/doc/stable/reference/generated/numpy.matrix.html), but the documentation recommends not using it. We are using *numpy* arrays for this exercise.
 Matrix multiplication can be performed between two arrays using the @ operator or the `numpy.matmul` function
 
 Use the provided `defFieldFromAffineMatrix` function to create a deformation field from the affine matrix, and resample the image with the deformation field using the provided `resampImageWithDefField function`. The functions include comments explaining what the inputs and outputs of the functions should be. Now display the transformed image. 
