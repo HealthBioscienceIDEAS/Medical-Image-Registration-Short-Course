@@ -114,7 +114,7 @@ Different versions of the ITK-SNAP app can have different default orientations f
 
 ### 2.4. Navigating DICOM images
 * Navigate around the image and check the intensity value on the cursor inspector.
-* To navigate around the image, you can left-click and drag. To move through the displayed slices, you can use the mouse wheel (or two fingers on the touchpad) or use the slider next to the displayed slice.
+* To navigate around the image, you can left-click and drag the cursor around one of the three planes. To move through the displayed slices, you can use the mouse wheel (or two fingers on the touchpad) or use the slider next to the displayed slice.
 * To zoom, you can use the right click and drag. You can move the entire image by using the mouse centre button or alt + left click and drag.
 
 ![Figure. ITK-SNAP cursor inspector](fig/itk-snap-cursor-inspector.png)
