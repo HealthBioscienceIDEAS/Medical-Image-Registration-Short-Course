@@ -308,7 +308,7 @@ We can get information on this image's `sform` and `qform` from the `sform_code`
 | Code | Label | Meaning |
 | --- | --- | --- |
 | 0  | unknown | not defined | 
-| 1  | scanner | RAS+ is scanner coordinates | 
+| 1  | scanner | RAS+ is defined according to the scanner coordinate system | 
 | 2  | aligned | RAS+ aligned to some other scan | 
 | 3  | talairach | RAS+ in Talairach atlas space | 
 | 4  | mni | RAS+ in MNI atlas space | 
