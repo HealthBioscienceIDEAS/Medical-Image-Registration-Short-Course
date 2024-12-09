@@ -20,9 +20,9 @@ exercises: 2
 
 In these exercises, we use a three 2D images:
 
-* *ct_slice_int8.png*: an axial CT slice of a head, stored as unsigned 8-bit integers.
-* *ct_slice_int16.png*: the same axial slice CT slice, stored as unsigned 16-bit integers.
-* *mr_slice_int16.png*: the corresponding axial MR slice, stored as unsigned 16-bit integers.
+* `ct_slice_int8.png`: an axial CT slice of a head, pixels are stored as unsigned 8-bit integers.
+* `ct_slice_int16.png`: the same axial slice CT slice, pixels are stored as unsigned 16-bit integers.
+* `mr_slice_int16.png`: the corresponding axial MR slice, pixels are stored as unsigned 16-bit integers.
 
 You can find in the zipped data folder under `practical3`.
 
