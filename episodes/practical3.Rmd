@@ -83,7 +83,7 @@ Note that:
 
 Make sure you understand why you get these results.
 
-### 2.2. MSD
+### 2.2. Mean of Squared Differences (MSD)
 Now edit the code so that it rotates the images as above but calculates the MSD instead of the SSD at each iteration, and then plots the MSD values. 
 
 The plots should look like this:
