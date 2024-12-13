@@ -28,7 +28,7 @@ TCIA is a resource of public datasets that hosts a large archive of medical imag
 We are going to use data from the CT Ventilation as a Functional Imaging Modality for Lung Cancer Radiotherapy dataset (also known as `CT-vs-PET-Ventilation-Imaging dataset`).
 It contains 20 lung cancer patients who underwent exhale/inhale breath-hold CT (BHCT), free-breathing four-dimensional CT (4DCT) and Galligas PET ventilation scans in a single session on a combined 4DPET/CT scanner. We won't make use of the 4DCT.
 
-We used the scans from the patient `CT-PET-VI-02`. In the zipped data folder, you can find it under `practical1`. You should see four folders: 
+We used the scans from the patient `CT-PET-VI-02`. In the unzipped `data` folder, you can find them in the `practical1` folder. You should see four folders: 
 
 * `inhale_BH_CT` and `exhale_BH_CT`: CT scans acquired during an inhalation breath hold and exhalation breath hold, respectively.
 * `PET`: PET scan measuring local lung function.
@@ -49,6 +49,7 @@ The first part of this tutorial makes use of the ITK-SNAP software. Make sure yo
 ## 1. Medical imaging formats
 
 Although there are many different file formats used in medical imaging, we will focus on two of the most common formats:
+
 * [DICOM](https://www.dicomstandard.org/) (Digital Imaging and Communications in Medicine)
 * [NIfTI](https://nifti.nimh.nih.gov/) (Neuroimaging Informatics Technology Initiative)
 
@@ -57,7 +58,7 @@ Most data from a hospital will be in DICOM format, whereas NIfTI is a very popul
 ### 1.1. DICOM format
 DICOM is a widely used technical standard for digitally storing and transmitting medical images and related information.
 DICOM images typically have a separate file for every slice.
-If you look at the data `CT-PET-VI-02/CT_for_PET`, you will see that there are 175 individual files corresponding to 175 slices in the volume. More modern DICOM images can come with all slices in a single file.
+If you look in the `CT_for_PET` folder, you will see that there are 175 individual files corresponding to 175 slices in the volume. More modern DICOM images can come with all slices in a single file.
 
 In addition to the image data for each slice, each file contains a header which can include extensive information relating to the scan and subject. 
 In a clinical setting, this will include identifiable information such as the patient's name, address, and other relevant details.
@@ -91,18 +92,25 @@ For more information, please see Anderson Winkler's blog on the [NIfTI-1]( https
 ## 2. Visualisation of data with ITK-SNAP
 
 ### 2.1. Getting Started with ITK-SNAP
-The ITK-SNAP application shows three orthogonal slices and a fourth window for three-dimensional view segmentation. 
+ITK-SNAP is a free, open-source, multi-platform software application used to segment structures in 3D and 4D biomedical images. Although ITK-SNAP has been developed to segment structures, it can also be used to view 3D and 4D medical image data in a wide variety of formats. In this practical we will just be using ITK-SNAP to view 3D images and will not be exploring any of it's segmentation functionality. For more information on ITK-SNAP, including documentation and tutorial videos, see the [ITK-SNAP website](http://www.itksnap.org/pmwiki/pmwiki.php?n=Main.HomePage).
 
-![Figure. Description of ITK-SNAP tools in the main window using [MRI-crop example datasets](http://www.nitrc.org/frs/download.php/750/MRI-crop.zip) for plane and 3D views.](fig/itk-snap-main-window.svg)
+* Open the ITK-SNAP application.
+    * When it opens it may display a 'Layout Preference Reminder' popout window:
+![Figure. ITK-SNAP Layout Preference Reminder](fig/itk-snap-layout-pref-reminder.png)
+    * If this popout appears and you have not changed the settings in ITK-SNAP it should say the same as above, i.e. that radiological convention is used. In this case you can check 'Don't remind me again' and click 'No'.
+
+* When ITK-SNAP opens you can select between the 'Getting Started' pane, the 'Recent Images' pane, or the 'Recent Workspaces' pane using the tabs near the top of the window. You should select the 'Recent Images' pane if it is not already showing.
+    * If you have used ITK-SNAP before it will display recent images which you can select to open. Note, for DICOM images the name displayed is the name of the file containing the first DICOM slice. This can be confusing when the folder names rather than the file names specify which scan is which, as is the case in this practical.
+  
+![Figure. ITK-SNAP Recent Images](fig/itk-snap-recent-images.png)
 
 ### 2.2. Opening and viewing DICOM images
-* Open the ITK-SNAP application. 
-  * If you have used it before, it will display recent images which you can select to open.
-* Load the inhale scan `CT-PET-VI-02/inhale_BH_CT`.
-  * If the image you want to open is not listed under recent images, you can open it by clicking the 'Open Image...' button at the bottom right of the window or by clicking on File in the top ribbon, then Open Main Image. When you do this, a small window opens where you can enter the path of the file you want to open or click Browse to search your file explorer.
-  * Select the first slice from the inhale_BH_CT folder, which is called 1-001.dcm. Leave the default file format and click `Next`. You will then be asked to select the DICOM series to open, but as this folder only includes one series, you can click `Next`.
-  * Check the image summary and click `Finish`.
-  * You can also drag and drop a file from the File Explorer to the ITK-SNAP app to open it.
+
+* Load the inhale scan.
+    * If the image you want to open is not listed under recent images (or you are not sure which one it is), you can open it by clicking the 'Open Image...' button at the bottom right of the window or by clicking on 'File -> Open Main Image...' in the top ribbon. When you do this, a small window opens where you can enter the path of the file you want to open or click 'Browse' to search your file explorer.
+    * Select the first slice from the `inhale_BH_CT` folder, which is called `1-001.dcm`. Make sure the 'File Format:' is set to 'DICOM Image Series' and click 'Next >'.
+    * You will then be asked to select the DICOM series to open, but as this folder only includes one series, you can click 'Next >'.
+    * Once the image has loaded a small window will display some summary information about the image. This can be reviewed and then the window can be closed by clicking 'Finish'.
 
 ![Figure. ITK-SNAP opening image file](fig/itk-snap-opening-dicoms.svg)
 ![Figure. ITK-SNAP main window](fig/itk-snap-viewing-dicoms.svg)
