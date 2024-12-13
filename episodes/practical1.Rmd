@@ -28,7 +28,7 @@ TCIA is a resource of public datasets that hosts a large archive of medical imag
 We are going to use data from the CT Ventilation as a Functional Imaging Modality for Lung Cancer Radiotherapy dataset (also known as `CT-vs-PET-Ventilation-Imaging dataset`).
 It contains 20 lung cancer patients who underwent exhale/inhale breath-hold CT (BHCT), free-breathing four-dimensional CT (4DCT) and Galligas PET ventilation scans in a single session on a combined 4DPET/CT scanner. We won't make use of the 4DCT.
 
-We used the scans from the patient `CT-PET-VI-02`. In the zipped data folder, you can find it under `practical1`. You should have: 
+We used the scans from the patient `CT-PET-VI-02`. In the zipped data folder, you can find it under `practical1`. You should see four folders: 
 
 * `inhale_BH_CT` and `exhale_BH_CT`: CT scans acquired during an inhalation breath hold and exhalation breath hold, respectively.
 * `PET`: PET scan measuring local lung function.
