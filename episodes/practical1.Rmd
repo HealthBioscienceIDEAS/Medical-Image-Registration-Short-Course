@@ -112,10 +112,16 @@ ITK-SNAP is a free, open-source, multi-platform software application used to seg
 * Load the inhale scan.
     * If the image you want to open is not listed under recent images (or you are not sure which one it is), you can open it by clicking the 'Open Image...' button at the bottom right of the window or by clicking on 'File -> Open Main Image...' in the top ribbon. When you do this, a small window opens where you can enter the path of the file you want to open or click 'Browse' to search your file explorer.
     * Select the first slice from the `inhale_BH_CT` folder, which is called `1-001.dcm`. Make sure the 'File Format:' is set to 'DICOM Image Series' and click 'Next >'.
+    
+    ![](fig/itk-snap-open-image-1.png)
+    
     * You will then be asked to select the DICOM series to open, but as this folder only includes one series, you can click 'Next >'.
+    
+    ![](fig/itk-snap-open-image-2.png)
+    
     * Once the image has loaded a small window will display some summary information about the image. This can be reviewed and then the window can be closed by clicking 'Finish'.
     
-    ![](fig/itk-snap-opening-dicoms.svg)
+    ![](fig/itk-snap-open-image-3.png)
     
 * The inhale scan will now be displayed in ITK-SNAP, as shown below. On the left you will see the 'Main Toolbar', 'Cursor Inspector', 'Segmentation Labels', and '3D Toolbar'. In the rest of the window you will see four panes, three of which show orthogonal slices through the 3D volume:
         * Top-left shows an axial slice.
@@ -123,7 +129,7 @@ ITK-SNAP is a free, open-source, multi-platform software application used to seg
         * Bottom-right shows a coronal slice.
         * Bottom-left is currently empty (but would show a 3D reconstruction of the structures that have been segmented in the image when using ITK-SNAP for segmentation)
         
-![Figure. ITK-SNAP main window](fig/itk-snap-viewing-dicoms.svg)
+![Figure. ITK-SNAP after loading the inhale scan](fig/itk-snap-inhale-scan.png)
 
 ### 2.3. Navigating around 3D images
 * To navigate around the image, you can left-click in any of the three orthogonal slices to reposition the cursor to where you clicked. This will also change the slices displayed in the other two panes so that they show the slices that pass through the cursor (as indicated by the two dotted blue lines).
