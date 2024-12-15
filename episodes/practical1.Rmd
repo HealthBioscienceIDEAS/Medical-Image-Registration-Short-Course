@@ -110,7 +110,7 @@ ITK-SNAP is a free, open-source, multi-platform software application used to seg
 ### 2.2. Opening and viewing DICOM images
 
 * Load the inhale scan.
-    * If the image you want to open is not listed under recent images (or you are not sure which one it is), you can open it by clicking the 'Open Image...' button at the bottom right of the window or by clicking on 'File -> Open Main Image...' in the top ribbon. When you do this, a small window opens where you can enter the path of the file you want to open or click 'Browse' to search your file explorer.
+    * If the image you want to open is not listed under recent images (or you are not sure which one it is), you can open it by clicking the 'Open Image...' button at the bottom right of the window or by clicking on 'File -> Open Main Image...' in the top ribbon. When you do this, a small window opens where you can enter the path of the file you want to open or click 'Browse...' to search your file explorer.
     * Select the first slice from the `inhale_BH_CT` folder, which is called `1-001.dcm`. Make sure the 'File Format:' is set to 'DICOM Image Series' and click 'Next >'.
     
     ![](fig/itk-snap-open-image-1.png)
@@ -142,24 +142,34 @@ ITK-SNAP is a free, open-source, multi-platform software application used to seg
 * To zoom in , you can use the right click and drag the cursor upwards (to zoom out, drag the cursor downwards).
 * You can pan, or move the entire image, by clicking and dragging the mouse centre button (or alt + left click on Windows, option key + left click on Mac OS).
 
-### 2.4. Displaying multiple images
-We provide instructions for handling multiple DICOM images, applying overlays, viewing image information, and using colour maps in ITK-SNAP.
-For this example, we use `CT-PET-VI-02/inhale_BH_CT` and `CT-PET-VI-02/exhale_BH_CT` DICOMs.
+### 2.4. Loading and displaying multiple images
+If you open a new main image in ITK-SNAP it will replace the current image, making it difficult to directly compare the images. However, it is possible to load multiple images into ITK-SNAP so that they can be easily compared. The additional images can either be loaded as separate images, enabling you to quickly switch the displayed image from one to another, or as semi-transparent overlay images, enabling you to see one image overlaid on the other.
 
-#### Load additional image
-Go to the `exhale_BH_CT` folder in your File Explorer and drag any DICOM files onto the ITK-SNAP window. 
-A small window will pop up asking what should ITK-SNAP do with this image. 
-If you select `Load as Main Image`, the current image will be replaced. 
-Instead, select `Load as Additional Image` - this will enable easy comparison of the two images.
+* Load an additional image as a separate image
+    * Click 'File -> Add Another Image...'
+    * This will open a similar window to the one for opening the main image, where you can enter the name of the file you want to open or use the 'Browse...' button to locate it.
+    * This time select the first slice from the `exhale_BH_CT` folder, which is also called `1-001.dcm`. As before, make sure the 'File Format:' is set to 'DICOM Image Series' and click 'Next >'.
+    
+    ![](fig/itk-snap-additional-image-1.png)
+    
+    * As before you will be asked to select the DICOM series to open, but there is only one series in this folder, so just click 'Next >'.
+    * A window will then be displayed asking 'How should the image be displayed?'
+        * Select 'As a separate image (shown beside other images)' and then click 'Next >'.
+    
+    ![](fig/itk-snap-additional-image-2.png)
 
-![Figure. ITK-SNAP additional image](fig/itk-snap-additional-image.png)
-
-* Once the second image is loaded, you will see two thumbnails in the top corner of each slice display
-* Click on these to swap the displayed slices from one image to the other, allowing you to easily see the similarities and differences between the images. You can also swap quickly by using the square bracket shortcut keys `[` and `]`
-* You will also see that both images now appear in the Cursor Inspector, where you can see the intensity value at the cursor for both images. 
-* You can also change the displayed image by clicking on it in the Cursor Inspector
-
-![Figure. ITK-SNAP thumbnails, handling two DICOM images (`inhale_BH_CT` and `exhale_BH_CT` for `CT-PET-VI-02`)](fig/itk-snap-thumbnails.png)
+    * Once the second image is loaded, you will see two thumbnails in the top corner of each slice display.
+        * Click on these to swap the displayed slices from one image to the other, allowing you to easily see the similarities and differences between the images.
+    * You can also swap quickly by using the square bracket shortcut keys '[' and ']'.
+    * You will also see that both images now appear in the 'Cursor Inspector', where you can see the intensity value at the cursor for both images. 
+        * You can also change the displayed image by clicking on it in the 'Cursor Inspector'.
+    * If you compare the inhale and exhale image you will see they are very similar, although the patient's chest is further our in the inhale scan, and the rest of the anatomy has shifted accordingly.
+    
+    ![Figure. ITK-SNAP after loading the inhale and exhale scans](fig/itk-snap-inhale-and-exhale-scans.png)
+    
+    
+    
+    
 
 #### Colour overlay
 Sometimes, you may want to display an image as a colour overlay on top of another image, e.g., a PET image overlaid on the corresponding CT.
