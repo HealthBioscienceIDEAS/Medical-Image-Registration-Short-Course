@@ -20,7 +20,7 @@ git clone git@github.com:HealthBioscienceIDEAS/Medical-Image-Registration-Short-
 ## Course material
 
 Start by downloading the course material [here](https://liveuclac-my.sharepoint.com/:u:/g/personal/rmapcdr_ucl_ac_uk/ETtoAQ1qXedMiU69mRdFXOIBcnKQ-nxMQ1c74gsPm7a6Sg?download=1).
-We recommend saving it in your `Desktop` folder. Unzip it. 
+Unzip it and make a note of where the folder is saved.
 
 In this folder, you will find:
 
@@ -61,20 +61,35 @@ Once this has been installed, you should be able to open a terminal.
 
 ### Creating an environment
 
-Once you have opened the terminal, move to the location of the course files.
+Once you have opened the terminal, move to the location of the course files 
+(use the `cd` command to move to the correct location - have a quick look [here](https://tutorials.codebar.io/command-line/introduction/tutorial.html) if you've never used the command line before). 
+
+:::::::::::::::::::::::::: discussion
+### What does this look like?
+Say you have saved the extracted zip file on your Desktop. 
+::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::: solution
+### Windows
+```
+cd Desktop\ideas-reg\
+```
+Note: the above tutorial for the command line is for Mac/Linux users. 
+In your Anaconda prompt in Windows, you can use `dir` instead of `ls` and `cd` without any arguments instead of `pwd`.
+::::::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::: solution
+### Mac/Linux
 ```bash
-cd Desktop
+cd Desktop/ideas-reg/
 ```
-Create the environment.
+::::::::::::::::::::::::::::::::::::
+
+Create the environment from the existing `python-environment.yml` file.
 ``` bash
-conda create --name ideas-reg -c conda-forge python=3.12
-
-conda activate ideas-reg
-
-conda env update --name ideas-reg --file=python-environment.yml
+conda env create --name ideas-reg -f python-environment.yml
 ```
-
-We created a conda environment from the existing `python-environment.yml` file. This environment has been tested on all the tutorials and should help avoiding issues when running them.
+This environment has been tested on all the tutorials and should help avoiding issues when running them.
 
 ### VSCode
 
@@ -86,6 +101,21 @@ We recommend looking at the following instructions to get started:
 
 * [Python tutorial](https://code.visualstudio.com/docs/python/python-tutorial)
 * [Instructions for Jupyter notebooks](https://code.visualstudio.com/docs/datascience/jupyter-notebooks)
+
+#### Open the `ideas-reg` folder
+Start by opening the folder with the course content. Go on `File --> Open Folder` and navigate to the `ideas-reg` unzipped folder.
+![Figure. VSCode with ideas-reg opened](fig/vscode.png)
+
+On the left, you can see the files available in the directory. Open one of the practicals (`.ipynb`). This is a Jupyter notebook.
+If this is the first time you open a Jupyter notebook in VSCode, you should be prompted to install some extensions (Python, Pylance, Jupyter and a few more). 
+Install them. 
+
+#### Select the environment
+You now need to select the conda environment we created above. At the top right of the notebook, there should be a `Select Kernel` button.
+![Figure. VSCode: selecting an environment](fig/vscode-select-kernel.png)
+
+Click on Python Environment. You should see a dropdown with your existing environments. Select `ideas-reg`.
+![Figure. VSCode: selecting an environment](fig/vscode-ideas-reg.png)
 
 ## Software Setup
 
