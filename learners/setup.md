@@ -20,7 +20,7 @@ git clone git@github.com:HealthBioscienceIDEAS/Medical-Image-Registration-Short-
 ## Course material
 
 Start by downloading the course material [here](https://liveuclac-my.sharepoint.com/:u:/g/personal/rmapcdr_ucl_ac_uk/ETtoAQ1qXedMiU69mRdFXOIBcnKQ-nxMQ1c74gsPm7a6Sg?download=1).
-Unzip it and make a note of where you save it. 
+We recommend saving it in your `Desktop` folder. Unzip it. 
 
 In this folder, you will find:
 
@@ -61,9 +61,11 @@ Once this has been installed, you should be able to open a terminal.
 
 ### Creating an environment
 
-Once you have opened the terminal, move to the location of the course files (use `cd` and `ls` commands - have a quick look [here](https://tutorials.codebar.io/command-line/introduction/tutorial.html) if you've never used the command line before). 
-You need to be in the directory of the unzipped folder with the course material and see the `python-environment.yml` file.
-
+Once you have opened the terminal, move to the location of the course files.
+```bash
+cd Desktop
+```
+Create the environment.
 ``` bash
 conda create --name ideas-reg -c conda-forge python=3.12
 
@@ -72,7 +74,7 @@ conda activate ideas-reg
 conda env update --name ideas-reg --file=python-environment.yml
 ```
 
-We created a conda environment from the existing `ideas-reg-environment.yml` file. This environment has been tested on all the tutorials and should help avoiding issues when running them.
+We created a conda environment from the existing `python-environment.yml` file. This environment has been tested on all the tutorials and should help avoiding issues when running them.
 
 ### VSCode
 
