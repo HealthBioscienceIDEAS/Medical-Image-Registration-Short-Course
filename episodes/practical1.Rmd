@@ -147,7 +147,7 @@ Sometimes, you may want to display an image as a colour overlay on top of anothe
 	- Make sure the File Format is DICOM Image Series.
 	- This time, select Load as Main Image. This will load in the new image, replacing the two that were previously loaded.
 * **Load Overlay Image**:
-   - Load the `CT-PET-VI-02/PET` image either using the drag and drop method or `File -> Open Image`
+   - Load the `CT-PET-VI-02/PET` image either using the drag and drop method or `File -> Add Another Image`
 
 ![Figure. ITK-SNAP thumbnails](fig/itk-snap-colour-overlay-as-separate-image.svg)
 
