@@ -25,10 +25,10 @@ output: pdf_document
 
 In these exercises, we will be working with real-world medical imaging data from the Cancer Imaging Archive [(TCIA)](https://www.cancerimagingarchive.net/collection/ct-vs-pet-ventilation-imaging/).
 TCIA is a resource of public datasets that hosts a large archive of medical images of cancer accessible for public download.
-We are going to use data from the CT Ventilation as a Functional Imaging Modality for Lung Cancer Radiotherapy dataset (also known as `CT-vs-PET-Ventilation-Imaging dataset`).
+We are going to use data from the CT Ventilation as a Functional Imaging Modality for Lung Cancer Radiotherapy dataset (also known as CT-vs-PET-Ventilation-Imaging dataset).
 It contains 20 lung cancer patients who underwent exhale/inhale breath-hold CT (BHCT), free-breathing four-dimensional CT (4DCT) and Galligas PET ventilation scans in a single session on a combined 4DPET/CT scanner. We won't make use of the 4DCT.
 
-We used the scans from the patient `CT-PET-VI-02`. In the unzipped `data` folder, you can find them in the `practical1` folder. You should see four folders: 
+We used the scans from the patient CT-PET-VI-02. In the unzipped `data` folder, you can find them in the `practical1` folder. You should see four folders: 
 
 * `inhale_BH_CT` and `exhale_BH_CT`: CT scans acquired during an inhalation breath hold and exhalation breath hold, respectively.
 * `PET`: PET scan measuring local lung function.
@@ -112,6 +112,8 @@ ITK-SNAP is a free, open-source, multi-platform software application used to seg
 * Load the inhale scan.
     * If the image you want to open is not listed under recent images (or you are not sure which one it is), you can open it by clicking the 'Open Image...' button at the bottom right of the window or by clicking on 'File -> Open Main Image...' in the top ribbon. When you do this, a small window opens where you can enter the path of the file you want to open or click 'Browse...' to search your file explorer.
     * Select the first slice from the `inhale_BH_CT` folder, which is called `1-001.dcm`. Make sure the 'File Format:' is set to 'DICOM Image Series' and click 'Next >'.
+        * **Warning!** some versions of ITK-SNAP incorrectly set the 'File Format:' for the images used in this practical to '4D CTA DICOM Series'
+        * If this happens use the drop-down menu to set the 'File Format:' to 'DICOM Image Series' instead before clicking 'Next >'
     
     ![](fig/itk-snap-open-image-1.png)
     
@@ -163,38 +165,44 @@ If you open a new main image in ITK-SNAP it will replace the current image, maki
     * You can also swap quickly by using the square bracket shortcut keys '[' and ']'.
     * You will also see that both images now appear in the 'Cursor Inspector', where you can see the intensity value at the cursor for both images. 
         * You can also change the displayed image by clicking on it in the 'Cursor Inspector'.
-    * If you compare the inhale and exhale image you will see they are very similar, although the patient's chest is further our in the inhale scan, and the rest of the anatomy has shifted accordingly.
+    * If you compare the inhale and exhale image you will see they are very similar, although the patient's chest is further out in the inhale scan, and the rest of the anatomy has shifted accordingly.
     
     ![Figure. ITK-SNAP after loading the inhale and exhale scans](fig/itk-snap-inhale-and-exhale-scans.png)
     
+* Load an additional image as a colour overlay
+    * To demonstrate the use of colour overlays we are going to load the PET scan as a colour overlay on top of the corresponding CT scan. You should first load the CT scan as the main image (which will close any other images that are currently open, e.g. the inhale and exhale scans).
+        * Click 'File -> Open Main Image...'.
+        * Select the first slice from the `CT_for_PET` folder (also called `1-001.dcm`) and again make sure the 'File Format:' is set to 'DICOM Image Series' before clicking 'Next >'.
+        
+        ![](fig/itk-snap-additional-image-3.png)
+        
+        * As before you will be asked to select the DICOM series to open, but there is only one series in this folder, so just click 'Next >'.
+        * And then the summary information about the image will be displayed, which can be reviewed before closing the window by clicking 'Finish'.
+    * Now click 'File -> Add Another Image...'
+    * Select the first slice from the `PET` folder (also called `1-001.dcm`) and check the 'File Format:' is set to 'DICOM Image Series' before clicking 'Next >'.
     
+    ![](fig/itk-snap-additional-image-4.png)
+        
+    * Once again there is only one DICOM series in the folder so just click 'Next >'.
+    * The window will now be displayed asking 'How should the image be displayed?'
+        * This time select 'As a semi-transparent overlay (shown op top of other images)'.
+        * Use the dropdown menu to set the 'Overlay color map:' to 'Hot'.
+        * Click 'Next >'.
+        
+        ![](fig/itk-snap-additional-image-5.png)
+        
+    * The 'Image Summary' will now be displayed. This time it will include a warning about loss of precision, but this can be ignored. Click 'Finish' to close the window.
     
+    ![](fig/itk-snap-additional-image-6.png)
     
+    * The PET scan will now be displayed in ITK-SNAP using the hot colourmap (so the lungs mostly appear in red). Depending on the version of ITK-SNAP used, the CT scan may not be visible initially - this is because the PET scan is set to full opacity.
+    * The opacity of the PET scan can be adjusted by right-clicking on the PET scan in the 'Cursor Inspector' (where it is called *Galligas Lung*) and dragging the 'Opacity:' slider
+    
+    ![Figure. ITK-SNAP after loading the PET scan as a colour overlay on top of the corresponding CT scan](fig/itk-snap-ct-pet-overlay.png)
 
-#### Colour overlay
-Sometimes, you may want to display an image as a colour overlay on top of another image, e.g., a PET image overlaid on the corresponding CT.
 
-##### Colour overlay as a separate image (shown beside other images)
-* **Load Primary Image**:
-   - Open your primary DICOM series of the `CT-PET-VI-02/CT_for_PET` image either using the drag and drop method or `File -> Open Image` as described above.
-	- Make sure the File Format is DICOM Image Series.
-	- This time, select Load as Main Image. This will load in the new image, replacing the two that were previously loaded.
-* **Load Overlay Image**:
-   - Load the `CT-PET-VI-02/PET` image either using the drag and drop method or `File -> Open Image`
 
-![Figure. ITK-SNAP thumbnails](fig/itk-snap-colour-overlay-as-separate-image.svg)
 
-##### Colour overlay as a semi-transparent overlay (shown on the top of other images)
-* **Load Primary Image**:
-   - Open your primary DICOM series of the `CT-PET-VI-02/CT_for_PET` image either using the drag and drop method or `File -> Open Image` as described above.
-	- Make sure the File Format is DICOM Image Series.
-	- Select Load as Main Image.
-* **Load Overlay Image**:
-   - Load the `CT-PET-VI-02/PET` image either using the drag and drop method or `File -> Open Image`
-   - When the image has loaded, select it as a semi-transparent overlay. You can also set the overlay colour map here - select `Hot` from the drop-down menu and click Next. 
-   - The image summary will then be displayed, along with a warning about possible loss of precision (which can be ignored). Click Finish.
-
-![Figure. ITK-SNAP semi-transparent overlays](fig/itk-snap-colour-overlay-as-semi-transparent-image.svg)
 
 ### Layer inspector tools
 * Load `CT-PET-VI-02/CT_for_PET` and `CT-PET-VI-02/PET` scans using hot semi-transparency (as shown above).
