@@ -68,7 +68,9 @@ They should appear like this:
 
 (the difference image for *nearest neighbour* is on the left, and *splinef2d* on the right)
 
+::::::::::::callout
 Note – the values in the difference image for *splinef2d* are very small, in the order of 10-14, and can be attributed to numerical errors. So, the different interpolation all give (very almost) the same results. Do you understand why this is the case?
+::::::::::::
 
 Now write code that repeats the steps above using a translation of 10.5 pixels in the x direction and 20.5 pixels in the y direction. 
 
