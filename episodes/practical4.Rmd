@@ -36,6 +36,8 @@ Compare the images to each other and observe the motion that occurs between the 
 
 ![Figure. Difference images](fig/p4-diff-images.png)
 
+The image on the left is the difference image between the first and second images, and the one on the right is the difference image between the first and third images. 
+
 It is often easier to appreciate how things have moved/changed between images if you 'flip' between the images. To achieve this, we can use the `dispImageFlip` function. This function takes in the two images you want to look at as arguments, and you can flip between the two using the arrow keys on your keyboard.
 
 See how the images differ from each other. Pay particular attention to motion that you think could be challenging for the demons algorithm to recover, such as very large motion and deformation, or sliding motion that can occur between the lung/liver and surrounding anatomy.
