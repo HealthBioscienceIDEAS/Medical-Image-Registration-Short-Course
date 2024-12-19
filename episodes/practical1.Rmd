@@ -90,9 +90,9 @@ There are actually two formats of NIfTI files, NIfTI-1 and NIfTI-2, but these ar
 For more information, please see Anderson Winkler's blog on the [NIfTI-1]( https://brainder.org/2012/09/23/the-nifti-file-format/) and [NIfTI-2]( https://brainder.org/2015/04/03/the-nifti-2-file-format/) formats.
 
 
-## 2. Visualisation of data with ITK-SNAP
+## 2. Visualising images with ITK-SNAP
 
-### 2.1. Getting Started with ITK-SNAP
+### 2.1. Getting started with ITK-SNAP
 ITK-SNAP is a free, open-source, multi-platform software application used to segment structures in 3D and 4D biomedical images. Although ITK-SNAP has been developed to segment structures, it can also be used to view 3D and 4D medical image data in a wide variety of formats. In this practical we will just be using ITK-SNAP to view 3D images and will not be exploring any of it's segmentation functionality. For more information on ITK-SNAP, including documentation and tutorial videos, see the [ITK-SNAP website](http://www.itksnap.org/pmwiki/pmwiki.php?n=Main.HomePage).
 
 * Open the ITK-SNAP application.
@@ -195,8 +195,8 @@ If you open a new main image in ITK-SNAP it will replace the current image, maki
     
     ![](fig/itk-snap-additional-image-6.png)
     
-    * The PET scan will now be displayed in ITK-SNAP using the hot colourmap (so the lungs mostly appear in red). Depending on the version of ITK-SNAP used, the CT scan may not be visible initially - this is because the PET scan is set to full opacity.
-    * The opacity of the PET scan can be adjusted by right-clicking on the PET scan in the 'Cursor Inspector' (where it is called *Galligas Lung*) and dragging the 'Opacity:' slider
+    * The PET scan will now be displayed in ITK-SNAP using the hot colourmap (so the lungs mostly appear in red). Depending on the version of ITK-SNAP used, the opacity of the PET scan may initially be set to 0% (so all you will see is the CT scan), 100% (so all you will see is the PET scan), or some other value (so you will see both the CT scan and the PET scan overlaid on it).
+    * The opacity of the PET scan can be adjusted by right-clicking on the PET scan in the 'Cursor Inspector' (where it is called *Galligas Lung*) and dragging the 'Opacity:' slider.
     
     ![Figure. ITK-SNAP after loading the PET scan as a colour overlay on top of the corresponding CT scan](fig/itk-snap-ct-pet-overlay.png)
 
@@ -204,46 +204,51 @@ If you open a new main image in ITK-SNAP it will replace the current image, maki
 
 
 
-### Layer inspector tools
-* Load `CT-PET-VI-02/CT_for_PET` and `CT-PET-VI-02/PET` scans using hot semi-transparency (as shown above).
-* Go to `Tools -> Layer Inspector`. This opens the Image Layer Inspector window. You will see the two images on the left and five tabs at the window's top.
-* The PET image appears in the Cursor Inspector (called Galligas Lung) in italics and the CT image in bold. 
+### 2.5. Image Layer Inspector tool
+The 'Image Layer Inspector' tool displays further information about the images and allows you to modify and control how they are displayed. We will now briefly look at some of the functionality provided by the 'Image Layer Inspector'.
+
+* Click 'Tools -> Layer Inspector...' in the top ribbon. This will open the 'Image Layer Inspector' in a separate window.
+
+You will see the open images listed on the left, and five tabs across the top: 'General', 'Contrast', 'Color Map', 'Info', and 'Metadata'. You can click on the images listed on the left to select a different image.
 
 #### General tab
-The General tab displays the filename and the nickname for the selected image (click on either `Main Image` or `Additional Images` to display the corresponding information). 
+The 'General' tab displays the filename and the nickname for the selected image. For any 'Additional Images' the 'General' tab also enables you to select if the image is displayed as a 'Separate image' or a 'Semi-transparent overlay', and to change the 'Overlay opacity' if the image is being displayed as an overlay.
 
-* The nickname can be edited. 
-* For the PET image, the General tab also displays a slider to set the opacity and the option to display it as a separate image or semi-transparent overlay. 
-
-![Figure. ITK-SNAP: Layer inspector with general tab](fig/itk-snap-layer-inspector-general-tab.png)
+![](fig/itk-snap-image-layer-inspector-general.png)
 
 #### Contrast tab
-The Contrast tab enables you to adjust how the image intensities are displayed for the different images.
+The 'Contrast' tab enables you to adjust how the image intensities are displayed for the different images. You can use the text boxes in the 'Linear Image Contrast Adjustment:' panel to modify the range of intensity values displayed, e.g.:
 
-* e.g. Select the lung image and set the maximum value to 1000 (push enter after typing the number). This will make the structures in the lungs easier to see.
+* Select the CT image (called 'CT Lung 3.0 B31f' and listed as the 'Main Image') from the list on the left.
+* Use the text box to set the 'Maximum:' value to '1000' (push enter after typing the number). The CT image should now appear brighter than it previously did.
 
-![Figure. ITK-SNAP: Layer inspector with contrast tab](fig/itk-snap-layer-inspector-contrast-tab.png)
+The 'Reset' button can be used to return the intensity range to the original values. The 'Auto' button can be used to automatically set the intensity range based on the distribution of the intensity values in the image.
+The 'Curve-Based Image Contrast Adjustment:' panel can also be used to provide more fine grained control of how the image intensities are mapped to displayed intensities. The details of how this works are beyond the scope of this practical, but feel free to have a play with it in your own time (and remember the 'Reset' button resets the curve as well).
 
-#### Colour map tab
-The colour map tab can be used to select and manipulate the colour map.
+![](fig/itk-snap-image-layer-inspector-contrast.png)
 
-* Choose a predefined colour map from the list. You might also create a customised map.
-* Adjust the intensity and transparency settings as needed to enhance the visualisation of the images.
+#### Color Map tab
+The 'Color Map' tab can be used to select and manipulate the colour map used for each image. The colour map can be changed for any of the images, not just those displayed as semi-transparent overlays. You can select from predefined colour maps using the dropdown menu in the 'Presets:' panel. 
+The 'Color Map Editor:' panel can be used to modify the colour maps, which can then be saved as new presets (using the '+' button in the 'Presets:' panel). The details of how this works are beyond the scope of this practical, but feel free to have a play with it in your own time. You can always restore the original colour map by reselecting it from the dropdown menu in the 'Presets:' panel.
 
-![Figure. ITK-SNAP: Layer inspector with colour map tab](fig/itk-snap-layer-inspector-color-map-tab.png)
+![](fig/itk-snap-image-layer-inspector-color-map.png)
 
 #### Info tab
-The info tab displays the Image Header information for the images and also gives the cursor coordinates in both voxel and world units.
+The 'Info' tab displays some of the important information about the selected image under 'Image Header'. It also displays the 'Cursor Coordinates' in both voxel and world units (ITK-SNAP uses the same world coordinate system as NIfTI images - see section 4.3 below for more information on NIfTI and DICOM world coordinate systems) as well as the intensity at the cursor for the selected image.
 
-* A dialogue box will appear displaying metadata and other relevant information about the loaded DICOM images (e.g. values for image header and cursor coordinates).
-* If you look at the info tab for both the CT image and PET image, you will see that the image header information is different, and the cursor coordinates in voxel units for the PET image are not whole numbers. The resolution of the images is different, with the PET image having a coarser grid than the CT. Therefore, ITK-SNAP first displays the CT image, and the overlaid PET image slices are interpolated at the corresponding location.
+* First select the CT image. Then select the PET image. Notice how the values change for both the 'Image Header' and 'Cursor Coordinates'.
+    * The resolution ('Spacing') of the images is different, with the PET image having coarser voxels (larger spacing) than the CT.
+    * The voxel coordinates are always integers for the main image (here the CT image) but may be non-integer for any additional images.
+    * The world coordinates are the same for all images.
+    
+In ITK-SNAP the cursor can be located at the centre of any voxel in the main image. However, the voxel locations in the additional images may not be aligned with the voxels in the main image, e.g. if they have a different resolution, as for the CT and PET images here. In this case the cursor will not be located at the centre of a voxel in the additional images, hence the non-integer voxel coorindates.
 
-![Figure. ITK-SNAP: Layer inspector with info tab](fig/itk-snap-layer-inspector-info-tab.png)
+![](fig/itk-snap-image-layer-inspector-info.png)
 
 #### Metadata tab
-The metadata tab contains some of the information from the DICOM header of the images.
+The 'Metadata' tab contains information stored in the headers of the image files, so in this case (some of) the DICOM header information for these images. As can be seen, a lot of the information stored in the DICOM headers is not required or useful for processing the images.
 
-![Figure. ITK-SNAP: Layer inspector with metadata tab](fig/itk-snap-layer-inspector-metadata-tab.png)
+![](fig/itk-snap-image-layer-inspector-metadata.png)
 
 ## 3. Converting DICOM images to NIfTI
 As mentioned earlier, working in the NIfTI image format is easier when processing and analysing medical image data.

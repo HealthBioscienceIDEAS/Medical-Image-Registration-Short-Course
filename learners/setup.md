@@ -104,6 +104,6 @@ ITK-SNAP will be used in Practical 1.
     
     ![](fig/itk-snap-install-2.png)
     
-    * All of the default options can be selected during installation.
+    * Then all of the default options can be selected during installation.
 
 
