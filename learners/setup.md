@@ -93,7 +93,17 @@ It is open-source software distributed under the GNU General Public License.
 It is written in C++ and leverages the [Insight Segmentation and Registration Toolkit (ITK)](https://itk.org/).
 ITK-SNAP will be used in Practical 1.
 
-The ITK-SNAP installer should be downloaded from [here](http://www.itksnap.org/pmwiki/pmwiki.php?n=Downloads.SNAP4). You should download version 4.?? -  other versions should also be fine to use, but this is the version that was used when preparing the practical.
-Once you have downloaded the installer you should run it to install ITK-SNAP (accepting all of the default options during installation).
+* The ITK-SNAP installer should be downloaded from [here](http://www.itksnap.org/pmwiki/pmwiki.php?n=Downloads.SNAP4).
+    * Version 4.2.2 was used when preparing the practical exercises. Other versions can also be used for the practical, although they may behave slightly differently to what is described in the practical.
+* Once you have downloaded the installer you should run it to install ITK-SNAP.
+    * When you run the installer on Windows a window may pop up as shown below, with 'Don't run' as the only option given.
+    
+    ![](fig/itk-snap-install-1.png)
+    
+    * However, If you click on 'More info' a new 'Run anyway' button will appear which you can click on to run the installer.
+    
+    ![](fig/itk-snap-install-2.png)
+    
+    * All of the default options can be selected during installation.
 
 
