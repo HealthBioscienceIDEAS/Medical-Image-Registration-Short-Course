@@ -47,7 +47,12 @@ Use the provided `defFieldFromAffineMatrix` function to create a deformation fie
 If you have done this correctly it should appear like this:
 ![Figure. Displayed image](fig/trans_disp_image_translated.png)
 
-Does this appear as expected? Has the image been translated in the direction you expected? The `resampImageWithDefField` function uses pull-interpolation, so the image will appear to have been transformed by the inverse of the transformation in the affine matrix.
+::::::::::::callout
+* Does the image appear as expected? 
+* Has the image been translated in the direction you expected? 
+
+The `resampImageWithDefField` function uses pull-interpolation, so the image will appear to have been transformed by the inverse of the transformation in the affine matrix. We will discuss pull and push interpolations later in this lesson.
+:::::::::::::::::
 
 Check what value has been assigned to pixels that were originally outside the image by printing the value of the top right pixel (255,255). This is known as the ‘padding value’ or ‘extrapolation value’. A value of NaN (not a number) is often used to indicate that the true value for these pixels is unknown, and therefore they should be ignored when calculating similarity measures during image registration.
 
@@ -63,7 +68,9 @@ They should appear like this:
 
 (the difference image for *nearest neighbour* is on the left, and *splinef2d* on the right)
 
+::::::::::::callout
 Note – the values in the difference image for *splinef2d* are very small, in the order of 10-14, and can be attributed to numerical errors. So, the different interpolation all give (very almost) the same results. Do you understand why this is the case?
+::::::::::::
 
 Now write code that repeats the steps above using a translation of 10.5 pixels in the x direction and 20.5 pixels in the y direction. 
 
