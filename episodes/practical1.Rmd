@@ -126,10 +126,10 @@ ITK-SNAP is a free, open-source, multi-platform software application used to seg
     ![](fig/itk-snap-open-image-3.png)
     
 * The inhale scan will now be displayed in ITK-SNAP, as shown below. On the left you will see the 'Main Toolbar', 'Cursor Inspector', 'Segmentation Labels', and '3D Toolbar'. In the rest of the window you will see four panes, three of which show orthogonal slices through the 3D volume:
-        * Top-left shows an axial slice.
-        * Top-right shows a sagittal slice.
-        * Bottom-right shows a coronal slice.
-        * Bottom-left is currently empty (but would show a 3D reconstruction of the structures that have been segmented in the image when using ITK-SNAP for segmentation)
+    * Top-left shows an axial slice.
+    * Top-right shows a sagittal slice.
+    * Bottom-right shows a coronal slice.
+    * Bottom-left is currently empty (but would show a 3D reconstruction of the structures that have been segmented in the image when using ITK-SNAP for segmentation)
         
 ![Figure. ITK-SNAP after loading the inhale scan](fig/itk-snap-inhale-scan.png)
 
@@ -200,10 +200,6 @@ If you open a new main image in ITK-SNAP it will replace the current image, maki
     
     ![Figure. ITK-SNAP after loading the PET scan as a colour overlay on top of the corresponding CT scan](fig/itk-snap-ct-pet-overlay.png)
 
-
-
-
-
 ### 2.5. Image Layer Inspector tool
 The 'Image Layer Inspector' tool displays further information about the images and allows you to modify and control how they are displayed. We will now briefly look at some of the functionality provided by the 'Image Layer Inspector'.
 
@@ -251,18 +247,34 @@ The 'Metadata' tab contains information stored in the headers of the image files
 ![](fig/itk-snap-image-layer-inspector-metadata.png)
 
 ## 3. Converting DICOM images to NIfTI
-As mentioned earlier, working in the NIfTI image format is easier when processing and analysing medical image data.
-We will now work on converting DICOM images to a NIfTI image volume. 
+As mentioned earlier, converting DICOM images to another format, such as NIfTI, is often one of the first steps when processing and analysing medical image data. ITK-SNAP can save images in NIfTI format (and a few others), so can be used to convert the DICOM images to NIfTI. To save the images in NIfTI format:
 
-### 3.1. Using [SimpleITK](https://simpleitk.org/)
-Many Python packages allow you to convert images from DICOM to NIfTI format. Here, we chose to use the SimpleITK library. You can find the code for converting the images in the Jupyter notebook.
+* Open the 'General' tab in the 'Image Layer Inspector'.
+* Select the image you want to save from the list on the left, in this case select the CT image. Then click on the disk icon just above the list of images on the left. This will open the 'Save Image' window.
+    * Click 'Browse...' and navigate up one folder to the `practical1` folder and enter the 'File name:' as `CT_for_PET.nii.gz`.
+        * Note, using the `.nii.gz` extension saves the image as a compressed NIfTI file. Many softwares and libraries, including ITK-SNAP, NiBabel, and NiftyReg, can work directly with the compressed `.nii.gz` files, so these are often used to save storage space, and will be used in these exercises.
+    * Check the 'File Format:' is set to 'NiFTI' and click 'Finish'.
+    
+    ![](fig/itk-snap-save-image-1.png)
 
-### 3.2. Using other packages
-You might also be interested in looking at other packages: 
+* If you look in the `practical1` folder you should now see a file called `CT_for_PET.nii.gz`.
+* If you load this file as an additional image in ITK-SNAP you should see that the new NIfTI image looks exactly the same as the original DICOM image, and the 'Info' tab in the 'Image Layer Inspector' has exactly the same information for both images, as we would expect.
+* However, the information in the 'Metadata' tab for the two images is different, with the information from the NIfTI file header being displayed for the NIfTI image and the DICOM header information being displayed for the DICOM image.
 
-* https://pypi.org/project/dicom2nifti/
-* https://pypi.org/project/scikit-rt/
-* https://pypi.org/project/dcm2niix/
+![](fig/itk-snap-nifti-header.png)
+
+:::::::::::::::::::::::::::::::::::::: spoiler
+
+### Converting large numbers of DICOM images to NIfTI
+While ITK-SNAP provides a convenient way to convert DICOM images to NIfTI format, it is not very practical to use if you need to convert more than a few images. There are many free tools available that can be used to convert large numbers of images from DICOM to NIfTI, such as:
+
+* [dicom2nifti](https://dicom2nifti.readthedocs.io/en/latest/)
+* [dcm2niix](https://www.nitrc.org/plugins/mwiki/index.php/dcm2nii:MainPage)
+* [Scikit-rt](https://scikit-rt.github.io/scikit-rt/index.html)
+
+::::::::::::::::::::::::::::::::::::::
+
+
 
 
 ## 4. Viewing and understanding the NIfTI header with NiBabel
