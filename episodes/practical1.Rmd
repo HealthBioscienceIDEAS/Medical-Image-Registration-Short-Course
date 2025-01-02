@@ -23,6 +23,16 @@ output: pdf_document
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
+:::::::::::::::::::::::::::::::::::::: prereq
+
+You should have followed the instructions from [the Setup page](../learners/setup.md) to download the course material, setup Python, and install ITK-SNAP.
+
+::::::::::::::::::::::::::::::::::::::
+
+The first part of this tutorial makes use of the ITK-SNAP software. The second part is based in Python, and uses the Jupyter notebook `practical1-exercises.ipynb` downloaded with the course material.
+
+### Data 
+
 In these exercises, we will be working with real-world medical imaging data from the Cancer Imaging Archive [(TCIA)](https://www.cancerimagingarchive.net/collection/ct-vs-pet-ventilation-imaging/).
 TCIA is a resource of public datasets that hosts a large archive of medical images of cancer accessible for public download.
 We are going to use data from the CT Ventilation as a Functional Imaging Modality for Lung Cancer Radiotherapy dataset (also known as CT-vs-PET-Ventilation-Imaging dataset).
@@ -34,20 +44,19 @@ We used the scans from the patient CT-PET-VI-02. In the unzipped `data` folder, 
 * `PET`: PET scan measuring local lung function.
 * `CT_for_PET`: CT scan acquired at the same time as the PET scan for attenuation correction of the PET scan and to provide anatomical reference for the PET data.  
 
-These images are shown below in ITK-SNAP.
-
-![Figure. CT-PET-VI-02 dataset](fig/CT-PET-VI-02.svg)
 
 :::::::::::::::::::::::::::::::::::::: spoiler
 
-### Data sharing ethics and policies
-When using open datasets that contain images of humans, such as those from TCIA, for your research, you will still need to get ethical approval as you do for any non-open datasets you use. This is usually obtained from the local ethics committee, but tends to be a less involved process for secondary data analysis then it does for original data collection.
+#### Ethical approval for using open datasets
+When using open datasets that contain images of humans, such as those from TCIA, for your own research, you will still need to get ethical approval as you do for any non-open datasets you use. You should contact your local Research Ethics Committee at your institution for details on how to obtain ethical approval for your research.
+
+Ethical approval has been obtained from UCL for using these datasets as part of this teaching course.
 
 ::::::::::::::::::::::::::::::::::::::
 
-The first part of this tutorial makes use of the ITK-SNAP software. Make sure you have installed it following the instructions from the Summary and Setup page. The second part is based in Python, and you should use the template Jupyter notebook `practical1-exercises.ipynb`. 
+:::::::::::::::::::::::::::::::::::::: callout
 
-## 1. Medical imaging formats
+### Medical imaging formats
 
 Although there are many different file formats used in medical imaging, we will focus on two of the most common formats:
 
@@ -56,7 +65,7 @@ Although there are many different file formats used in medical imaging, we will 
 
 Most data from a hospital will be in DICOM format, whereas NIfTI is a very popular format in the medical image analysis community. The files from the TCIA are in DICOM format.
 
-### 1.1. DICOM format
+#### DICOM format
 DICOM is a widely used technical standard for digitally storing and transmitting medical images and related information.
 DICOM images typically have a separate file for every slice.
 If you look in the `CT_for_PET` folder, you will see that there are 175 individual files corresponding to 175 slices in the volume. More modern DICOM images can come with all slices in a single file.
@@ -74,26 +83,33 @@ Generally, most conversions go from DICOM to NIfTI. There are scenarios when you
 
 :::::::::::::::::::::::::::::::::::::: spoiler
 
-### Warning on converting images back to DICOM 
+#### Warning on converting images back to DICOM 
 Converting images back to DICOM such that they are correctly interpreted by a clinical system can be very tricky and requires a good understanding of the DICOM standard. 
 More information on the DICOM standard can be found here: https://www.dicomstandard.org.
 
 ::::::::::::::::::::::::::::::::::::::
 
-### 1.2. NIfTI format
+#### NIfTI format
 The NIfTI image format usually stores all of the imaging data and header information within a single file.
 While the neuroimaging community originally developed the NIfTI file format, it is not specific to neuroimaging. It is now widely used for many medical imaging applications outside the brain.
 The NIfTI header contains much less information than DICOM, but it includes all the key information required to interpret, manipulate, and process the image.
 During these exercises, you will learn about some of the key information stored in the NIfTI header.
+For more information, please see Anderson Winkler's blog on the [NIfTI file format]( https://brainder.org/2012/09/23/the-nifti-file-format/).
 
-There are actually two formats of NIfTI files, NIfTI-1 and NIfTI-2, but these are very similar. 
-For more information, please see Anderson Winkler's blog on the [NIfTI-1]( https://brainder.org/2012/09/23/the-nifti-file-format/) and [NIfTI-2]( https://brainder.org/2015/04/03/the-nifti-2-file-format/) formats.
+::::::::::::::::::::::::::::::::::::::
 
 
-## 2. Visualising images with ITK-SNAP
+## 1. Visualising images with ITK-SNAP
 
-### 2.1. Getting started with ITK-SNAP
+### 1.1. Getting started with ITK-SNAP
+
+:::::::::::::::::::::::::::::::::::::: callout
+
+#### ITK-SNAP
+
 ITK-SNAP is a free, open-source, multi-platform software application used to segment structures in 3D and 4D biomedical images. Although ITK-SNAP has been developed to segment structures, it can also be used to view 3D and 4D medical image data in a wide variety of formats. In this practical we will just be using ITK-SNAP to view 3D images and will not be exploring any of it's segmentation functionality. For more information on ITK-SNAP, including documentation and tutorial videos, see the [ITK-SNAP website](http://www.itksnap.org/pmwiki/pmwiki.php?n=Main.HomePage).
+
+::::::::::::::::::::::::::::::::::::::
 
 * Open the ITK-SNAP application.
     * When it opens it may display a 'Layout Preference Reminder' popout window:
@@ -107,7 +123,7 @@ ITK-SNAP is a free, open-source, multi-platform software application used to seg
     
 ![Figure. ITK-SNAP Recent Images](fig/itk-snap-recent-images.png)
 
-### 2.2. Opening and viewing DICOM images
+### 1.2. Opening and viewing DICOM images
 
 * Load the inhale scan.
     * If the image you want to open is not listed under recent images (or you are not sure which one it is), you can open it by clicking the 'Open Image...' button at the bottom right of the window or by clicking on 'File -> Open Main Image...' in the top ribbon. When you do this, a small window opens where you can enter the path of the file you want to open or click 'Browse...' to search your file explorer.
@@ -133,7 +149,7 @@ ITK-SNAP is a free, open-source, multi-platform software application used to seg
         
 ![Figure. ITK-SNAP after loading the inhale scan](fig/itk-snap-inhale-scan.png)
 
-### 2.3. Navigating around 3D images
+### 1.3. Navigating around 3D images
 * To navigate around the image, you can left-click in any of the three orthogonal slices to reposition the cursor to where you clicked. This will also change the slices displayed in the other two panes so that they show the slices that pass through the cursor (as indicated by the two dotted blue lines).
     * If you left-click and drag the cursor the other panes will scroll through the slices as you move the mouse.
     * If you use the mouse wheel (or two fingers on the touchpad) you will scroll through the slices in the pane where the mouse pointer currently is. You can also use the slider next to the displayed slice.
@@ -144,7 +160,7 @@ ITK-SNAP is a free, open-source, multi-platform software application used to seg
 * To zoom in , you can use the right click and drag the cursor upwards (to zoom out, drag the cursor downwards).
 * You can pan, or move the entire image, by clicking and dragging the mouse centre button (or alt + left click on Windows, option key + left click on Mac OS).
 
-### 2.4. Loading and displaying multiple images
+### 1.4. Loading and displaying multiple images
 If you open a new main image in ITK-SNAP it will replace the current image, making it difficult to directly compare the images. However, it is possible to load multiple images into ITK-SNAP so that they can be easily compared. The additional images can either be loaded as separate images, enabling you to quickly switch the displayed image from one to another, or as semi-transparent overlay images, enabling you to see one image overlaid on the other.
 
 * Load an additional image as a separate image
@@ -200,7 +216,7 @@ If you open a new main image in ITK-SNAP it will replace the current image, maki
     
     ![Figure. ITK-SNAP after loading the PET scan as a colour overlay on top of the corresponding CT scan](fig/itk-snap-ct-pet-overlay.png)
 
-### 2.5. Image Layer Inspector tool
+### 1.5. Image Layer Inspector tool
 The 'Image Layer Inspector' tool displays further information about the images and allows you to modify and control how they are displayed. We will now briefly look at some of the functionality provided by the 'Image Layer Inspector'.
 
 * Click 'Tools -> Layer Inspector...' in the top ribbon. This will open the 'Image Layer Inspector' in a separate window.
@@ -246,7 +262,7 @@ The 'Metadata' tab contains information stored in the headers of the image files
 
 ![](fig/itk-snap-image-layer-inspector-metadata.png)
 
-## 3. Converting DICOM images to NIfTI
+### 1.6 Converting DICOM images to NIfTI
 As mentioned earlier, converting DICOM images to another format, such as NIfTI, is often one of the first steps when processing and analysing medical image data. ITK-SNAP can save images in NIfTI format (and a few others), so can be used to convert the DICOM images to NIfTI. To save the images in NIfTI format:
 
 * Open the 'General' tab in the 'Image Layer Inspector'.
@@ -274,14 +290,18 @@ While ITK-SNAP provides a convenient way to convert DICOM images to NIfTI format
 
 ::::::::::::::::::::::::::::::::::::::
 
+## 2. Viewing and understanding the NIfTI header with NiBabel
 
+:::::::::::::::::::::::::::::::::::::: callout
 
+#### NiBabel
 
-## 4. Viewing and understanding the NIfTI header with NiBabel
-We will use the Python package [NiBabel](https://nipy.org/nibabel/) to open NIfTI images and learn some basic properties of the images.
-We recommend checking [documentation](https://nipy.org/nibabel/#documentation) for further details on using the NiBabel library.
+We will use the Python package [NiBabel](https://nipy.org/nibabel/) for viewing and manipulating NIfTI images and their headers.
+We will demonstrate some of the functionality of NiBabel, but recommend checking the [documentation](https://nipy.org/nibabel/#documentation) for further details on using the NiBabel library. This also contains some useful information and tutorials on [working with NIfTI images](https://nipy.org/nibabel/nifti_images.html), [understanding world coordinate systems](https://nipy.org/nibabel/coordinate_systems.html), and  [neurological vs radiological views](https://nipy.org/nibabel/neuro_radio_conventions.html).
 
-### 4.1. Loading images
+::::::::::::::::::::::::::::::::::::::
+
+### 2.1. Loading images
 A NIfTI image can be read using NiBabel’s `load` function. This creates a Nifti1Image object. We load the `ct_for_pet.nii.gz` file.
 <!--
 ```python
@@ -311,7 +331,7 @@ We recommend using the `sform` over the `qform` for various reasons:
 * It can contain shears that cannot be represented using the `qform`, which can be helpful when representing affine transformations.
 * Common libraries (including NiBabel) tend to give precedence to the `sform` and use the `qform` only if the `sform` is not provided.
 
-### 4.2. Header features 
+### 2.2. Header features 
 We can look at the header of the Nifti1Image object.
 ```python
 <class 'nibabel.nifti1.Nifti1Header'> object, endian='<'
@@ -379,7 +399,7 @@ These specify the top three rows of a 4x4 matrix representing an affine transfor
 The fourth row is not stored as it is always `[0 0 0 1]`. This is true because it makes a lot of mathematical operations involved in mapping coordinates to the right location much easier and quicker
 You will notice that the `sform` matrix matches the affine transform in the `Nifti1Image` object (`nii3ct.affine`).
 
-### 4.3. Coordinate systems
+### 2.3. Coordinate systems
 #### RAS  
 In the above `sform` matrix, you will notice that the diagonal elements of the affine matrix match the voxel dimensions (as the affine matrix does not contain any rotations), but the values for the x and y dimensions are negative. This is because the voxel indices increase as you move to the left and posterior of the image/patient, but the NIfTI format assumes a RAS world coordinate system (i.e. the values increase as you move to the **Right**,  **Anterior**, and **Superior** of the patient). Therefore, the world coordinates decrease as the voxel indices increase.
 
@@ -413,9 +433,9 @@ print(nii_itksnap.affine)
 This time, all three rows have negative values on the diagonal (the third row was positive before). This means the coordinate system is now RAI: rows run towards Inferior.
 -->
 
-## 5. Modifying NIfTI images and headers with NiBabel
+## 3. Modifying NIfTI images and headers with NiBabel
 
-### 5.1. Modifying the data type
+### 3.1. Modifying the data type
 The image data for a Nifti1Image object can be accessed using the `get_fdata` function.
 This will load the data from the disk and cast it to float64 type before returning it as a `numpy` array.
 Casting it to float64 prevents any integer-related errors and problems in downstream processing when using the data read by NiBabel. 
@@ -433,7 +453,7 @@ Load the `ct_for_pet.nii.gz` image. If you open the `Image Layer Inspector` and 
 
 ![Figure. ITK-SNAP: Metadata for 16-bit integers vs 32-bit floats](fig/itk-snap-16-32-bits.svg)
 
-### 5.2. Cropping data
+### 3.2. Cropping data
 We are going to crop the image to remove slices that do not contain the patient (background pixels). These background pixels can take up a large amount of memory and are not usually useful for further data processing tasks. However, there are a few considerations to pay careful attention to when cropping in order to preserve the mapping of the data to world coordinates. 
 
 We are going to crop the image from slice 103 to slice 381 in the x dimension (sagittal slices) and from slice 160 to 340 in the y dimension (coronal slices). Use ITK-SNAP to confirm that cropping the image to these slices will only remove slices that do not contain the patient.
@@ -472,7 +492,7 @@ If you load the cropped and aligned image into ITK-SNAP using the overlay semi-t
 ![Figure. ITK-SNAP: Cropped image in ITK-SNAP](fig/itk-snap-overlay-semi-transparent-cropped-affine.png)
 
 
-### 5.3. Aligning images
+### 3.3. Aligning images
 If you load `ct_for_pet.nii.gz` and `inhale_bh_ct.nii.gz` in ITK-SNAP as separate images, you can see that the anatomy in both images does not overlap and the field of view is different. 
 
 ![Figure. Misaligned images](fig/itk-snap-misaligned-images.png)
@@ -491,7 +511,7 @@ Try writing code to implement these steps yourself, based on what you have learn
 
 ![Figure. Aligned images](fig/itk-snap-aligned-images.png)
 
-## 6. References 
+## 4. References 
 * NiBabel: "The NiBabel documentation also contains some useful information and tutorials for working with NIfTI images and understanding world coordinate systems and radiological vs neurological view."
 	* https://nipy.org/nibabel/nifti_images.html  
 	* https://nipy.org/nibabel/coordinate_systems.html  
