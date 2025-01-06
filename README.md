@@ -30,6 +30,7 @@ This project exists thanks to all mainteners. Sort list by last name (alphabetic
 ## Contributors
 This project exists thanks to all the people who contribute. Sort list by last name (alphabetically). 
 * [Dave Cash](https://github.com/davecash75)
+* [Clea Dronne](https://github.com/clead6)
 * [Milan Malfait](https://github.com/milanmlft)
 * [Jamie Mcclelland](https://github.com/jamie-mcclelland)
 * [Zakaria Senousy](https://github.com/zsenousy)
