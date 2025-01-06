@@ -9,7 +9,7 @@ output: pdf_document
 
 - How is medical imaging data typically stored?
 - What tools and methods can be used to visualise medical imaging data?
-- How can medical imaging data be manipulated and modified effectively?
+- How can medical imaging data be manipulated and modified consistently?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -17,7 +17,6 @@ output: pdf_document
 
 - Explore medical imaging data formats, focusing on DICOM and NIfTI.
 - Learn to use ITK-SNAP software to display medical imaging data.
-- Convert medical images from DICOM to NIfTI format using Python.
 - Understand the structure and content of the NIfTI header.
 - Modify and manipulate NIfTI images and headers using Python.
 
