@@ -30,11 +30,11 @@ Load and display the three images. Convert the images to doubles and reorientate
 
 The images should look like this:
 
-![Figure. Displayed images](fig/p4-displayed-images.png)
+![Figure. Displayed images](fig/practical4-displayed-images.png)
 
 Compare the images to each other and observe the motion that occurs between the images. Difference images (one image minus another, e.g. as shown below) are a good way seeing where there are differences between the images, but it can be difficult to tell how things have moved between the images from the difference image.
 
-![Figure. Difference images](fig/p4-diff-images.png)
+![Figure. Difference images](fig/practical4-diff-images.png)
 
 The image on the left is the difference image between the first and second images, and the one on the right is the difference image between the first and third images. 
 
@@ -49,19 +49,19 @@ Have a look at the comments at the start of `demonsReg` function in `demonsReg.p
 Start by running a registration with `cine_MR_1` as the source image and `cine_MR_2` as the target image and using default values for all the other parameters.
 When you start the registration, a figure appears with 3 subplots. The first subplot on the left shows the warped image (transformed source image), the second subplot in the middle shows the current deformation field and the third subplot on the right shows the update to the deformation field for the current iteration. The deformation field (middle plot) is displayed as a deformed grid whereas the update is displayed as a vector field. All three images update during the registration.
 
-![Figure. Initialisation of the demons algorithm](fig/p4-reg-first-step.png)
+![Figure. Initialisation of the demons algorithm](fig/practical4-reg-init.png)
 
 While the registration is running, you will notice that the figures are updated and that text is outputted in the notebook stating the current resolution level, iteration number, and value of the Mean Squared Difference (MSD) between the target image and the current warped image. The MSD is the similarity metric used by this demons registration. At the end of the registration, the figure should look like this:
 
-![Figure. Output of the demons algorithm](fig/p4-reg-output.png)
+![Figure. Output of the demons algorithm](fig/practical4-defparams-output1.png)
 
 Here is a summary of the registration:
-![Figure. Output of the demons algorithm](fig/registration_animation.gif)
+![Figure. Output of the demons algorithm](fig/practical4-defparams-anim.gif)
 
 
 At the end of the registration, a second figure appears. The figure allows us to flip between the source, target and warped image and shows the deformation field and difference image. We can also display the Jacobian (more details later).
 
-![Figure. Output of the demons algorithm](fig/p4-reg-output2.png)
+![Figure. Output of the demons algorithm](fig/practical4-defparams-output2.png)
 
 If you look at the text output you will see that the final MSD value is 80.20 (rounded to 2 decimal places – more are shown in the console), and that 74 iterations were performed at the final (3rd) resolution level. If you scroll up in the console you will see that 24 iterations were also performed at the 2nd resolution level, and 17 iterations at the 1st level. 
 :::::::::::::::challenge
@@ -79,21 +79,21 @@ If you look at the deformation field you will see that it corresponds to the def
 
 You can specify the values of the optional input parameters when calling the function, e.g. `demonsReg(cine_MR_1, cine_MR_2, sigma_elastic=0)` will run the registration with sigma_elastic set to 0, i.e. with no elastic like regularisation applied. Try running this registration. At the end of the registration, the figures should look like this:
 
-![Figure. Output of the demons algorithm](fig/p4-reg-output-sigelastic0.png)
-![Figure. Output of the demons algorithm](fig/p4-reg-output2-sigelastic0.png)
+![Figure. Output of the demons algorithm](fig/practical4-elastic0-output1.png)
+![Figure. Output of the demons algorithm](fig/practical4-elastic0-output2.png)
 
 Here is a summary of the registration:
-![Figure. Output of the demons algorithm](fig/registration_animation_elastic0.gif)
+![Figure. Output of the demons algorithm](fig/practical4-elastic0-anim.gif)
 
 You will see that parts of the final warped image looks very similar to the target image, and the final MSD is 79.01, which is a little lower than for the default parameters. However, you can see that the final deformation field is very ‘crumpled’ and does not look very physically plausible. Therefore, for most applications this would not be considered a good registration result. The reason that the result is like this is that without any elastic-like regularisation applied to the deformation field it is free to ‘evolve’ in any way that better aligns the intensities, even if this results in implausible transformations, and highlights the need for using suitable regularisation.
 
 Now rerun the registration with sigma_elastic at its default value again but this time setting sigma_fluid to 0. At the end of the registration, the figures should look like this:
 
-![Figure. Output of the demons algorithm](fig/p4-reg-output-sigfluid0.png)
-![Figure. Output of the demons algorithm](fig/p4-reg-output2-sigfluid0.png)
+![Figure. Output of the demons algorithm](fig/practical4-fluid0-output1.png)
+![Figure. Output of the demons algorithm](fig/practical4-fluid0-output2.png)
 
 Here is a summary of the registration:
-![Figure. Output of the demons algorithm](fig/registration_animation_fluid0.gif)
+![Figure. Output of the demons algorithm](fig/practical4-fluid0-anim.gif)
 
 You will now see that the updates are much larger and noisier as no regularisation is being applied to them, but the deformation field is still relatively smooth as it does have regularisation applied. If you compare the result from this registration to the result obtained with the default parameters (remember, you can store the outputs of the function so that you can directly compare the results from different registrations) you will see that the results are very similar. However, the final MSD value is lower (72.73), but some regions of the deformation field are slightly less smooth. Which of the results should be considered ‘best’ will depend on exactly what the application is. But it should be clear that the elastic-like regularisation usually has a larger effect on the result than the fluid-like regularisation does. Now try running several more registrations with different levels of elastic-like and fluid-like regularisation to get a good feel for how the combination of these parameters affects the results, and which ranges of values produce good/bad results.
 
@@ -104,11 +104,11 @@ You can control how often the plots are updated by setting the value of the `dis
 ### 2.3. Resolution levels
 You should have noticed that the registration is using a multi-resolution approach, with 3 resolution levels by default. You can specify the number of resolution levels to use with the `num_lev` input parameter. Try running a registration with `num_lev` set to 1, i.e. so that only a single resolution level is used, and the multi-resolution approach is not applied. At the end of the registration, the figures should look like this:
 
-![Figure. Output of the demons algorithm](fig/p4-reg-output-numlev1.png)
-![Figure. Output of the demons algorithm](fig/p4-reg-output2-numlev1.png)
+![Figure. Output of the demons algorithm](fig/practical4-numlev1-output1.png)
+![Figure. Output of the demons algorithm](fig/practical4-numlev1-output2.png)
 
 Here is a summary of the registration:
-![Figure. Output of the demons algorithm](fig/registration_animation_level1.gif)
+![Figure. Output of the demons algorithm](fig/practical4-numlev1-anim.gif)
 
 ::::::::::::::::::::discussion
 Do you think using a multi-resolution approach helps? Why?
@@ -124,16 +124,16 @@ When investigating the effects of the regularisation parameters you should have 
 
 For example, if you perform a registration with the following parameters: `sigma_elastic = 0.5, sigma_fluid = 1, num_lev = 3`, the result is the deformation field shown below, and as can be seen in the zoomed-in image on the right, the grid has folded over itself in some regions.
 
-![Figure. Deformation field](fig/p4-def-field-zoom.png)
+![Figure. Deformation field](fig/practical4-def-field-zoom.png)
 You have been provided with a function, `calcJacobian`, to calculate the Jacobian determinant (and optionally the full Jacobian matrix) at each pixel in the deformation field, and return a map (image) of the Jacobian determinants. Have a look at this function and make sure you understand how it works.
 
 You can display the Jacobian by using the up and down arrows on the second output figure at the end of the registration. 
 
-![Figure. Output of the demons algorithm](fig/p4-reg-output2-sigelastic0.5.png)
+![Figure. Output of the demons algorithm](fig/practical4-elastic05-output2.png)
 
 You can also plot the Jacobian yourself by calling the `calcJacobian` and `dispImage` functions. It is useful to add a colourbar and to use the `jet` colourmap. You can also plot a binary mask of the Jacobian by setting all values <= 0 to 1s.
 
-![Figure. Jacobian](fig/p4-jac-binarymask.png)
+![Figure. Jacobian](fig/practical4-jac-binarymask.png)
 
 You can notice that the image is very ‘patchy’, and does not show smooth expansions/contractions as would be expected during breathing. The colourbar shows us that the Jacobian contains some very large values (>4) as well as negative values, indicating that folding has occurred. 
 
@@ -157,15 +157,15 @@ You can see that the equation for composing the transformation is the same as th
 Now perform a registration using the same parameters as above but use composition rather than addition to update the transformation, i.e. use the following parameters: `sigma_elastic = 0.5, sigma_fluid = 1, num_lev = 3, use_composition = True`. 
 
 Here is a summary of the registration:
-![Figure. Output of the demons algorithm](fig/registration_animation_comp.gif)
+![Figure. Output of the demons algorithm](fig/practical4-comp-anim.gif)
 
 You will notice that the deformation field no longer contains any folding:
 
-![Figure. Deformation field](fig/p4-def-field-comp.png)
+![Figure. Deformation field](fig/practical4-comp-def-field.png)
 
 but the Jacobian determinant map is still very patchy
 
-![Figure. Jacobian](fig/p4-comp-jac.png)
+![Figure. Jacobian](fig/practical4-comp-jac.png)
 
 and the max value is larger (note – a different intensity scale is used compared to the Jacobian determinant image on the previous page to show there is a different range of values).
 

@@ -1,41 +1,41 @@
 ---
-title: "An introduction to medical imaging data"
+title: "An introduction to viewing and manipulating medical imaging data"
 teaching: 10
 exercises: 2
-output: pdf_document
 ---
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- How is medical imaging data typically stored?
-- What tools and methods can be used to visualise medical imaging data?
-- How can medical imaging data be manipulated and modified consistently?
+* What file formats are commonly used to store medical image data?
+* How can we view and compare medical images?
+* How can we display and modify image header information?
+* How can we modify the imaging data and the header data consistently?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Explore medical imaging data formats, focusing on DICOM and NIfTI.
-- Learn to use ITK-SNAP software to display medical imaging data.
-- Understand the structure and content of the NIfTI header.
-- Modify and manipulate NIfTI images and headers using Python.
+* Understand some of the key differences between the DICOM and NIfTI file formats.
+* Learn to use ITK-SNAP software to view and compare medical imaging data.
+* Explore how the NiBabel library can be used to display and modify NIfTI header and image data.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::: prereq
 
-You should have followed the instructions from [the Setup page](../learners/setup.md) to download the course material, setup Python, and install ITK-SNAP.
+You should have followed the instructions from [the Setup page](../learners/setup.md) to access the data and Jupyter notebook for these exercises, setup Python and install ITK-SNAP.
 
 ::::::::::::::::::::::::::::::::::::::
 
-The first part of this tutorial makes use of the ITK-SNAP software. The second part is based in Python, and uses the Jupyter notebook `practical1-exercises.ipynb` downloaded with the course material.
+The first part of this practical makes use of the ITK-SNAP software. The second part is based in Python, and uses this Jupyter notebook: [`practical1_notebook.ipynb`](files/practical1_notebook.ipynb).
+
 
 ### Data 
 
 In these exercises, we will be working with real-world medical imaging data from The Cancer Imaging Archive [(TCIA)](https://www.cancerimagingarchive.net/collection/ct-vs-pet-ventilation-imaging/).
 TCIA is a resource of public datasets that hosts a large archive of medical images of cancer accessible for public download.
 We are going to use data from the CT Ventilation as a Functional Imaging Modality for Lung Cancer Radiotherapy dataset (also known as CT-vs-PET-Ventilation-Imaging dataset).
-It contains 20 lung cancer patients who underwent exhale/inhale breath-hold CT (BHCT), free-breathing four-dimensional CT (4DCT) and Galligas PET ventilation scans in a single session on a combined 4DPET/CT scanner. We won't make use of the 4DCT.
+It contains 20 lung cancer patients who underwent exhale/inhale breath-hold CT (BHCT), free-breathing four-dimensional CT (4DCT) and Galligas PET ventilation scans in a single session on a combined 4DPET/CT scanner. We won't make use of the 4DCT in these exercises.
 
 We used the scans from the patient CT-PET-VI-02. In the unzipped `data` folder, you can find them in the `practical1` folder. You should see four folders: 
 
@@ -48,8 +48,6 @@ We used the scans from the patient CT-PET-VI-02. In the unzipped `data` folder, 
 
 #### Ethical approval for using open datasets
 When using open datasets that contain images of humans, such as those from TCIA, for your own research, you will still need to get ethical approval as you do for any non-open datasets you use. You should contact your local Research Ethics Committee at your institution for details on how to obtain ethical approval for your research.
-
-Ethical approval has been obtained from UCL for using these datasets as part of this teaching course.
 
 ::::::::::::::::::::::::::::::::::::::
 
@@ -98,7 +96,7 @@ For more information, please see Anderson Winkler's blog on the [NIfTI file form
 ::::::::::::::::::::::::::::::::::::::
 
 
-## 1. Visualising images with ITK-SNAP
+## 1. Viewing images with ITK-SNAP
 
 ### 1.1. Getting started with ITK-SNAP
 
@@ -113,14 +111,14 @@ ITK-SNAP is a free, open-source, multi-platform software application used to seg
 * Open the ITK-SNAP application.
     * When it opens it may display a 'Layout Preference Reminder' popout window:
     
-    ![](fig/itk-snap-layout-pref-reminder.png)
+    ![](fig/practical1-layout-pref-reminder.png)
     
     * If this popout appears and you have not changed the settings in ITK-SNAP it should say the same as above, i.e. that radiological convention is used. In this case you can check 'Don't remind me again' and click 'No'.
 
 * When ITK-SNAP opens you can select between the 'Getting Started' pane, the 'Recent Images' pane, or the 'Recent Workspaces' pane using the tabs near the top of the window. You should select the 'Recent Images' pane if it is not already showing.
     * If you have used ITK-SNAP before it will display recent images which you can select to open. Note, for DICOM images the name displayed is the name of the file containing the first DICOM slice. This can be confusing when the folder names rather than the file names specify which scan is which, as is the case in this practical.
     
-![Figure. ITK-SNAP Recent Images](fig/itk-snap-recent-images.png)
+![Figure. ITK-SNAP Recent Images](fig/practical1-recent-images.png)
 
 ### 1.2. Opening and viewing DICOM images
 
@@ -130,15 +128,15 @@ ITK-SNAP is a free, open-source, multi-platform software application used to seg
         * :warning: **Warning!** some versions of ITK-SNAP incorrectly set the 'File Format:' for the images used in this practical to '4D CTA DICOM Series'
         * If this happens use the drop-down menu to set the 'File Format:' to 'DICOM Image Series' instead before clicking 'Next >'
     
-    ![](fig/itk-snap-open-image-1.png)
+    ![](fig/practical1-open-image-1.png)
     
     * You will then be asked to select the DICOM series to open, but as this folder only includes one series, you can click 'Next >'.
     
-    ![](fig/itk-snap-open-image-2.png)
+    ![](fig/practical1-open-image-2.png)
     
     * Once the image has loaded a small window will display some summary information about the image. This can be reviewed and then the window can be closed by clicking 'Finish'.
     
-    ![](fig/itk-snap-open-image-3.png)
+    ![](fig/practical1-open-image-3.png)
     
 * The inhale scan will now be displayed in ITK-SNAP, as shown below. On the left you will see the 'Main Toolbar', 'Cursor Inspector', 'Segmentation Labels', and '3D Toolbar'. In the rest of the window you will see four panes, three of which show orthogonal slices through the 3D volume:
     * Top-left shows an axial slice.
@@ -146,7 +144,7 @@ ITK-SNAP is a free, open-source, multi-platform software application used to seg
     * Bottom-right shows a coronal slice.
     * Bottom-left is currently empty (but would show a 3D reconstruction of the structures that have been segmented in the image when using ITK-SNAP for segmentation)
         
-![Figure. ITK-SNAP after loading the inhale scan](fig/itk-snap-inhale-scan.png)
+![Figure. ITK-SNAP after loading the inhale scan](fig/practical1-inhale-scan.png)
 
 ### 1.3. Navigating around 3D images
 * To navigate around the image, you can left-click in any of the three orthogonal slices to reposition the cursor to where you clicked. This will also change the slices displayed in the other two panes so that they show the slices that pass through the cursor (as indicated by the two dotted blue lines).
@@ -154,7 +152,7 @@ ITK-SNAP is a free, open-source, multi-platform software application used to seg
     * If you use the mouse wheel (or two fingers on the touchpad) you will scroll through the slices in the pane where the mouse pointer currently is. You can also use the slider next to the displayed slice.
     * As you move the cursor around or scroll through the slices you should notice that the information displayed in the 'Cursor Inspector' is updated accordingly. Note, the cursor position displayed here is in voxel coordinates.
     
-    ![](fig/itk-snap-cursor-inspector.png)
+    ![](fig/practical1-cursor-inspector.png)
     
 * To zoom in , you can use the right click and drag the cursor upwards (to zoom out, drag the cursor downwards).
 * You can pan, or move the entire image, by clicking and dragging the mouse centre button (or alt + left click on Windows, option key + left click on Mac OS).
@@ -167,13 +165,13 @@ If you open a new main image in ITK-SNAP it will replace the current image, maki
     * This will open a similar window to the one for opening the main image, where you can enter the name of the file you want to open or use the 'Browse...' button to locate it.
     * This time select the first slice from the `exhale_BH_CT` folder, which is also called `1-001.dcm`. As before, make sure the 'File Format:' is set to 'DICOM Image Series' and click 'Next >'.
     
-    ![](fig/itk-snap-additional-image-1.png)
+    ![](fig/practical1-additional-image-1.png)
     
     * As before you will be asked to select the DICOM series to open, but there is only one series in this folder, so just click 'Next >'.
     * A window will then be displayed asking 'How should the image be displayed?'
         * Select 'As a separate image (shown beside other images)' and then click 'Next >'.
     
-    ![](fig/itk-snap-additional-image-2.png)
+    ![](fig/practical1-additional-image-2.png)
 
     * Once the second image is loaded, you will see two thumbnails in the top corner of each slice display.
         * Click on these to swap the displayed slices from one image to the other, allowing you to easily see the similarities and differences between the images.
@@ -182,21 +180,21 @@ If you open a new main image in ITK-SNAP it will replace the current image, maki
         * You can also change the displayed image by clicking on it in the 'Cursor Inspector'.
     * If you compare the inhale and exhale image you will see they are very similar, although the patient's chest is further out in the inhale scan, and the rest of the anatomy has shifted accordingly.
     
-    ![Figure. ITK-SNAP after loading the inhale and exhale scans](fig/itk-snap-inhale-and-exhale-scans.png)
+    ![Figure. ITK-SNAP after loading the inhale and exhale scans](fig/practical1-inhale-and-exhale-scans.png)
     
 * Load an additional image as a colour overlay
     * To demonstrate the use of colour overlays we are going to load the PET scan as a colour overlay on top of the corresponding CT scan. You should first load the CT scan as the main image (which will close any other images that are currently open, e.g. the inhale and exhale scans).
         * Click 'File -> Open Main Image...'.
         * Select the first slice from the `CT_for_PET` folder (also called `1-001.dcm`) and again make sure the 'File Format:' is set to 'DICOM Image Series' before clicking 'Next >'.
         
-        ![](fig/itk-snap-additional-image-3.png)
+        ![](fig/practical1-additional-image-3.png)
         
         * As before you will be asked to select the DICOM series to open, but there is only one series in this folder, so just click 'Next >'.
         * And then the summary information about the image will be displayed, which can be reviewed before closing the window by clicking 'Finish'.
     * Now click 'File -> Add Another Image...'
     * Select the first slice from the `PET` folder (also called `1-001.dcm`) and check the 'File Format:' is set to 'DICOM Image Series' before clicking 'Next >'.
     
-    ![](fig/itk-snap-additional-image-4.png)
+    ![](fig/practical1-additional-image-4.png)
         
     * Once again there is only one DICOM series in the folder so just click 'Next >'.
     * The window will now be displayed asking 'How should the image be displayed?'
@@ -204,16 +202,16 @@ If you open a new main image in ITK-SNAP it will replace the current image, maki
         * Use the dropdown menu to set the 'Overlay color map:' to 'Hot'.
         * Click 'Next >'.
         
-        ![](fig/itk-snap-additional-image-5.png)
+        ![](fig/practical1-additional-image-5.png)
         
     * The 'Image Summary' will now be displayed. This time it will include a warning about loss of precision, but this can be ignored. Click 'Finish' to close the window.
     
-    ![](fig/itk-snap-additional-image-6.png)
+    ![](fig/practical1-additional-image-6.png)
     
     * The PET scan will now be displayed in ITK-SNAP using the hot colourmap (so the lungs mostly appear in red). Depending on the version of ITK-SNAP used, the opacity of the PET scan may initially be set to 0% (so all you will see is the CT scan), 100% (so all you will see is the PET scan), or some other value (so you will see both the CT scan and the PET scan overlaid on it).
     * The opacity of the PET scan can be adjusted by right-clicking on the PET scan in the 'Cursor Inspector' (where it is called *Galligas Lung*) and dragging the 'Opacity:' slider.
     
-    ![Figure. ITK-SNAP after loading the PET scan as a colour overlay on top of the corresponding CT scan](fig/itk-snap-ct-pet-overlay.png)
+    ![Figure. ITK-SNAP after loading the PET scan as a colour overlay on top of the corresponding CT scan](fig/practical1-ct-pet-overlay.png)
 
 ### 1.5. Image Layer Inspector tool
 The 'Image Layer Inspector' tool displays further information about the images and allows you to modify and control how they are displayed. We will now briefly look at some of the functionality provided by the 'Image Layer Inspector'.
@@ -225,7 +223,7 @@ You will see the open images listed on the left, and five tabs across the top: '
 #### General tab
 The 'General' tab displays the filename and the nickname for the selected image. For any 'Additional Images' the 'General' tab also enables you to select if the image is displayed as a 'Separate image' or a 'Semi-transparent overlay', and to change the 'Overlay opacity' if the image is being displayed as an overlay.
 
-![](fig/itk-snap-image-layer-inspector-general.png)
+![](fig/practical1-image-layer-inspector-general.png)
 
 #### Contrast tab
 The 'Contrast' tab enables you to adjust how the image intensities are displayed for the different images. You can use the text boxes in the 'Linear Image Contrast Adjustment:' panel to modify the range of intensity values displayed, e.g.:
@@ -236,13 +234,13 @@ The 'Contrast' tab enables you to adjust how the image intensities are displayed
 The 'Reset' button can be used to return the intensity range to the original values. The 'Auto' button can be used to automatically set the intensity range based on the distribution of the intensity values in the image.
 The 'Curve-Based Image Contrast Adjustment:' panel can also be used to provide more fine grained control of how the image intensities are mapped to displayed intensities. The details of how this works are beyond the scope of this practical, but feel free to have a play with it in your own time (and remember the 'Reset' button resets the curve as well).
 
-![](fig/itk-snap-image-layer-inspector-contrast.png)
+![](fig/practical1-image-layer-inspector-contrast.png)
 
 #### Color Map tab
 The 'Color Map' tab can be used to select and manipulate the colour map used for each image. The colour map can be changed for any of the images, not just those displayed as semi-transparent overlays. You can select from predefined colour maps using the dropdown menu in the 'Presets:' panel. 
 The 'Color Map Editor:' panel can be used to modify the colour maps, which can then be saved as new presets (using the '+' button in the 'Presets:' panel). The details of how this works are beyond the scope of this practical, but feel free to have a play with it in your own time. You can always restore the original colour map by reselecting it from the dropdown menu in the 'Presets:' panel.
 
-![](fig/itk-snap-image-layer-inspector-color-map.png)
+![](fig/practical1-image-layer-inspector-color-map.png)
 
 #### Info tab
 The 'Info' tab displays some of the important information about the selected image under 'Image Header'. It also displays the 'Cursor Coordinates' in both voxel and world units (ITK-SNAP uses the same world coordinate system as NIfTI images - see section 4.3 below for more information on NIfTI and DICOM world coordinate systems) as well as the intensity at the cursor for the selected image.
@@ -254,12 +252,12 @@ The 'Info' tab displays some of the important information about the selected ima
     
 In ITK-SNAP the cursor can be located at the centre of any voxel in the main image. However, the voxel locations in the additional images may not be aligned with the voxels in the main image, e.g. if they have a different resolution, as for the CT and PET images here. In this case the cursor will not be located at the centre of a voxel in the additional images, hence the non-integer voxel coorindates.
 
-![](fig/itk-snap-image-layer-inspector-info.png)
+![](fig/practical1-image-layer-inspector-info.png)
 
 #### Metadata tab
 The 'Metadata' tab contains information stored in the headers of the image files, so in this case (some of) the DICOM header information for these images. As can be seen, a lot of the information stored in the DICOM headers is not required or useful for processing the images.
 
-![](fig/itk-snap-image-layer-inspector-metadata.png)
+![](fig/practical1-image-layer-inspector-metadata.png)
 
 ### 1.6 Converting DICOM images to NIfTI
 As mentioned earlier, converting DICOM images to another format, such as NIfTI, is often one of the first steps when processing and analysing medical image data. ITK-SNAP can save images in NIfTI format (and a few others), so can be used to convert the DICOM images to NIfTI. To save the images in NIfTI format:
@@ -270,13 +268,13 @@ As mentioned earlier, converting DICOM images to another format, such as NIfTI, 
         * Note, using the `.nii.gz` extension saves the image as a compressed NIfTI file. Many softwares and libraries, including ITK-SNAP, NiBabel, and NiftyReg, can work directly with the compressed `.nii.gz` files, so these are often used to save storage space, and will be used in these exercises.
     * Check the 'File Format:' is set to 'NiFTI' and click 'Finish'.
     
-    ![](fig/itk-snap-save-image-1.png)
+    ![](fig/practical1-save-image-1.png)
 
 * If you look in the `practical1` folder you should now see a file called `CT_for_PET.nii.gz`.
 * If you load this file as an additional image in ITK-SNAP you should see that the new NIfTI image looks exactly the same as the original DICOM image, and the 'Info' tab in the 'Image Layer Inspector' has exactly the same information for both images, as we would expect.
 * However, the information in the 'Metadata' tab for the two images is different, with the information from the NIfTI file header being displayed for the NIfTI image and the DICOM header information being displayed for the DICOM image.
 
-![](fig/itk-snap-nifti-header.png)
+![](fig/practical1-nifti-header.png)
 
 :::::::::::::::::::::::::::::::::::::: spoiler
 
@@ -431,7 +429,7 @@ On the other hand, the original DICOM images assume the world coordinate system 
 ```output
 [[   0.9765625     0.            0.         -249.51171875]
  [   0.            0.9765625     0.         -466.01171875]
- [   0.            0.            3.         -205.5       ]
+ [   0.            0.            2.         -553.5       ]
  [   0.            0.            0.            1.        ]]
 ```
 As you can see, the values in the first two rows corresponding to the X and Y dimensions are the negative of those in the NIfTI header.
@@ -478,14 +476,14 @@ The new file `CT_for_PET_float32.nii.gz` is larger than `CT_for_PET.nii.gz` (62 
 * Load `CT_for_PET_float32.nii.gz` as an additional image in ITK-SNAP. You should see that the new NIfTI image looks exactly the same as the previous NIfTI image (and the original DICOM image) and has the same intensity values.
 * However, if you look at the 'Info' tab in the 'Image Layer Inspector' you will see that the 'Pixel Format:' for the new image is float32, but is int16 for the previous image.
 
-![](fig/itk-snap-info-32.png)
+![](fig/practical1-info-32.png)
 
-![](fig/itk-snap-info-16.png)
+![](fig/practical1-info-16.png)
 
 * And if you look at he 'Metadata' tab you will see that the 'bitpix' value is 32 for the new image and 16 for the previous image, and the 'datatype' is 16 for the new image and 4 for the previous image.
 
-![](fig/itk-snap-metadata-32.png)
-![](fig/itk-snap-metadata-16.png)
+![](fig/practical1-metadata-32.png)
+![](fig/practical1-metadata-16.png)
 
 
 ### 3.2. Cropping images
@@ -508,7 +506,7 @@ When creating a new Nifti1Image object, you can provide an affine transform and/
 * Load the uncropped CT image (`CT_for_PET.nii.gz`) into ITK-SNAP as the main image. Now load the cropped image as an additional image. 
 You will see that the cropped image has been cropped in all three dimensions so that it just contains the lungs, but it is shifted relative to the uncropped image.
 
-![Figure. ITK-SNAP after loading the cropped image (and repositioning the cursor to see the image more clearly)](fig/itk-snap-cropped-ct.png)
+![Figure. ITK-SNAP after loading the cropped image (and repositioning the cursor to see the image more clearly)](fig/practical1-cropped-ct.png)
 
 :::::::::::::::::::::::::::::::::::::: callout
 
@@ -544,14 +542,14 @@ But you wouldn’t have learnt so much if we’d simply done that to start with!
 
 If you load the new image into ITK-SNAP you will see that it is now aligned with the original image. 
 
-![Figure. ITK-SNAP after loading the cropped and aligned image)](fig/itk-snap-cropped-ct-aligned-1.png)
+![Figure. ITK-SNAP after loading the cropped and aligned image)](fig/practical1-cropped-ct-aligned-1.png)
 
-![Figure. ITK-SNAP showing the same slices through the uncropped image)](fig/itk-snap-cropped-ct-aligned-2.png)
+![Figure. ITK-SNAP showing the same slices through the uncropped image)](fig/practical1-cropped-ct-aligned-2.png)
 
 ### 3.3. Aligning images
 If you load `CT_for_PET.nii.gz` and the DICOM image in the inhale_BH_CT` folder in to ITK-SNAP, you can see that there is a large misalignment between the images. 
 
-![Figure. ITK-SNAP after loading `CT_for_PET.nii.gz` and the DICOM image in the inhale_BH_CT` folder](fig/itk-snap-misaligned-images.png)
+![Figure. ITK-SNAP after loading `CT_for_PET.nii.gz` and the DICOM image in the inhale_BH_CT` folder](fig/practical1-misaligned-images.png)
 
 If we perform a registration between these images as they are, it may have difficulties as the images are so far out of alignment to start with. One way to roughly align the images before performing a registration is to align the centres of the images.
 
@@ -586,8 +584,8 @@ The translation should not replace the image origin values in the affine header 
 
 Use ITK-SNAP to verify that you have correctly aligned the centres of the images.
 
-![Figure. ITK-SNAP after loading `inhale_BH_CT_aligned.nii.gz`](fig/itk-snap-aligned-images-1.png)
-![Figure. ITK-SNAP showing the cprresponding slices of `CT_for_PET.nii.gz`](fig/itk-snap-aligned-images-2.png)
+![Figure. ITK-SNAP after loading `inhale_BH_CT_aligned.nii.gz`](fig/practical1-aligned-images-1.png)
+![Figure. ITK-SNAP showing the cprresponding slices of `CT_for_PET.nii.gz`](fig/practical1-aligned-images-2.png)
 
 ## 4. References 
 #### Data
