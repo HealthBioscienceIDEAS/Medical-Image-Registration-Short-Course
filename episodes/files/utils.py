@@ -277,7 +277,6 @@ def dispImageFlip(image1, image2, int_lims=[]):
 
     # Display the figure
     plt.tight_layout()
-    plt.show()
 
 def calcJacobian(def_field):
     """

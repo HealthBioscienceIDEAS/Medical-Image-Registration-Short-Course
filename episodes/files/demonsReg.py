@@ -15,7 +15,7 @@ from scipy.ndimage import gaussian_filter
 from utils import dispImage, resampImageWithDefField, calcMSD, dispDefField, calcJacobian
 
 def demonsReg(source, target, sigma_elastic=1, sigma_fluid=1, num_lev=3, use_composition=False,
-              use_target_grad=False, max_it=1000, check_MSD=True, disp_freq=3, disp_spacing=2, 
+              use_target_grad=False, max_it=1000, check_MSD=True, disp_freq=5, disp_spacing=2, 
               scale_update_for_display=10, disp_method_df='grid', disp_method_up='arrows'):
     """
     SYNTAX:
@@ -86,6 +86,7 @@ def demonsReg(source, target, sigma_elastic=1, sigma_fluid=1, num_lev=3, use_com
     # Prepare the figure for live update during registration process
     fig, axs = plt.subplots(1, 3, figsize=(12, 6))
     iteration_text = fig.text(0.5, 0.92, '', ha='center', va='top', fontsize=10, color='black')
+    fig.suptitle('Live display')
     
     # Loop over resolution levels
     for lev in range(1, num_lev + 1):        
@@ -170,13 +171,13 @@ def demonsReg(source, target, sigma_elastic=1, sigma_fluid=1, num_lev=3, use_com
             # transform the image using the updated deformation field
             warped_image = resampImageWithDefField(source, def_field)
 
-            # update images if required for this iteration
-            if disp_freq > 0 and it % disp_freq == 0:
-                update_live_display(axs, fig, iteration_text, warped_image, def_field, update_x, update_y, lev, it, prev_MSD, X, Y, disp_spacing, scale_update_for_display, disp_method_df, disp_method_up)
-            
             # calculate MSD between target and warped image and print results
             MSD = calcMSD(target, warped_image)
             print('Level {0:d}, Iteration {1:d}: MSD = {2:f}\n'.format(lev, it, MSD))
+
+            # update images if required for this iteration
+            if disp_freq > 0 and it % disp_freq == 0:
+                update_live_display(axs, fig, iteration_text, warped_image, def_field, update_x, update_y, lev, it, MSD, X, Y, disp_spacing, scale_update_for_display, disp_method_df, disp_method_up)
             
             # check for improvement in MSD if required
             if check_MSD and MSD >= prev_MSD:
@@ -188,15 +189,17 @@ def demonsReg(source, target, sigma_elastic=1, sigma_fluid=1, num_lev=3, use_com
             
             # update previous values of def_field and MSD
             def_field_prev, prev_MSD = def_field.copy(), MSD.copy()
-
-        if lev == num_lev:
-            final_display(source_full, target_full, warped_image, def_field, disp_spacing, disp_method_df)
-
+    
+    # update the live display with the final results
+    update_live_display(axs, fig, iteration_text, warped_image, def_field, update_x, update_y, lev, it, MSD, X, Y, disp_spacing, scale_update_for_display, disp_method_df, disp_method_up)
+    # and make the final display appear
+    final_display(source_full, target_full, warped_image, def_field, disp_spacing, disp_method_df)
+    
     # return the transformed image and the deformation field
     return warped_image, def_field
 
 
-def update_live_display(axs, fig, iteration_text, warped_image, def_field, update_x, update_y, lev, it, prev_MSD, X, Y, disp_spacing, scale_update_for_display, disp_method_df, disp_method_up):
+def update_live_display(axs, fig, iteration_text, warped_image, def_field, update_x, update_y, lev, it, MSD, X, Y, disp_spacing, scale_update_for_display, disp_method_df, disp_method_up):
     """
     Updates the live display of the registration process during each iteration.
 
@@ -233,8 +236,8 @@ def update_live_display(axs, fig, iteration_text, warped_image, def_field, updat
             The current level of the multi-resolution registration scheme.
         it: int
             The current iteration number.
-        prev_MSD: float
-            The Mean Squared Difference (MSD) value from the previous iteration.
+        MSD: float
+            The current Mean Squared Difference (MSD) value.
         X, Y: 2D arrays
             The grid coordinates of the original image.
         disp_spacing: int
@@ -271,11 +274,10 @@ def update_live_display(axs, fig, iteration_text, warped_image, def_field, updat
     axs[2].set_ylim(y_lims)
     axs[2].set_title('Update Field')
 
-    iteration_text.set_text(f'Level {lev}, Iteration {it}: MSD = {prev_MSD:.6f}')
+    iteration_text.set_text(f'Level {lev}, Iteration {it}: MSD = {MSD:.6f}')
     plt.tight_layout()
     fig.canvas.draw()
     fig.canvas.flush_events()
-    plt.pause(0.5)
 
 
 def final_display(source, target, warped_image, def_field, disp_spacing, disp_method_df):
@@ -326,7 +328,7 @@ def final_display(source, target, warped_image, def_field, disp_spacing, disp_me
     """
 
     # Initialise global variables for current index tracking
-    current_image_index = [0]
+    current_image_index = [2]
     current_mode_index = [0]
     
     # Define the images and titles
@@ -347,11 +349,14 @@ def final_display(source, target, warped_image, def_field, disp_spacing, disp_me
         axs_combined[0].clear()
         plt.sca(axs_combined[0])
         dispImage(images[current_image_index[0]], title=image_titles[current_image_index[0]])
+        x_lims, y_lims = plt.xlim(), plt.ylim()
 
         axs_combined[1].clear()
         plt.sca(axs_combined[1])
         if modes[current_mode_index[0]] == 'Deformation Field': 
             dispDefField(def_field, spacing=disp_spacing, plot_type=disp_method_df)
+            axs_combined[1].set_xlim(x_lims)
+            axs_combined[1].set_ylim(y_lims)
             axs_combined[1].set_title('Deformation Field')
 
         else:
@@ -368,13 +373,18 @@ def final_display(source, target, warped_image, def_field, disp_spacing, disp_me
 
     # Create a single figure with 3 subplots
     fig_combined, axs_combined = plt.subplots(1, 3, figsize=(12, 6))
+    fig_combined.suptitle('Final display')
 
     # Display initial images
     plt.sca(axs_combined[0])
     dispImage(images[current_image_index[0]], title=image_titles[current_image_index[0]])
+    x_lims, y_lims = plt.xlim(), plt.ylim()
 
     plt.sca(axs_combined[1])
     dispDefField(def_field, spacing=disp_spacing, plot_type=disp_method_df)
+    axs_combined[1].set_title('Deformation Field')
+    axs_combined[1].set_xlim(x_lims)
+    axs_combined[1].set_ylim(y_lims)
     axs_combined[1].set_title('Deformation Field')
 
     plt.sca(axs_combined[2])
@@ -388,4 +398,3 @@ def final_display(source, target, warped_image, def_field, disp_spacing, disp_me
     fig_combined.canvas.mpl_connect('key_press_event', on_key)
 
     plt.tight_layout()
-    plt.show()

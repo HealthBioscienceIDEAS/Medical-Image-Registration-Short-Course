@@ -30,7 +30,7 @@ You should have followed the instructions from [the Setup page](../learners/setu
 
 This practical is based in Python, and uses this template Jupyter notebook: [`practical2_notebook.ipynb`](files/practical2_notebook.ipynb).You have also been provided with some utility functions in [`utils.py`](files/utils.py). When using a function from this file, you should read it and make sure you understand what it does.
 
-In these exercises, we will use a 2D slice from a lung MRI image, *lung_MRI_slice.png*, which you can find in the unzipped data folder under `practical2`.
+In these exercises, we will use a 2D slice from a lung MRI image, `lung_MRI_slice.png`, which you can find in the unzipped data folder under `practical2`.
 
 * Run the first cell of the Juypter notebook. This imports the required libraries, and sets the *matplotlib* library to display figures in separate windows. This is required for the animations in these exercises to run correctly.
 

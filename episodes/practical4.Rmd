@@ -1,105 +1,144 @@
 ---
-title: 'Understanding the Demons registration algorithm'
+title: 'Exploring the Demons registration algorithm'
 teaching: 10
 exercises: 2
 ---
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- How does the Demons registration algorithm achieve image registration?
-- What parameters should be adjusted to optimise the performance of the Demons registration algorithm?
-- What are the key strengths and potential limitations of using the Demons registration algorithm?
+* How does the Demons registration algorithm attempt to align images?
+* How do the different parameters affect the performance of the Demons registration algorithm?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Explore the underlying principles and methods of the Demons registration algorithm.
-- Understand the key parameters that influence the performance of the algorithm and how to tune them effectively.
-- Visualise and interpret the results by generating plots of deformation fields and Jacobian determinant maps.
+* Understand how the demons registration algorithm works and how it attempts to align images.
+* Investigate the influence of the different parameters on the performance of the registration.
+* Visualise the execution of the algorithm by displaying the images and deformation fields while it is running.
+* Interpret the results by inspecting the images, deformation fields, and Jacobian determinant maps.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-In these exercises, we use three 2D sagittal MR slices `cine_MR_1.png`, `cine_MR_2.png`, and `cine_MR_3.png` showing the lung, liver, and surrounding anatomy, at different points in time during free-breathing. Image 1 is at end-exhalation, image 2 at the end-inhalation for a normal breath, and image 3 at end-inhalation for a deep breath. You can find them in the zipped data folder under `practical4`.
 
-This tutorial uses Python. There is a template Jupyter notebook for you to work on `practical4-exercises.ipynb`. You have also been provided with some utility functions in `utils.py`. When using a function from this file, you should read it and make sure you understand what it does.
-There is also a function that implements the Demons registration algorithm in `demonsReg.py`. You should look at the code in `demonsReg.py` and check you can follow what it is doing. You should be able to understand what each section of code is doing, even if you don’t fully understand every line.
+:::::::::::::::::::::::::::::::::::::: prereq
 
-## 1. Loading and displaying images
-Load and display the three images. Convert the images to doubles and reorientate them as in the previous exercises.
+You should have followed the instructions from [the Setup page](../learners/setup.md) to access the data and code for these exercises, and setup Python.
+
+::::::::::::::::::::::::::::::::::::::
+
+This practical is based in Python, and uses this template Jupyter notebook: [`practical4_notebook.ipynb`](files/practical4_notebook.ipynb).You have  been provided with some utility functions in [`utils.py`](files/utils.py). When using a function from this file, you should read it and make sure you understand what it does. There is also a function that implements the Demons registration algorithm in [`demonsReg.py`](files/demonsReg.py). You should look at the `demonsReg` function and check you can follow what it is doing. You should be able to understand what each section of code is doing, even if you don’t fully understand every line.
+
+In these exercises, we use three 2D sagittal MR slices showing the lung, liver, and surrounding anatomy, at different points in time during free-breathing:
+
+* `cine_MR_1.png` is at end-exhalation,
+* `cine_MR_2.png` is at the end-inhalation for a normal breath,
+* `cine_MR_3.png` is at end-inhalation for a deep breath.
+
+You can find them in the unzipped data folder under `practical4`.
+
+* Run the first cell of the Juypter notebook. This imports the required libraries, and sets the *matplotlib* library to display figures in separate windows. This is required for the animations in these exercises to run correctly.
+
+## 1. Compare the images
+
+* Edit and run the next cell so that it loads the three images and then coverts them to doubles and reorients them as in the previous exercises.
+* Add code to the following cell to display the images in separate figures.
 
 The images should look like this:
 
-![Figure. Displayed images](fig/practical4-displayed-images.png)
+![Images side by side](fig/practical4-images.png)
 
-Compare the images to each other and observe the motion that occurs between the images. Difference images (one image minus another, e.g. as shown below) are a good way seeing where there are differences between the images, but it can be difficult to tell how things have moved between the images from the difference image.
+When displaying the images next to each other you should be able to see that the images are different and some of the structures have moved (especially in `cine_MR_3`), but it can be difficult to see exactly what has moved, and by how much. Difference images (one image minus another, e.g. as shown below) are a good way seeing where there are differences between the images, but it can still be difficult to tell exactly what has moved where from the difference images.
 
-![Figure. Difference images](fig/practical4-diff-images.png)
+* Add code to the next cell to display the difference image between `cine_MR_1` and `cine_MR_2` in one figure, and the difference image between `cine_MR_1` and `cine_MR_3` in another figure.
 
-The image on the left is the difference image between the first and second images, and the one on the right is the difference image between the first and third images. 
+The difference images should look like this:
 
-It is often easier to appreciate how things have moved/changed between images if you 'flip' between the images. To achieve this, we can use the `dispImageFlip` function. This function takes in the two images you want to look at as arguments, and you can flip between the two using the arrow keys on your keyboard.
+![Difference images](fig/practical4-diff-images.png)
 
-See how the images differ from each other. Pay particular attention to motion that you think could be challenging for the demons algorithm to recover, such as very large motion and deformation, or sliding motion that can occur between the lung/liver and surrounding anatomy.
+It is often easier to appreciate how things have moved/changed between images if you 'flip' between the images. The `dispImageFlip` function in `utils.py` makes it easy to do this by taking two images as inputs, and allowing you to flip between the two using the arrow keys on your keyboard.
 
-## 2. Demons algorithm
-### 2.1. `demonsReg` function
+* Add code to the next cell to use the `dispImageFlip` function to compare `cine_MR_1` and `cine_MR_2` and to compare `cine_MR_1` and `cine_MR_3`. Observe how the images differ from each other. Pay particular attention to motion that you think could be challenging for the demons algorithm to recover, such as very large motion and deformation, or sliding motion that can occur between the lung/liver and surrounding anatomy.
+
+## 2. The `demonsReg` function
+
 Have a look at the comments at the start of `demonsReg` function in `demonsReg.py` (which are also displayed as the help info for the function). There are two required input parameters: the **source** and **target** images for the registration. There are also a number of optional input parameters, which have default values assigned to them that will be used if an alternative value is not specified. We will explore the effects of these parameters as we go through these exercises. The outputs of the function are the final warped image and the corresponding deformation field.
 
-Start by running a registration with `cine_MR_1` as the source image and `cine_MR_2` as the target image and using default values for all the other parameters.
-When you start the registration, a figure appears with 3 subplots. The first subplot on the left shows the warped image (transformed source image), the second subplot in the middle shows the current deformation field and the third subplot on the right shows the update to the deformation field for the current iteration. The deformation field (middle plot) is displayed as a deformed grid whereas the update is displayed as a vector field. All three images update during the registration.
+When you start the registration, a 'live display' figure appears with 3 subplots. The first subplot on the left shows the warped image (resampled source image), the second subplot in the middle shows the current deformation field and the third subplot on the right shows the update to the deformation field for the current iteration. The deformation field (middle plot) is displayed as a deformed grid whereas the update is displayed as a vector field. All three images update during the registration.
 
-![Figure. Initialisation of the demons algorithm](fig/practical4-reg-init.png)
+![The 'live display' figure at the start of the demons registration](fig/practical4-defparams-start.png)
 
-While the registration is running, you will notice that the figures are updated and that text is outputted in the notebook stating the current resolution level, iteration number, and value of the Mean Squared Difference (MSD) between the target image and the current warped image. The MSD is the similarity metric used by this demons registration. At the end of the registration, the figure should look like this:
+:::::::::::: callout
 
-![Figure. Output of the demons algorithm](fig/practical4-defparams-output1.png)
+#### Note
 
-Here is a summary of the registration:
-![Figure. Output of the demons algorithm](fig/practical4-defparams-anim.gif)
+Most other registration softwares (i.e. all that I am aware of!) do not display the intermediate results while the registration is running, and just output the final result. I think it can be very informative to visualise the intermediate results, and watch how the registration algorithm gets to its final answer - which is why we have implemented it for these exercises! :smirk:
+
+Although, to be fair, this is much easier in 2D than in 3D!
+
+::::::::::::
+
+* Run `demonsReg` with `cine_MR_1` as the source image and `cine_MR_2` as the target image and using default values for all the other parameters.
+
+While the registration is running, you will notice that the figure is updated and that text is outputted in the notebook stating the current resolution level, iteration number, and value of the Mean Squared Difference (MSD) between the target image and the current warped image. At the end of the registration, the figure should look like this:
+
+![The 'live display' figure at the end of the demons registration](fig/practical4-defparams-end.png)
+
+Once the registration has finished another figure appears. This 'final display' figure allows us to flip between the source, target and warped image in the left subplot. The middle subplot shows the deformation field (or Jacobian determinant map, more details later), and the right subplot shows a difference image between the target image and the image shown in the subplot. 
+
+![The 'final display' figure that appears after the registration has finished](fig/practical4-defparams-final.png)
+
+If you look at the text output you will see that the final MSD value is 80.20 (rounded to 2 decimal places – more are shown in the figure and notebook), and that 74 iterations were performed at the final (3rd) resolution level. If you scroll up in the notebook (you may need to click on 'View as scollable element' at the bottom of the text output if the output has been truncated) you will see that 24 iterations were also performed at the 2nd resolution level, and 17 iterations at the 1st level.
+
+:::::::::::: discussion
+
+#### Questions
+
+Within each resolution level, the MSD value decreases with each iteration. However, the MSD increases between resolution levels.
+
+* Do you know why it does this? 
+
+Hint, it’s not just because there are more pixels in the higher resolution images, as using the mean rather than sum of squared differences should account for different numbers of pixels in the images.
+
+Compare the final warped image with the target and source images.
+
+* How well do you think the registration did at aligning the images?
+* Which parts of the images are well aligned, and which parts are less well aligned?
+
+If you look at the deformation field you should see that it corresponds to the deformation that would be applied to the warped image to get back to the source image (rather than the deformation that would be applied to the source image to get to the warped image). Make sure you understand why this is the case.
+
+::::::::::::
 
 
-At the end of the registration, a second figure appears. The figure allows us to flip between the source, target and warped image and shows the deformation field and difference image. We can also display the Jacobian (more details later).
+## 3. Regularisation
 
-![Figure. Output of the demons algorithm](fig/practical4-defparams-output2.png)
+You can specify the values of the optional input parameters when calling the function, e.g.
 
-If you look at the text output you will see that the final MSD value is 80.20 (rounded to 2 decimal places – more are shown in the console), and that 74 iterations were performed at the final (3rd) resolution level. If you scroll up in the console you will see that 24 iterations were also performed at the 2nd resolution level, and 17 iterations at the 1st level. 
-:::::::::::::::challenge
-Within each resolution level, the MSD value decreases with each iteration. However, the MSD increases between resolution levels. Do you know why it does this? 
-::::::::::::::::hint
-It’s not just because there are more pixels in the higher resolution images, as using the mean rather than sum of squared differences should account for different numbers of pixels in the images.
-::::::::::::::::::::
-::::::::::::::::::::
+`warped_image, def_field = demonsReg(cine_MR_1, cine_MR_2, sigma_elastic=0)`
 
-Compare the final warped image with the target and source images. How well do you think the registration did at aligning the images? Which parts of the images are well aligned, and which parts are less well aligned?
+will run the registration with sigma_elastic set to 0, i.e. with no elastic like regularisation applied.
 
-If you look at the deformation field you will see that it corresponds to the deformation that would be applied to the warped image to get back to the source image (rather than the deformation that would be applied to the source image to get to the warped image). Make sure you understand why this is the case (hint – pull-interpolation).
+* Try running this registration.
 
-### 2.2. Regularisation
+At the end of the registration, the 'final display' figure should look like this:
 
-You can specify the values of the optional input parameters when calling the function, e.g. `demonsReg(cine_MR_1, cine_MR_2, sigma_elastic=0)` will run the registration with sigma_elastic set to 0, i.e. with no elastic like regularisation applied. Try running this registration. At the end of the registration, the figures should look like this:
+![The 'final display' figure for `sigma_elastic = 0`](fig/practical4-elastic0-final.png)
 
-![Figure. Output of the demons algorithm](fig/practical4-elastic0-output1.png)
-![Figure. Output of the demons algorithm](fig/practical4-elastic0-output2.png)
 
-Here is a summary of the registration:
-![Figure. Output of the demons algorithm](fig/practical4-elastic0-anim.gif)
+You will see that parts of the final warped image looks very similar to the target image, and the final MSD is 79.01, which is a little lower than for the default parameters. However, you can see that the final deformation field is very ‘crumpled’ and does not look very physically plausible. Therefore, for most applications this would not be considered a good registration result. The reason that the result is like this is that without any elastic-like regularisation applied the registration is free to deform each part of the image independently in any way that better aligns the intensities. This results in structures being overly-deformed to resemble different structures, rather than being aligned with the correct corresponding structure in the other image, and highlights the need for using suitable regularisation.
 
-You will see that parts of the final warped image looks very similar to the target image, and the final MSD is 79.01, which is a little lower than for the default parameters. However, you can see that the final deformation field is very ‘crumpled’ and does not look very physically plausible. Therefore, for most applications this would not be considered a good registration result. The reason that the result is like this is that without any elastic-like regularisation applied to the deformation field it is free to ‘evolve’ in any way that better aligns the intensities, even if this results in implausible transformations, and highlights the need for using suitable regularisation.
+* Now rerun the registration with sigma_elastic at its default value again but this time setting sigma_fluid to 0.
 
-Now rerun the registration with sigma_elastic at its default value again but this time setting sigma_fluid to 0. At the end of the registration, the figures should look like this:
+At the end of the registration, the figures should look like this:
 
-![Figure. Output of the demons algorithm](fig/practical4-fluid0-output1.png)
-![Figure. Output of the demons algorithm](fig/practical4-fluid0-output2.png)
+![The 'live display' figure at the end of the registration for `sigma_fluid=0`](fig/practical4-fluid0-end.png)
+![The 'final display' figure for `sigma_fluid=0`](fig/practical4-fluid0-final.png)
 
-Here is a summary of the registration:
-![Figure. Output of the demons algorithm](fig/practical4-fluid0-anim.gif)
+You will now see that the updates are much larger and noisier as no regularisation is being applied to them, but the deformation field is still relatively smooth as it does have regularisation applied. If you compare the result from this registration to the result obtained with the default parameters you will see that the results are very similar. However, the final MSD value is lower (72.73), but some regions of the deformation field are slightly less smooth. Which of the results should be considered ‘best’ will depend on exactly what the application is. But it should be clear that the elastic-like regularisation usually has a larger effect on the result than the fluid-like regularisation does.
 
-You will now see that the updates are much larger and noisier as no regularisation is being applied to them, but the deformation field is still relatively smooth as it does have regularisation applied. If you compare the result from this registration to the result obtained with the default parameters (remember, you can store the outputs of the function so that you can directly compare the results from different registrations) you will see that the results are very similar. However, the final MSD value is lower (72.73), but some regions of the deformation field are slightly less smooth. Which of the results should be considered ‘best’ will depend on exactly what the application is. But it should be clear that the elastic-like regularisation usually has a larger effect on the result than the fluid-like regularisation does. Now try running several more registrations with different levels of elastic-like and fluid-like regularisation to get a good feel for how the combination of these parameters affects the results, and which ranges of values produce good/bad results.
+* Now try running several more registrations with different values for the elastic-like and fluid-like regularisation to get a good feel for how the combination of these parameters affects the results, and which ranges of values produce good/bad results.
 
-:::::::::::::::::::::::callout
-You can control how often the plots are updated by setting the value of the `disp_freq` input parameter. The registrations themselves run relatively quickly, but updating the images takes some time. This makes the registrations run considerably slower but allows you to see how the deformation field and warped image change during the course of the registration, which can be very useful for understanding why the registration produces the result it does. If you set `disp_freq` to 0 then the images will only update at the start of each level and to show the final result. If you do this you will notice that the registration runs much quicker, but you miss all the details of how the registration produces the result. For most of these exercises, keep the `disp_freq` value relatively low, e.g. at the default value of 5 iterations or less, so that you can see how the deformation field and warped image change as the registration is progressing.
-:::::::::::::::::::::::::::
+
 
 ### 2.3. Resolution levels
 You should have noticed that the registration is using a multi-resolution approach, with 3 resolution levels by default. You can specify the number of resolution levels to use with the `num_lev` input parameter. Try running a registration with `num_lev` set to 1, i.e. so that only a single resolution level is used, and the multi-resolution approach is not applied. At the end of the registration, the figures should look like this:
@@ -177,6 +216,10 @@ So which registration do you think is best?
 As you will have seen, there are a number of other optional parameters that can be set. The parameters `disp_spacing`, `scale_update_for_display`, `disp_method_df`, and `disp_method_up` all effect how the deformation field and update are displayed but have no effect on the actual registration itself. The comments/help should explain how these parameters work.
 
 The `max_it` parameter sets the maximum number of iterations to be performed. The default value is 1000, but you should have noticed that usually the registration stops well before reaching this number of iterations. This is because the registration checks for an improvement in the MSD at each iteration, and if there has not been an improvement it will move on to the next resolution level or finish if it is already on the last level. This behaviour can be disabled by setting the `check_MSD` parameter to false. In this case the registration will run for the full max_it number of iterations at each level.
+
+:::::::::::::::::::::::callout
+You can control how often the plots are updated by setting the value of the `disp_freq` input parameter. The registrations themselves run relatively quickly, but updating the images takes some time. This makes the registrations run considerably slower but allows you to see how the deformation field and warped image change during the course of the registration, which can be very useful for understanding why the registration produces the result it does. If you set `disp_freq` to 0 then the images will only update at the start of each level and to show the final result. If you do this you will notice that the registration runs much quicker, but you miss all the details of how the registration produces the result. For most of these exercises, keep the `disp_freq` value relatively low, e.g. at the default value of 5 iterations or less, so that you can see how the deformation field and warped image change as the registration is progressing.
+:::::::::::::::::::::::::::
 
 Try running a registration with the default parameters and `check_MSD = False`. It is also recommended to set `disp_freq = 50` so that the registration does not take too long to run. By looking at the MSD values output to the console you will notice that some iterations now cause (small) increases to the MSD. You will also notice that the registration reaches a stage at each level where the result starts to ‘oscillate’, with a few iterations making minor increases to the MSD and then a few making minor decreases to the MSD, and barely any noticeable changes to the warped image or deformation field. The final MSD value is lower than when `check_MSD` was set to true (74.53 compared to 80.20), but at the expense of running many more iterations. We get a similar result (MSD = 75.21) by setting `max_it` to 500 and only running half as many iterations, indicating that for at least the last 500 iterations the result was mostly oscillating and not improving, but the problem is it is difficult to know how many iterations will be required before the results start to ‘oscillate’ as this will depend on both the images being registered and the other parameters.
 
