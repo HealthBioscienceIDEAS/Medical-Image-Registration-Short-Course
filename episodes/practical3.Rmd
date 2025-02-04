@@ -134,17 +134,9 @@ Note that for cases 1 and 4, unlike the SSD, the MSD does not decrease as the am
 
 When calculating the NCC you need to ignore any pixels that are NaN in either of the input images. The *numpy* `nanmean` and `nanstd` functions can calculate the mean and standard deviation of an array (image) while ignoring the NaN values, but they will only ignore pixels that are NaN in the images passed as input to the function, not the pixels that are NaN in the other image.
 
-Therefore, You will first need to remove and pixels that contain NaN in either of the input images. You can use the *numpy* `isnan` function to find the indices of the NaN pixels in each image, and the `logical_or` function to combine these to get the indices of the pixels that are NaN in either image. You can then use boolean indexing to return 1D arrays containing all the pixel values from the images that were not NaN in either of the images. E.g.:
+Therefore, you will first need to remove any pixels that contain NaN in either of the input images. The *numpy* `isnan` function can find the NaN pixels in each individual image, and logical operations and boolean indexing can then be used to keep just the pixels that are not NaN in both images. If you are not sure how to do this ask me or one of the PGTAs to help you work it out.
 
-```python
-
-nan_inds = np.logical_or(np.isnan(A), np.isnan(B))
-A = A[np.logical_not(nan_inds)]
-B = B[np.logical_not(nan_inds)]
-
-```
-
-You can then calculate the mean and standard deviation of each image using the *numpy* `mean` and `std` functions. And then calculate the NCC using the equation from the lectures (the *numpy* `sum` function and the `size` attribute will be useful for this).
+You can then calculate the mean and standard deviation of each image using the *numpy* `mean` and `std` functions. And then calculate the NCC using the equation from the lectures.
 
 :::::::::::::::::::
 
