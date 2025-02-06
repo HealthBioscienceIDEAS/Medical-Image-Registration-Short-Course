@@ -132,6 +132,7 @@ You will see that parts of the final warped image looks very similar to the targ
 At the end of the registration, the figures should look like this:
 
 ![The 'live display' figure at the end of the registration for `sigma_fluid=0`](fig/practical4-fluid0-end.png)
+
 ![The 'final display' figure for `sigma_fluid=0`](fig/practical4-fluid0-final.png)
 
 You will now see that the updates are much larger and noisier as no regularisation is being applied to them, but the deformation field is still relatively smooth as it does have regularisation applied. If you compare the result from this registration to the result obtained with the default parameters you will see that the results are very similar. However, the final MSD value is lower (72.73), but some regions of the deformation field are slightly less smooth. Which of the results should be considered ‘best’ will depend on exactly what the application is. But it should be clear that the elastic-like regularisation usually has a larger effect on the result than the fluid-like regularisation does.
@@ -139,47 +140,87 @@ You will now see that the updates are much larger and noisier as no regularisati
 * Now try running several more registrations with different values for the elastic-like and fluid-like regularisation to get a good feel for how the combination of these parameters affects the results, and which ranges of values produce good/bad results.
 
 
+## 4. Resolution levels
+You should have noticed that the registration is using a multi-resolution approach, with 3 resolution levels by default. You can specify the number of resolution levels to use with the `num_lev` input parameter.
 
-### 2.3. Resolution levels
-You should have noticed that the registration is using a multi-resolution approach, with 3 resolution levels by default. You can specify the number of resolution levels to use with the `num_lev` input parameter. Try running a registration with `num_lev` set to 1, i.e. so that only a single resolution level is used, and the multi-resolution approach is not applied. At the end of the registration, the figures should look like this:
+* Try running a registration with `num_lev` set to 1, i.e. so that only a single resolution level is used, and the multi-resolution approach is not applied.
 
-![Figure. Output of the demons algorithm](fig/practical4-numlev1-output1.png)
-![Figure. Output of the demons algorithm](fig/practical4-numlev1-output2.png)
+At the end of the registration, the final display should look like this:
 
-Here is a summary of the registration:
-![Figure. Output of the demons algorithm](fig/practical4-numlev1-anim.gif)
+![The 'final display' figure for `num_lev=0`](fig/practical4-numlev1-final.png)
 
-::::::::::::::::::::discussion
-Do you think using a multi-resolution approach helps? Why?
-:::::::::::::::::::::
+:::::::::::::::: discussion
 
-Now try running the registration with 6 resolution levels (if you use 7 levels then the first level only contains 4 pixels, so there is not very much to change and improve. Anything greater than 7 levels will result in an error, since no further down-sampling can be done). The final MSD with six levels is worse (MSD = 86.24 ) then with the default 3 resolution levels (MSD = 80.20). However, visually the results from six resolution levels appears to align the structures within the lung better than the result from using three levels. It is the structures outside the lung, e.g. the ribs, that are not aligned as well. Again, assessing the "best" registration will be dependent on the exact application.
+#### Questions
 
-Now experiment with varying the values for the regularisation parameters as well as the number of resolution levels, and see how the results are affected.
+* Do you think using a multi-resolution approach helps?
+* Why?
 
-### 2.4. Jacobian determinant
+::::::::::::::::
 
-When investigating the effects of the regularisation parameters you should have noticed that some parameters will result in deformation fields do not look very plausible. In particular, sometimes the deformation field will appear to fold over itself, indicating that folding has occurred, which is often undesirable when performing registrations.
+* Now try running the registration with 6 resolution levels (if you use 7 levels then the first level only contains 4 pixels, so there is not very much to change and improve. Anything greater than 7 levels will result in an error, since no further down-sampling can be done).
 
-For example, if you perform a registration with the following parameters: `sigma_elastic = 0.5, sigma_fluid = 1, num_lev = 3`, the result is the deformation field shown below, and as can be seen in the zoomed-in image on the right, the grid has folded over itself in some regions.
+The final MSD with six levels is worse (MSD = 86.24 ) then with the default 3 resolution levels (MSD = 80.20). However, visually the results from six resolution levels appears to align the structures within the lung better than the result from using three levels. It is the structures outside the lung, e.g. the ribs, that are not aligned as well. Again, assessing the "best" registration will be dependent on the exact application.
 
-![Figure. Deformation field](fig/practical4-def-field-zoom.png)
-You have been provided with a function, `calcJacobian`, to calculate the Jacobian determinant (and optionally the full Jacobian matrix) at each pixel in the deformation field, and return a map (image) of the Jacobian determinants. Have a look at this function and make sure you understand how it works.
+* Now experiment with varying the values for the regularisation parameters as well as the number of resolution levels, and see how the results are affected.
 
-You can display the Jacobian by using the up and down arrows on the second output figure at the end of the registration. 
+## 5. Folding and the determinant of the Jacobian matrix
 
-![Figure. Output of the demons algorithm](fig/practical4-elastic05-output2.png)
+When investigating the effects of the regularisation parameters you should have noticed that some parameters will result in deformation fields do not look physically plausible. In particular, sometimes the deformation field will appear to fold over itself, indicating that folding has occurred, which is generally undesirable when performing registrations. E.g.:
 
-You can also plot the Jacobian yourself by calling the `calcJacobian` and `dispImage` functions. It is useful to add a colourbar and to use the `jet` colourmap. You can also plot a binary mask of the Jacobian by setting all values <= 0 to 1s.
+* Run a registration with `sigma_elastic=0.5` (and all other parameters set to default values)
 
-![Figure. Jacobian](fig/practical4-jac-binarymask.png)
+At the end of the registration, the final display should look like this:
 
-You can notice that the image is very ‘patchy’, and does not show smooth expansions/contractions as would be expected during breathing. The colourbar shows us that the Jacobian contains some very large values (>4) as well as negative values, indicating that folding has occurred. 
+![The 'final display' figure for `sigma_elastic=0.5`](fig/practical4-elastic05-final.png)
 
-If you compare the location of the pixels with folding in the binary image to the deformation field you will notice that they do not align with where you can see folding occurring in the grid. This is because the grid shows the deformation in the source image space whereas the binary image corresponds to the pixels in the warped image space.
+You can use the magnifying glass icon at the bottom-left of the figure to zoom in on different regions of the deformation field. To zoom back out you can click on the left facing (back) arrow icon, which will go back to the previous view/zoom (you can also right click and drag a rectangle to zoom out, but I found it very difficult to get this to behave how I wanted it to).
+![](fig/practical4-fig-controls.png)
 
-### 2.5. Compositions
-With the `demonsReg` function it is possible to compose the updates rather than add them, so that the deformation field will always represent a diffeomorphic transformation (as the updates are themselves always diffeomorphic), and hence will not contain any folding. If you look at lines 150-157 of the `demonsReg` function and you will see that the composition of two deformation fields can be implemented by treating the current deformation field as an image, and resampling it with (a deformation field derived from) the update to the transformation. To see why, we can write the equation for resampling an image as:
+* Zoom in on the deformation field to the region shown in red in the figure on the left, below. You should see that the deformation field has folded in on itself, as shown in the figure on the right, below. 
+
+![Zooming in on one of the regions in the deformation field where folding has occured](fig/practical4-def-field-zoom.png)
+
+The final display can also display a map of the determinant of the Jacobian matrix (often called the Jacobian determinant, or simply the Jacobian) instead of the deformation field.
+
+* Use the up or down arrows to switch from displaying the deformation field to the Jacobian map, and back again.
+
+![The 'final display' figure for `sigma_elastic=0.5` showing the Jacobian map](fig/practical4-elastic05-final-jac.png)
+
+:::::::::::::::: discussion
+
+#### Question
+
+You should notice that the regions where the deformation field expands correspond to the yellow and red regions of the Jacobian determinant map, and the regions where the deformation field compresses are blue in the Jacobian determinant map, with the regions where there is folding the darkest blue. However, the deformation field and Jacobian map are not well aligned with each other in some regions.
+
+* Why?
+
+::::::::::::::::
+
+It can be useful to display a colour bar with the Jacobian map so you see which values the different colours correspond to. Unfortunately adding a colour bar to the final display disrupts the layout of the figure, and is not recommended. However, if you have stored the deformation field output by the registration in a variable, e.g.:
+
+`warped_image, def_field = demonsReg(cine_MR_1, cine_MR_2, sigma_elastic=0.5)`
+
+you can use the `calcJacobian` function from `utils.py` to calculate the Jacobian map (and optionally the full Jacobian matrix at each pixel) from the deformation field. Have a look at this function and make sure you understand how it works.
+
+* Calculate the Jacobian map using `calcJacobian` and display it in a separate figure.
+    * You can use the `dispImage` function to display the Jacobian map with the correct orientation.
+    * You should change the colourmap to better visualise the Jacobian map. We have used 'Jet' but you can try different colourmaps if you prefer.
+    * You should then add a colourbar to the figure.
+
+The result should look like the left side of the figure below.
+
+With the colourbar you can see which colours correspond to values <= 0, i.e. where folding has occurred. However, due to the continuous nature of most colourmaps it can be difficult to see exactly which pixels have Jacobian values <= 0, and which are just above 0.
+
+* Create a binary image (boolean array) of the pixels where folding has occurred and display it in a separate figure.
+
+The result should look like the right side of the figure below
+
+![The Jacobian map (left) and a binary image showing which pixels in the Jacobian map have values <= 1](fig/practical4-jac-binarymask.png)
+
+## 6. Composing the updates
+
+With the `demonsReg` function it is possible to compose the updates rather than add them, so that the deformation field will always represent a diffeomorphic transformation (as the updates are themselves always diffeomorphic), and hence will not contain any folding. If you look at lines 170-183 of the `demonsReg` function and you will see that the composition of two deformation fields can be implemented by treating the current deformation field as an image, and resampling it with (a deformation field derived from) the update to the transformation. To see why, we can write the equation for resampling an image as:
 
 $I_{resamp}(\vec{x})=I_{orig}(T(\vec{x}))$
 
@@ -193,45 +234,46 @@ i.e. to calculate the composed transformation, $T_{t+1}$, we first apply the upd
 
 You can see that the equation for composing the transformation is the same as the equation for resampling the image, with the current transformation, $T_t$, replacing the image, $I_{orig}$, and $T_{up}$ used as the transformation to resample the image/transformation.
 
-Now perform a registration using the same parameters as above but use composition rather than addition to update the transformation, i.e. use the following parameters: `sigma_elastic = 0.5, sigma_fluid = 1, num_lev = 3, use_composition = True`. 
+* Now perform a registration using the same parameters as above (i.e. `sigma_elastic=0.5`) but use composition rather than addition to update the transformation by setting `use_composition=True`. 
 
-Here is a summary of the registration:
-![Figure. Output of the demons algorithm](fig/practical4-comp-anim.gif)
+The final display should look like:
+![The 'final display' figure for `sigma_elastic=0.5` and `use_composition=True`](fig/practical4-comp-final.png)
 
-You will notice that the deformation field no longer contains any folding:
+If you zoom in on the deformation field you will notice that the deformation field no longer contains any folding, but the Jacobian determinant map is still very patchy (note, the intensity-colour scale is different in the image below compared to the previous image as the min and max values are different):
 
-![Figure. Deformation field](fig/practical4-comp-def-field.png)
+![Zooming in on the deformation field to show that ther is no longer any folding (left) and Jacobian map (right)](fig/practical4-comp-def-field-jac.png)
 
-but the Jacobian determinant map is still very patchy
+This indicates that the deformation is still not very physically plausible. And if you look at the warped image you will see that some of the features in the lungs are better aligned when addition was used for updating the transformation, although the MSD value is lower when composition is used (63.01) than when addition is used (64.07). But there is no folding when using composition and there is folding when using addition. Which registration should be considered the 'best' will depend on the specific application (although neither would be considered very good for most applications!).
 
-![Figure. Jacobian](fig/practical4-comp-jac.png)
+* Run another registration using a set of parameters that you previously found gave a good result when adding the updates, but now use `use_composition=True`. How do the results compare to the previous ones?
 
-and the max value is larger (note – a different intensity scale is used compared to the Jacobian determinant image on the previous page to show there is a different range of values).
+## 7. Other parameters
 
-This indicates that the deformation is still not very physically plausible. And if you look at the warped image you will see that some of the features in the lungs are better aligned when addition was used for updating the transformation, although the MSD value is lower when composition is used (63.10) than when addition is used (64.07). But there is no folding when using composition and there is folding when using addition.
+As you will have seen, there are a number of other optional parameters that can be set. The parameters `disp_spacing`, `scale_update_for_display`, `disp_method_df`, and `disp_method_up` all effect how the deformation field and update are displayed but have no effect on the actual registration itself. The comments/help should explain what these parameters do.
 
-So which registration do you think is best?
-
-### 2.6. Other parameters
-As you will have seen, there are a number of other optional parameters that can be set. The parameters `disp_spacing`, `scale_update_for_display`, `disp_method_df`, and `disp_method_up` all effect how the deformation field and update are displayed but have no effect on the actual registration itself. The comments/help should explain how these parameters work.
+The `disp_freq` parameter controls how often the plots are updated. The registrations themselves run relatively quickly, but updating the images takes some time. This makes the registrations run considerably slower but allows you to see how the deformation field and warped image change during the course of the registration, which can be very useful for understanding why the registration produces the result it does. If you set `disp_freq` to 0 then the images will only update at the start of each level and to show the final result. If you do this you will notice that the registration runs much quicker, but you miss all the details of how the registration produces the result.
 
 The `max_it` parameter sets the maximum number of iterations to be performed. The default value is 1000, but you should have noticed that usually the registration stops well before reaching this number of iterations. This is because the registration checks for an improvement in the MSD at each iteration, and if there has not been an improvement it will move on to the next resolution level or finish if it is already on the last level. This behaviour can be disabled by setting the `check_MSD` parameter to false. In this case the registration will run for the full max_it number of iterations at each level.
 
-:::::::::::::::::::::::callout
-You can control how often the plots are updated by setting the value of the `disp_freq` input parameter. The registrations themselves run relatively quickly, but updating the images takes some time. This makes the registrations run considerably slower but allows you to see how the deformation field and warped image change during the course of the registration, which can be very useful for understanding why the registration produces the result it does. If you set `disp_freq` to 0 then the images will only update at the start of each level and to show the final result. If you do this you will notice that the registration runs much quicker, but you miss all the details of how the registration produces the result. For most of these exercises, keep the `disp_freq` value relatively low, e.g. at the default value of 5 iterations or less, so that you can see how the deformation field and warped image change as the registration is progressing.
-:::::::::::::::::::::::::::
+* Try running a registration with the default parameters and `check_MSD = False`. It is also recommended to set `disp_freq = 50` so that the registration does not take too long to run.
 
-Try running a registration with the default parameters and `check_MSD = False`. It is also recommended to set `disp_freq = 50` so that the registration does not take too long to run. By looking at the MSD values output to the console you will notice that some iterations now cause (small) increases to the MSD. You will also notice that the registration reaches a stage at each level where the result starts to ‘oscillate’, with a few iterations making minor increases to the MSD and then a few making minor decreases to the MSD, and barely any noticeable changes to the warped image or deformation field. The final MSD value is lower than when `check_MSD` was set to true (74.53 compared to 80.20), but at the expense of running many more iterations. We get a similar result (MSD = 75.21) by setting `max_it` to 500 and only running half as many iterations, indicating that for at least the last 500 iterations the result was mostly oscillating and not improving, but the problem is it is difficult to know how many iterations will be required before the results start to ‘oscillate’ as this will depend on both the images being registered and the other parameters.
+By looking at the MSD values output to the notebook you will notice that some iterations now cause (small) increases to the MSD. You will also notice that the registration reaches a stage at each level where the result starts to ‘oscillate’, with a few iterations making minor increases to the MSD and then a few making minor decreases to the MSD, and barely any noticeable changes to the warped image or deformation field. The final MSD value is lower than when `check_MSD` was set to true (74.52 compared to 80.20), but at the expense of running many more iterations.
 
-The last parameter that can be set is `use_target_grad`. This is false by default, and setting it to true will cause the registration to use the spatial gradient of the target image when calculating the demons forces rather than the spatial gradient of the source image, i.e. it will use the original demons forces rather than the common demons forces. If you run a registration with the default parameters and `use_target_grad` set to true and compare it to the results when `use_target_grad` is false, you will see there are differences in the results. However, each result aligns some regions/structures better than the other, and neither of the results are clearly the best overall (the final MSC is lower when `use_target_grad` is false, but this is not always the case when different parameters are used).
+* Now try running the same registration but with `max_it` set to 500
 
-### 2.7. Deeper breath image
+We get a similar result (MSD = 75.21) wuth `max_it` set to 500 and only running half as many iterations, indicating that for at least the last 500 iterations the result was mostly oscillating and not improving, but the problem is it is difficult to know how many iterations will be required before the results start to ‘oscillate’ as this will depend on both the images being registered and the other parameters.
 
-Now try registering `cine_MR_1.png` to `cine_MR_3.png`, which is a more challenging registration due to the deep breath taken when `cine_MR_3.png` was acquired.
+The last parameter that can be set is `use_target_grad`. This is false by default, and setting it to true will cause the registration to use the spatial gradient of the target image when calculating the demons forces rather than the spatial gradient of the source image, i.e. it will use the original demons forces rather than the common demons forces.
 
-Experiment with different parameters – can you find some that give a good result?
+* Run a registration with the default parameters and `use_target_grad` set to true.
 
-Try swapping the source and target image over. Do you think you get better results with `cine_MR_3.png` as the source or target image (or are they equally bad for both!)?
+If you compare the results to the results obtained when `use_target_grad` is false, you will see there are differences in the results. However, each result aligns some regions/structures better than the other, and neither of the results are clearly the best overall (the final MSC is lower when `use_target_grad` is false, but this is not always the case when different parameters are used).
+
+## 8. Registering the deep-breath image
+
+* Now try registering `cine_MR_1.png` to `cine_MR_3.png`.
+    * It is much more difficult to get a good result for this registration due to the deep breath taken when `cine_MR_3.png` was acquired. Experiment with different parameters – can you find some that give a good result?
+    * Try swapping the source and target image over. Do you think you get better results with `cine_MR_3.png` as the source or target image (or are they equally bad for both!)?
 
 
 

@@ -104,23 +104,36 @@ def demonsReg(source, target, sigma_elastic=1, sigma_fluid=1, num_lev=3, use_com
         # if first level, initialise deformation and displacement fields
         if lev == 1:
             def_field = np.zeros((X.shape[0], X.shape[1], 2))
-            def_field[:, :, 0], def_field[:, :, 1] = X, Y
-            disp_field_x, disp_field_y = np.zeros(target.shape), np.zeros(target.shape)
-        # otherwise upsample the displacement field from previous level and recalculate the corresponding deformation field
+            def_field[:, :, 0] = X
+            def_field[:, :, 1] = Y
+            disp_field_x = np.zeros(target.shape)
+            disp_field_y = np.zeros(target.shape)
         else:
+            # otherwise upsample disp_field from previous level
             disp_field_x = 2 * resize(disp_field_x, (target.shape[0], target.shape[1]), mode='edge', order=3)
             disp_field_y = 2 * resize(disp_field_y, (target.shape[0], target.shape[1]), mode='edge', order=3)
+            # recalculate def_field for this level from disp_field
             def_field = np.zeros((X.shape[0], X.shape[1], 2))  # clear def_field from previous level
-            def_field[:, :, 0], def_field[:, :, 1] = X + disp_field_x, Y + disp_field_y
+            def_field[:, :, 0] = X + disp_field_x
+            def_field[:, :, 1] = Y + disp_field_y
 
-        # initialise updates
-        update_x, update_y = np.zeros(target.shape), np.zeros(target.shape)
+        #initialise updates
+        update_x = np.zeros(target.shape)
+        update_y = np.zeros(target.shape)
+        update_def_field = np.zeros(def_field.shape)
+    
+        # calculate the transformed image at the start of this level
         warped_image = resampImageWithDefField(source, def_field)
-        def_field_prev, prev_MSD = def_field.copy(), calcMSD(target, warped_image)
+    
+        # store the current def_field and MSD value to check for improvements at 
+        # end of iteration 
+        def_field_prev = def_field.copy()
+        prev_MSD = calcMSD(target, warped_image)
         
-        # calculate the image gradient if required  
-        if use_target_grad and target is not None:
-            img_grad_x, img_grad_y = np.gradient(target)
+        # if target image gradient is being used this can be calculated now as it will
+        # not change during the registration
+        if use_target_grad:
+            [img_grad_x, img_grad_y] = np.gradient(target)
         
         # main iterative loop - repeat until max number of iterations reached
         for it in range(max_it):          
@@ -136,11 +149,16 @@ def demonsReg(source, target, sigma_elastic=1, sigma_fluid=1, num_lev=3, use_com
             diff = target - warped_image
             # calculate denominator of demons forces
             denom = np.power(img_grad_x, 2) + np.power(img_grad_y, 2) + np.power(diff, 2)
+            # calculate x and y components of numerator of demons forces
+            numer_x = diff * img_grad_x
+            numer_y = diff * img_grad_y
             # calculate the x and y components of the update
-            update_x, update_y = diff * img_grad_x / denom, diff * img_grad_y / denom
-            
+            update_x = numer_x / denom
+            update_y = numer_y / denom
+      
             # set nan values to 0
-            update_x[np.isnan(update_x)], update_y[np.isnan(update_y)] = 0, 0
+            update_x[np.isnan(update_x)] = 0
+            update_y[np.isnan(update_y)] = 0
                     
             # if fluid like regularisation used smooth the update
             if sigma_fluid > 0:
@@ -149,13 +167,20 @@ def demonsReg(source, target, sigma_elastic=1, sigma_fluid=1, num_lev=3, use_com
             
             # update displacement field using addition (original demons) or composition (diffeomorphic demons)
             if use_composition:
-                update_def_field = np.dstack((update_x + X, update_y + Y))
-                # calculate the update to the deformation field
+                # compose update with current transformation
+                # this can be done by treating the deformation field as an image, and resampling it with the update using resampImageWithDefField
+                # to do this, we first need to calculate a deformation field from the update (which is stored as a displacement field)
+                update_def_field[:, :, 0] = update_x + X
+                update_def_field[:, :, 1] = update_y + Y
+                # resample the deformation field with the update deformation field, saving the result over the previous deformtion field
                 def_field = resampImageWithDefField(def_field, update_def_field)
-                # calculate the displacement field from the composed deformation field
-                disp_field_x, disp_field_y = def_field[:, :, 0] - X, def_field[:, :, 1] - Y
+                # the result is deformation field representing the update composed with the original deformation field
+                # however, to apply elastic smoothing (below) we need to convert this back to a displacement field
+                disp_field_x = def_field[:, :, 0] - X
+                disp_field_y = def_field[:, :, 1] - Y
                 # replace nans in disp field with 0s
-                disp_field_x[np.isnan(disp_field_x)], disp_field_y[np.isnan(disp_field_y)] = 0, 0
+                disp_field_x[np.isnan(disp_field_x)] = 0
+                disp_field_y[np.isnan(disp_field_y)] = 0
             else:
                 # add the update to the current displacement field
                 disp_field_x = disp_field_x + update_x
@@ -167,7 +192,9 @@ def demonsReg(source, target, sigma_elastic=1, sigma_fluid=1, num_lev=3, use_com
                 disp_field_y = gaussian_filter(disp_field_y, sigma_elastic, mode='nearest')
             
             # update deformation field from disp field
-            def_field[:, :, 0], def_field[:, :, 1] = disp_field_x + X, disp_field_y + Y
+            def_field[:, :, 0] = disp_field_x + X
+            def_field[:, :, 1] = disp_field_y + Y
+    
             # transform the image using the updated deformation field
             warped_image = resampImageWithDefField(source, def_field)
 
