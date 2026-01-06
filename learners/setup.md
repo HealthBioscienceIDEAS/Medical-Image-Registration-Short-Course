@@ -10,7 +10,7 @@ editor_options:
 ## Accessing the materials for the practicals
 
 * Create a folder in which you will store all of the material for the IPMI registration practicals, e.g. `C:\ipmi_reg\`
-* If you haven't already, download the zip file containing data used in the practicals from moodle, [here](https://moodle.ucl.ac.uk/mod/resource/view.php?id=7158616).
+* If you haven't already, download the zip file containing data used in the practicals from moodle.
 * Extract the zip file in the folder you created above.
     * This will create the following folders containing the data used in the exercises:
         * `C:\impi_reg\data\practical1\CT_for_PET`
