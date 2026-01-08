@@ -41,7 +41,7 @@ You can find in the unzipped data folder under `practical3`.
 
 * Run the next cell of the notebook to load the 3 images.
 * Add code to the next cell to display the data type for each of the images, run it, and check they match the expected data types.
-* Add code to the next cells to convert all the images to double data type, reorient them into cartesian orientation, and display each image in a separate figure using the `dispImage` function from *utils2.py*.
+* Add code to the next cells to convert all the images to double data type, reorient them into cartesian orientation, and display each image in a separate figure using the `dispImage` function from *utils.py*.
 
 The images should appear like this:
 
@@ -59,7 +59,7 @@ In order to explore the performance of the different similarity measures we are 
 The Juypter notebook contains the outline of some code to rotate each of the images between -90 degrees and 90 degrees, in steps of 1 degree, but you need to complete the code.
 
 * Edit the code so that on each iteration of the loop it:
-    * uses the `affineMatrixFromRotationAboutPoint` function from *utils2.py* to create an affine matrix representing an anti-clockwise rotation by theta degrees about the point (10,10),
+    * uses the `affineMatrixFromRotationAboutPoint` function from *utils.py* to create an affine matrix representing an anti-clockwise rotation by theta degrees about the point (10,10),
     * uses the `defFieldFromAffineMatrix` function to create the corresponding deformation field,
     * then resamples each of the 3 images using the `resampImageWithDefField` function with the default interpolation (linear) and padding value (NaN),
     * and uses the `dispImage` function to display the resampled 8-bit CT image. 
